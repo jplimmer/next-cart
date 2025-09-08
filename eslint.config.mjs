@@ -22,15 +22,15 @@ const eslintConfig = [
     ],
   },
 
-  prettierConfig, // disables conflicting ESLint rules
-  {
-    plugins: {
-      prettier: pluginPrettier,
-    },
-    rules: {
-      'prettier/prettier': 'error', // show Prettier issues as ESLint errors
-    },
-  },
+  // prettierConfig, // disables conflicting ESLint rules
+  // {
+  //   plugins: {
+  //     prettier: pluginPrettier,
+  //   },
+  //   rules: {
+  //     'prettier/prettier': 'error', // show Prettier issues as ESLint errors
+  //   },
+  // },
 ];
 
 export default eslintConfig;
