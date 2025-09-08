@@ -11,6 +11,7 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...compat.extends('prettier'),
   {
     ignores: [
       'node_modules/**',
@@ -21,16 +22,6 @@ const eslintConfig = [
       '.husky/',
     ],
   },
-
-  // prettierConfig, // disables conflicting ESLint rules
-  // {
-  //   plugins: {
-  //     prettier: pluginPrettier,
-  //   },
-  //   rules: {
-  //     'prettier/prettier': 'error', // show Prettier issues as ESLint errors
-  //   },
-  // },
 ];
 
 export default eslintConfig;
