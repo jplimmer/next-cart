@@ -1,5 +1,7 @@
 'use client';
 
+import { submitQuery } from '@/lib/actions/contact';
+import { contactFormSchema } from '@/lib/schemas/contactForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -15,25 +17,17 @@ import {
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 
-const formSchema = z.object({
-  email: z.email(),
-  message: z
-    .string()
-    .min(1, { message: 'Message cannot be empty' })
-    .max(1000, { message: 'Message cannot be longer than 1000 characters' }),
-});
-
 export function ContactForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof contactFormSchema>>({
+    resolver: zodResolver(contactFormSchema),
     defaultValues: {
       email: '',
       message: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof contactFormSchema>) {
+    submitQuery(values);
   }
 
   return (
@@ -49,9 +43,6 @@ export function ContactForm() {
               <FormControl>
                 <Input placeholder="example@domain.com" {...field}></Input>
               </FormControl>
-              {/* <FormDescription>
-                Email address we will use to contact you about your query.
-              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
