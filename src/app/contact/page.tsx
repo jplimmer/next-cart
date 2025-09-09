@@ -1,3 +1,9 @@
-export default function Contact() {
-  return <div>Content</div>;
+import { ContactForm } from '@/components/contact-form';
+
+export default function ContactPage() {
+  return (
+    <div className="w-[50%] border-1 rounded-xl shadow-md p-8">
+      <ContactForm />
+    </div>
+  );
 }
