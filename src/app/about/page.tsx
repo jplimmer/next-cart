@@ -1,12 +1,12 @@
 export default function about() {
   return (
     <main>
-      <section className="text-white bg-[#004F44] p-20">
+      <header className="text-white bg-[#004F44] p-20">
         <h1 className="text-5xl w-1/3 mb-12">
           NextCart is more than an e-commerce website
         </h1>
         <p>Our story begins in a galaxy, far, far away</p>
-      </section>
+      </header>
       <section className="flex w-3/4 m-auto p-10 gap-8 flex-col">
         <article className="max-w-1/3">
           <h2 className="text-3xl">Story</h2>
