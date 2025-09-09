@@ -1,0 +1,12 @@
+{
+	"Export Default Page": {
+		"scope": "javascript,typescript,typescriptreact",
+		"prefix": "page",
+		"body": [
+			"export default function Page() {",
+			"  return <div></div>;",
+			"}"
+		],
+		"description": "Export a default Page component"
+	}
+}
