@@ -37,7 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased`}
       >
         <Header />
-        <main>{children}</main>
+        {children}
         <Footer />
       </body>
     </html>
