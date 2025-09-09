@@ -1,7 +1,8 @@
+import Footer from '@/components/ui/footer';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
-import localFont from "next/font/local";
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,9 +20,9 @@ export const metadata: Metadata = {
 };
 
 const iconsSocialMedia15Colr = localFont({
-  src: "./fonts/Icons Social Media 15-COLR.ttf",
-  variable: "--iconsSocialMedia15Colr",
-  display: "swap",
+  src: './fonts/Icons Social Media 15-COLR.ttf',
+  variable: '--iconsSocialMedia15Colr',
+  display: 'swap',
 });
 
 export default function RootLayout({
@@ -35,6 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
