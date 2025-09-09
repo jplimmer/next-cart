@@ -1,5 +1,5 @@
+import Footer from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
-import Footer from '@/components/ui/footer';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
@@ -36,11 +36,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased`}
       >
-        <header>
-          <Header />
-        </header>
+        <Header />
         <main>{children}</main>
-        <footer></footer>
         <Footer />
       </body>
     </html>
