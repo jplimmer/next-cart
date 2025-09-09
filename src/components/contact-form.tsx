@@ -1,8 +1,9 @@
 'use client';
 
-import { submitQuery } from '@/lib/actions/contact';
-import { contactFormSchema } from '@/lib/schemas/contactForm';
+import { submitContactForm } from '@/lib/actions/contactForm';
+import { contactFormSchema, ContactFormState } from '@/lib/schemas/contactForm';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useActionState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from './ui/button';
@@ -17,7 +18,17 @@ import {
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 
+const initialState: ContactFormState = {
+  success: false,
+  error: {},
+};
+
 export function ContactForm() {
+  const [state, formAction, isPending] = useActionState(
+    submitContactForm,
+    initialState
+  );
+
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -26,14 +37,10 @@ export function ContactForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof contactFormSchema>) {
-    submitQuery(values);
-  }
-
   return (
     <Form {...form}>
-      <h1 className="font-bold text-center pb-4">Get in touch!</h1>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <h1 className="font-bold text-center pb-8">Get in touch!</h1>
+      <form action={formAction} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -43,7 +50,9 @@ export function ContactForm() {
               <FormControl>
                 <Input placeholder="example@domain.com" {...field}></Input>
               </FormControl>
-              <FormMessage />
+              {!state.success && state.error.email && (
+                <FormMessage>{state.error.email}</FormMessage>
+              )}
             </FormItem>
           )}
         />
@@ -59,11 +68,18 @@ export function ContactForm() {
                   {...field}
                 ></Textarea>
               </FormControl>
-              <FormMessage />
+              {!state.success && state.error.message && (
+                <FormMessage>{state.error.message}</FormMessage>
+              )}
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="flex gap-12 items-center">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? 'Submitting' : state.success ? 'Submitted!' : 'Submit'}
+          </Button>
+          {state.success && <p className="text-green-500">{state.data}</p>}
+        </div>
       </form>
     </Form>
   );
