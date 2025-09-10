@@ -33,6 +33,7 @@ export function ContactForm() {
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       email: '',
+      subject: '',
       message: '',
     },
   });
@@ -50,8 +51,24 @@ export function ContactForm() {
               <FormControl>
                 <Input placeholder="example@domain.com" {...field}></Input>
               </FormControl>
-              {!state.success && state.error.email && (
-                <FormMessage>{state.error.email}</FormMessage>
+              {!state.success && <FormMessage>{state.error.email}</FormMessage>}
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="subject"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Subject</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Let us know what your query is about..."
+                  {...field}
+                ></Input>
+              </FormControl>
+              {!state.success && (
+                <FormMessage>{state.error.subject}</FormMessage>
               )}
             </FormItem>
           )}
@@ -64,11 +81,12 @@ export function ContactForm() {
               <FormLabel>Message</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Send us your query and we'll get back to you as soon as we can!"
+                  placeholder="...then hit submit and we'll get back to you as soon as we can!"
+                  className="min-h-24"
                   {...field}
                 ></Textarea>
               </FormControl>
-              {!state.success && state.error.message && (
+              {!state.success && (
                 <FormMessage>{state.error.message}</FormMessage>
               )}
             </FormItem>

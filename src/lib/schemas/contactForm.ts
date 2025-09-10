@@ -3,6 +3,10 @@ import { Result } from '../types/types';
 
 export const contactFormSchema = z.object({
   email: z.email(),
+  subject: z
+    .string()
+    .min(1, { message: 'Message cannot be empty' })
+    .max(100, { message: 'Message cannot be longer than 100 characters' }),
   message: z
     .string()
     .min(1, { message: 'Message cannot be empty' })

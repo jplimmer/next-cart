@@ -9,6 +9,7 @@ export async function submitContactForm(
 ): Promise<ContactFormState> {
   const parseResult = contactFormSchema.safeParse({
     email: formData.get('email'),
+    subject: formData.get('subject'),
     message: formData.get('message'),
   });
 
