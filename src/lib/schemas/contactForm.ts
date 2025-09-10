@@ -5,8 +5,8 @@ export const contactFormSchema = z.object({
   email: z.email(),
   subject: z
     .string()
-    .min(1, { message: 'Message cannot be empty' })
-    .max(100, { message: 'Message cannot be longer than 100 characters' }),
+    .min(1, { message: 'Subject cannot be empty' })
+    .max(100, { message: 'Subject cannot be longer than 100 characters' }),
   message: z
     .string()
     .min(1, { message: 'Message cannot be empty' })
