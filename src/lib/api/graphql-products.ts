@@ -1,0 +1,113 @@
+const GRAPHQL_ENDPOINT = 'https://api.escuelajs.co/graphql';
+
+// Type definitions for GraphQL variables
+interface ProductVariables {
+  id: string;
+}
+
+interface PaginationVariables {
+  limit?: number;
+  offset?: number;
+}
+
+type GraphQLVariables =
+  | ProductVariables
+  | PaginationVariables
+  | Record<string, never>;
+
+export async function graphqlFetch(
+  query: string,
+  variables?: GraphQLVariables
+) {
+  try {
+    const response = await fetch(GRAPHQL_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      throw new Error(result.errors[0].message);
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error('GraphQL fetch error:', error);
+    throw error;
+  }
+}
+
+// Query strings based on Platzi Api documentation
+export const QUERIES = {
+  GET_PRODUCTS: `
+    query {
+      products {
+        id
+        title
+        price
+        description
+        images
+        category {
+          id
+          name
+          image
+        }
+      }
+    }
+  `,
+
+  GET_PRODUCTS_PAGINATED: `
+    query GetProducts($limit: Int, $offset: Int) {
+      products(limit: $limit, offset: $offset) {
+        id
+        title
+        price
+        description
+        images
+        category {
+          id
+          name
+          image
+        }
+      }
+    }
+  `,
+
+  GET_PRODUCT_BY_ID: `
+    query GetProduct($id: ID!) {
+      product(id: $id) {
+        id
+        title
+        price
+        description
+        category {
+          id
+          name
+          image
+        }
+        images
+      }
+    }
+  `,
+
+  GET_CATEGORIES: `
+    query {
+      categories {
+        id
+        name
+        image
+      }
+    }
+  `,
+};
