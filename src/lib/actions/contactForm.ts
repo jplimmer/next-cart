@@ -26,11 +26,14 @@ export async function submitContactForm(
     return { success: false, error: errors };
   }
 
-  // Generate message id & return?
+  // Generate random message id
+  const uuid = crypto.randomUUID();
+  const shortId = uuid.split('-')[0].toUpperCase();
+  const msgId = `MSG-${shortId}`;
 
   // Simulated processing time
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  console.log('Contact form submitted:', parseResult.data);
-  return { success: true, data: '#number' };
+  console.log('Contact form submitted:', msgId);
+  return { success: true, data: msgId };
 }
