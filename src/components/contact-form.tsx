@@ -3,7 +3,8 @@
 import { submitContactForm } from '@/lib/actions/contactForm';
 import { contactFormSchema, ContactFormState } from '@/lib/schemas/contactForm';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useActionState } from 'react';
+import { MailCheck } from 'lucide-react';
+import { startTransition, useActionState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from './ui/button';
@@ -38,9 +39,37 @@ export function ContactForm() {
     },
   });
 
+  const resetForm = async () => {
+    form.reset();
+    startTransition(() => {
+      formAction({ reset: true });
+    });
+  };
+
+  if (state.success) {
+    return (
+      <div className="flex flex-col p-4 space-y-8">
+        <h2 className="text-center font-bold text-xl">Message received!</h2>
+        <div className="order-first self-center rounded-full p-4 bg-green-50">
+          <MailCheck className=" text-green-700" size={64} />
+        </div>
+        <p>
+          Your message ID is{' '}
+          <strong className="text-green-700">{state.data}</strong>, please keep
+          this for reference.
+        </p>
+        <div className="self-end mt-4">
+          <Button type="button" onClick={resetForm}>
+            Send a new message
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
-      <h1 className="font-bold text-center pb-8">Get in touch!</h1>
+      <h1 className="font-bold text-center text-xl pb-8">Get in touch!</h1>
       <form action={formAction} className="space-y-8">
         <FormField
           control={form.control}
@@ -96,7 +125,6 @@ export function ContactForm() {
           <Button type="submit" disabled={isPending}>
             {isPending ? 'Submitting' : state.success ? 'Submitted!' : 'Submit'}
           </Button>
-          {state.success && <p className="text-green-500">{state.data}</p>}
         </div>
       </form>
     </Form>
