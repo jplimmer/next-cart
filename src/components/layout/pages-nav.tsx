@@ -15,7 +15,7 @@ export async function PagesNav() {
   const categories = await getCategories();
 
   return (
-    <NavigationMenu>
+    <NavigationMenu aria-label="Main navigation">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>{routes.products.title}</NavigationMenuTrigger>
