@@ -3,23 +3,17 @@
 import { processContactForm } from '@/lib/actions/contactForm';
 import React, { startTransition, useActionState, useRef } from 'react';
 import { Button } from '../ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
 import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { SuccessMessage } from './success-message';
 
 export function ContactForm() {
-  const [state, formAction, isPending] = useActionState(
-    submitContactForm,
-    initialState
-  );
+  const [state, formAction, isPending] = useActionState(processContactForm, {
+    success: false,
+    error: {},
+    formData: { email: '', subject: '', message: '' },
+  });
   const formRef = useRef<HTMLFormElement>(null);
 
   // Resets action state to initial state
@@ -51,72 +45,56 @@ export function ContactForm() {
   }
 
   return (
-    <Form {...form}>
+    <div>
       <h1 className="font-bold text-center text-xl pb-8">Get in touch!</h1>
       <form action={formAction} ref={formRef} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="example@domain.com"
-                  disabled={isPending}
-                  {...field}
-                ></Input>
-              </FormControl>
-              {!state.success && <FormMessage>{state.error.email}</FormMessage>}
-            </FormItem>
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            placeholder="example@domain.com"
+            defaultValue={state.formData.email}
+            disabled={isPending}
+          />
+          {!state.success && (
+            <p className="text-destructive text-sm">{state.error.email}</p>
           )}
-        />
-        <FormField
-          control={form.control}
-          name="subject"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Subject</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Let us know what your query is about..."
-                  disabled={isPending}
-                  {...field}
-                ></Input>
-              </FormControl>
-              {!state.success && (
-                <FormMessage>{state.error.subject}</FormMessage>
-              )}
-            </FormItem>
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="subject">Subject</Label>
+          <Input
+            type="text"
+            name="subject"
+            placeholder="Let us know what your query is about..."
+            defaultValue={state.formData.subject}
+            disabled={isPending}
+          />
+          {!state.success && (
+            <p className="text-destructive text-sm">{state.error.subject}</p>
           )}
-        />
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Message</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="...then hit submit and we'll get back to you as soon as we can!"
-                  disabled={isPending}
-                  onKeyDown={handleKeyDown}
-                  className="min-h-24"
-                  {...field}
-                ></Textarea>
-              </FormControl>
-              {!state.success && (
-                <FormMessage>{state.error.message}</FormMessage>
-              )}
-            </FormItem>
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="message">Message</Label>
+          <Textarea
+            name="message"
+            placeholder="...then hit submit and we'll get back to you as soon as we can!"
+            defaultValue={state.formData.message}
+            onKeyDown={handleKeyDown}
+            disabled={isPending}
+            className="min-h-24"
+          />
+          {!state.success && (
+            <p className="text-destructive text-sm">{state.error.message}</p>
           )}
-        />
+        </div>
+
         <div className="flex gap-12 items-center">
           <Button type="submit" disabled={isPending}>
             {isPending ? 'Submitting' : 'Submit'}
           </Button>
         </div>
       </form>
-    </Form>
+    </div>
   );
 }
