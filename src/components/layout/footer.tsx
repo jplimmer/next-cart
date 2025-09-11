@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { ASSET_PATHS } from '@/lib/constants/assets';
 import { routes } from '@/lib/constants/routes';
-import Image from 'next/image';
 import Link from 'next/link';
+import { Logo } from './logo';
 
 export default function Footer() {
   return (
@@ -11,7 +10,7 @@ export default function Footer() {
         {/* Logo */}
         <Link href={routes.home.href} className="flex items-center gap-2">
           <span className="font-bold">NextCart</span>
-          <Image src={ASSET_PATHS.LOGOWHITE} alt="" width={32} height={32} />
+          <Logo size={32} colour="white" />
         </Link>
 
         {/* Social Icons */}
