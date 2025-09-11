@@ -1,12 +1,7 @@
 'use client';
 
-import { submitContactForm } from '@/lib/actions/contactForm';
-import { contactFormSchema, ContactFormState } from '@/lib/schemas/contactForm';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { MailCheck } from 'lucide-react';
+import { processContactForm } from '@/lib/actions/contactForm';
 import React, { startTransition, useActionState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Button } from '../ui/button';
 import {
   Form,
@@ -18,11 +13,7 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-
-const initialState: ContactFormState = {
-  success: false,
-  error: {},
-};
+import { SuccessMessage } from './success-message';
 
 export function ContactForm() {
   const [state, formAction, isPending] = useActionState(
@@ -31,22 +22,16 @@ export function ContactForm() {
   );
   const formRef = useRef<HTMLFormElement>(null);
 
-  const form = useForm<z.infer<typeof contactFormSchema>>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      email: '',
-      subject: '',
-      message: '',
-    },
-  });
-
-  const resetForm = async () => {
-    form.reset();
+  // Resets action state to initial state
+  const resetState = () => {
     startTransition(() => {
-      formAction({ reset: true });
+      const resetFormData = new FormData();
+      resetFormData.set('_action', 'reset');
+      formAction(resetFormData);
     });
   };
 
+  // Enables form submission on "Ctrl+Enter" in Textarea
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
@@ -60,25 +45,9 @@ export function ContactForm() {
     }
   };
 
+  // Conditionally render success message in place of form
   if (state.success) {
-    return (
-      <div className="flex flex-col p-4 space-y-8">
-        <h2 className="text-center font-bold text-xl">Message received!</h2>
-        <div className="order-first self-center rounded-full p-4 bg-green-50">
-          <MailCheck className=" text-green-700" size={64} />
-        </div>
-        <p>
-          Your message ID is{' '}
-          <strong className="text-green-700">{state.data}</strong>, please keep
-          this for reference.
-        </p>
-        <div className="self-end mt-4">
-          <Button type="button" onClick={resetForm}>
-            Send a new message
-          </Button>
-        </div>
-      </div>
-    );
+    return <SuccessMessage state={state} reset={resetState} />;
   }
 
   return (

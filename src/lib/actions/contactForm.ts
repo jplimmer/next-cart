@@ -5,11 +5,15 @@ import { contactFormSchema, ContactFormState } from '../schemas/contactForm';
 
 export async function submitContactForm(
   prevState: ContactFormState,
-  formData: FormData | { reset: true }
+  formData: FormData
 ): Promise<ContactFormState> {
-  // Return reset form if requested
-  if (typeof formData === 'object' && 'reset' in formData) {
-    return { success: false, error: {} };
+  // Reset state if requested
+  if (formData.get('_action') === 'reset') {
+    return {
+      success: false,
+      error: {},
+      formData: { email: '', subject: '', message: '' },
+    };
   }
 
   // Safely parse user inputs
@@ -34,6 +38,6 @@ export async function submitContactForm(
   // Simulated processing time
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  console.log('Contact form submitted:', msgId);
+  console.log('Contact form processed:', msgId);
   return { success: true, data: msgId };
 }
