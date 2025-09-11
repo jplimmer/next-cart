@@ -1,14 +1,26 @@
 import ProductCard from '@/components/product-card';
+import ProductFilters from '@/components/products/product-filters';
 import { getProducts } from '@/lib/api/products-data-server';
 import { Product } from '@/lib/types/product';
 
-export default async function Products() {
+export default async function Products({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+  const { query } = await searchParams;
   const products = await getProducts();
+
+  const filteredProducts = products.filter((product) =>
+    product.title.toLowerCase().includes((query || '').toLowerCase())
+  );
+
   return (
     <main>
       <h1 className="text-4xl text-center my-16">Products</h1>
+      <ProductFilters />
       <section className="flex flex-wrap gap-6 w-5/6 m-auto mb-32 justify-center">
-        {products?.map((product: Product) => (
+        {filteredProducts.map((product: Product) => (
           <section className="w-1/4" key={product.id}>
             <ProductCard product={product} key={product.id} />
           </section>
