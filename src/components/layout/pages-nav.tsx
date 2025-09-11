@@ -33,7 +33,7 @@ export async function PagesNav() {
               </li>
               {categories.length > 0 &&
                 categories.map((cat, idx) => (
-                  <NavigationMenuLink key={idx}>
+                  <NavigationMenuLink asChild key={idx}>
                     <Link
                       href={`${routes.products.href}?category=${cat.name.toLowerCase()}`}
                       className="whitespace-nowrap"
