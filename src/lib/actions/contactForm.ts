@@ -1,9 +1,26 @@
 'use server';
 
 import { z } from 'zod';
-import { contactFormSchema, ContactFormState } from '../schemas/contactForm';
+import {
+  ContactFormData,
+  contactFormSchema,
+  ContactFormState,
+} from '../schemas/contactForm';
 
-export async function submitContactForm(
+const extractFormField = (formData: FormData, fieldName: string): string => {
+  const value = formData.get(fieldName);
+  return typeof value === 'string' ? value : '';
+};
+
+const sanitiseFormData = (formData: FormData): ContactFormData => {
+  return {
+    email: extractFormField(formData, 'email').trim(),
+    subject: extractFormField(formData, 'subject').trim(),
+    message: extractFormField(formData, 'message').trim(),
+  };
+};
+
+export async function processContactForm(
   prevState: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
@@ -16,18 +33,18 @@ export async function submitContactForm(
     };
   }
 
-  // Safely parse user inputs
-  const parseResult = contactFormSchema.safeParse({
-    email: formData.get('email'),
-    subject: formData.get('subject'),
-    message: formData.get('message'),
-  });
+  // Initial sanitisation for returning to client in case of validation error
+  // NOTE: sanitisation not currently implemented (only trim)
+  const sanitisedData = sanitiseFormData(formData);
 
-  // Return validation errors
+  // Validate user inputs
+  const parseResult = contactFormSchema.safeParse(sanitisedData);
+
+  // Return validation errors and sanitised inputs
   if (!parseResult.success) {
     const errors = z.flattenError(parseResult.error).fieldErrors;
     console.error('Validation failed:', errors);
-    return { success: false, error: errors };
+    return { success: false, error: errors, formData: sanitisedData };
   }
 
   // Generate random message id

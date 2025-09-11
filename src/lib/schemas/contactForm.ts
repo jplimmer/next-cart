@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { Result } from '../types/types';
 
 export const contactFormSchema = z.object({
   email: z.email(),
@@ -19,4 +18,7 @@ export type ContactFormErrors = Partial<
   Record<keyof ContactFormData, string[]>
 >;
 
-export type ContactFormState = Result<string, ContactFormErrors>;
+// export type ContactFormState = Result<string, ContactFormErrors>;
+export type ContactFormState =
+  | { success: true; data: string }
+  | { success: false; error: ContactFormErrors; formData: ContactFormData };
