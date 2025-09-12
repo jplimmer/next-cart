@@ -10,9 +10,9 @@ import {
   navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 
-export function UtilitiesNav() {
+export function UtilitiesNav({ className }: { className?: string }) {
   return (
-    <NavigationMenu aria-label="Account and utilities">
+    <NavigationMenu className={className} aria-label="Account and utilities">
       <NavigationMenuList>
         <NavigationMenuItem className={navigationMenuTriggerStyle()}>
           <Search />

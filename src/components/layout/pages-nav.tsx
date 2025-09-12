@@ -11,11 +11,11 @@ import { getCategories } from '@/lib/api/products-data-server';
 import { routes } from '@/lib/constants/routes';
 import Link from 'next/link';
 
-export async function PagesNav() {
+export async function PagesNav({ className }: { className?: string }) {
   const categories = await getCategories();
 
   return (
-    <NavigationMenu aria-label="Main navigation">
+    <NavigationMenu className={className} aria-label="Main navigation">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>{routes.products.title}</NavigationMenuTrigger>
