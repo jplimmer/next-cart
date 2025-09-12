@@ -1,5 +1,5 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
-import { Product } from '@/lib/types/product';
+import { Category, Product } from '@/lib/types/product';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
@@ -22,7 +22,7 @@ export async function getProduct(id: string): Promise<Product | null> {
   }
 }
 
-export async function getCategories() {
+export async function getCategories(): Promise<Category[]> {
   try {
     const data = await graphqlFetch(QUERIES.GET_CATEGORIES);
     return data.categories || [];
