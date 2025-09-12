@@ -6,9 +6,9 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
-import { SuccessMessage } from './success-message';
+import SuccessMessage from './success-message';
 
-export function ContactForm() {
+export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(processContactForm, {
     success: false,
     error: {},

@@ -9,7 +9,7 @@ interface SuccessMessageProps {
   reset: () => void;
 }
 
-export function SuccessMessage({ state, reset }: SuccessMessageProps) {
+export default function SuccessMessage({ state, reset }: SuccessMessageProps) {
   if (!state.success) return null;
 
   return (
