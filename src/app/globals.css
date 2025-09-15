@@ -123,15 +123,9 @@
 
 @layer components {
   .content-grid {
-    --spacing-xl: 4rem;
-    --spacing-lg: 2rem;
-    --spacing-md: 1rem;
-    --spacing-sm: 0.5rem;
-    --spacing-xs: 0.25rem;
-
-    --content-max-width: 75rem;
+    --content-max-width: 70rem;
     --breakout-max-width: 80rem;
-    --padding-inline: var(--spacing-md);
+    --padding-inline: 1rem;
     --breakout-size: calc(
       (var(--breakout-max-width) - var(--content-max-width)) / 2
     );
