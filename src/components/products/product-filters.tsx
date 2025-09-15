@@ -30,6 +30,8 @@ export default function ProductFilters({
     const params = new URLSearchParams(searchParams.toString());
     if (data.search) {
       params.set('query', data.search);
+    } else {
+      params.delete('query');
     }
     if (data.category) {
       params.set('category', data.category);
@@ -61,7 +63,10 @@ export default function ProductFilters({
             {categories.map((category) => (
               <DropdownMenuItem
                 key={category.id}
-                onSelect={() => setValue('category', category.name)}
+                onSelect={() => {
+                  setValue('category', category.name);
+                  handleSubmit(onSubmit)();
+                }}
               >
                 {category.name}
               </DropdownMenuItem>
