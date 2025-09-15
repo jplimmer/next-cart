@@ -5,7 +5,7 @@ import HeroImgText from './hero-img-text';
 
 export default function Hero() {
   return (
-    <section className="full-width bg-gradient-to-tr from-green-950 to-green-800">
+    <section className="full-width bg-gradient-to-tr from-green-950 to-green-800 text-white">
       <div className="flex items-center justify-around py-16">
         <div>
           <h1 className="text-6xl mb-4">NextCart</h1>
