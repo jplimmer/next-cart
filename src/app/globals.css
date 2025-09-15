@@ -116,6 +116,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -158,5 +159,21 @@
 
     display: grid;
     grid-template-columns: inherit;
+  }
+}
+
+.loading-dots {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 8ch;
+  /* enough for "Loading..." */
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  to {
+    width: 11ch;
+    /* reveals up to "Loading..." */
   }
 }

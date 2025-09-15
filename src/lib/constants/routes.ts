@@ -25,4 +25,9 @@ export const routes: Record<string, Route> = {
     href: '/products',
     description: '',
   },
+  merchandise: {
+    title: 'Merchandise',
+    href: '/merchandise',
+    description: '',
+  },
 } as const;
