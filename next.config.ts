@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
       'i.imgur.com',
       'picsum.photos',
       'api.escuelajs.co',
+      'cdn.pixabay.com',
+      'placehold.co',
     ],
     remotePatterns: [
       {
