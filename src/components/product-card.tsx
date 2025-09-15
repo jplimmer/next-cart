@@ -13,23 +13,10 @@ import Image from 'next/image';
 interface ProductCardProps {
   product: Product;
 }
-// TODO: Move this to its own file
-// TODO: "sync" this with the domains in next.config file
-const domains: string[] = [
-  'api.lorem.space',
-  'placeimg.com',
-  'i.imgur.com',
-  'picsum.photos',
-  'api.escuelajs.co',
-  'cdn.pixabay.com',
-  'placehold.co',
-];
 
 export function ProductCard({ product }: ProductCardProps) {
-  const productImages = product.images.filter(
-    (image: string) =>
-      image.startsWith('http') &&
-      domains.some((domain) => image.includes(domain))
+  const productImages = product.images.filter((image: string) =>
+    image.startsWith('http')
   );
 
   return (
