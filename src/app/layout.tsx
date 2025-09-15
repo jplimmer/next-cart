@@ -36,7 +36,7 @@ export default function RootLayout({
       <body
         className={`
           ${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased
-          min-h-svh grid grid-rows-[auto_1fr_auto]
+          min-h-svh content-grid grid-rows-[auto_1fr_auto]
         `}
       >
         <Header />
