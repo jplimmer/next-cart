@@ -31,3 +31,19 @@ export async function getCategories(): Promise<Category[]> {
     return [];
   }
 }
+
+export async function getProductsPaginated(
+  limit: number = 20,
+  offset: number = 0
+): Promise<Product[]> {
+  try {
+    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
+      limit,
+      offset,
+    });
+    return data.products || [];
+  } catch (error) {
+    console.error('Error fetching paginated products:', error);
+    return [];
+  }
+}
