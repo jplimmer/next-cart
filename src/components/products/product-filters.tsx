@@ -1,15 +1,10 @@
 'use client';
 import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { ChangeEventHandler, useState } from 'react';
 import { Button } from '../ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
 import { Input } from '../ui/input';
+import CategorySelect from './category-select';
 
 export default function ProductFilters({
   categories,
@@ -19,72 +14,52 @@ export default function ProductFilters({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const { register, handleSubmit, setValue, watch } = useForm();
 
-  const category = watch('category');
+  const [inputValue, setInputValue] = useState<string>('');
+  // We create category state here to be able to easily reset it when we press the button here
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  const onSubmit: SubmitHandler<{
-    search?: string;
-    category?: string;
-  }> = (data) => {
+  // Add query to search params
+  const handleInputOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value.trim();
+    setInputValue(value);
     const params = new URLSearchParams(searchParams.toString());
-    if (data.search) {
-      params.set('query', data.search);
+    if (value) {
+      params.set('query', value);
     } else {
+      // If there is nothing in the searchbox, delete the param
       params.delete('query');
-    }
-    if (data.category) {
-      params.set('category', data.category);
     }
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const handleFilterReset = () => {
+    router.push(pathname);
+    setInputValue('');
+    setSelectedCategory('');
+  };
+
   return (
     <section>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col place-items-start place-content-center w-2/3 m-auto"
-      >
-        <div>
-          <label htmlFor="search-input">Search</label>
-          <Input
-            id="search-input"
-            placeholder="Toaster..."
-            {...register('search')}
-            className="w-72"
-          />
-        </div>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">{category || 'Categories ↓'}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {categories.map((category) => (
-              <DropdownMenuItem
-                key={category.id}
-                onSelect={() => {
-                  setValue('category', category.name);
-                  handleSubmit(onSubmit)();
-                }}
-              >
-                {category.name}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <Button type="submit">Apply Filters</Button>
-        <Button
-          type="reset"
-          onClick={() => {
-            router.push(pathname);
-            setValue('category', '');
-          }}
-        >
+      <label htmlFor="search-input">Search</label>
+      <Input
+        value={inputValue}
+        id="search-input"
+        placeholder="Toaster..."
+        onChange={handleInputOnChange}
+        className="w-72"
+      />
+      <CategorySelect
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+      <div>
+        <Button>Apply Filters</Button>
+        <Button type="reset" onClick={handleFilterReset}>
           Clear Filters
         </Button>
-      </form>
+      </div>
     </section>
   );
 }
