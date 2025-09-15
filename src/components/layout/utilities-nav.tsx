@@ -1,5 +1,8 @@
-import { LogOut, Search, ShoppingCart, UserRound } from 'lucide-react';
+import { routes } from '@/lib/constants/routes';
+import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { SearchBar } from '../search/search-bar';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,16 +10,25 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 
 export function UtilitiesNav({ className }: { className?: string }) {
+  const navigateToSearchedItem = async (formData: FormData) => {
+    'use server';
+    const searchTerm = formData.get('search') as string;
+    if (!searchTerm) return;
+
+    redirect(`${routes.products.href}?query=${searchTerm.toLowerCase()}`);
+  };
+
   return (
     <NavigationMenu className={className} aria-label="Account and utilities">
       <NavigationMenuList>
-        <NavigationMenuItem className={navigationMenuTriggerStyle()}>
-          <Search />
-          <span className="sr-only">Search</span>
+        <NavigationMenuItem>
+          <SearchBar
+            searchAction={navigateToSearchedItem}
+            placeholder="Search..."
+          />
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="[&>svg:last-child]:hidden">
@@ -56,9 +68,6 @@ export function UtilitiesNav({ className }: { className?: string }) {
             <ShoppingCart />
             <span className="sr-only">Basket</span>
           </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            Basket component goes here
-          </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
