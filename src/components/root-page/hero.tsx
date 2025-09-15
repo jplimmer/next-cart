@@ -5,7 +5,7 @@ import HeroImgText from './hero-img-text';
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-tr from-green-950 to-green-800 flex place-items-center place-content-center p-16 justify-around">
+    <section className="text-white bg-gradient-to-tr from-green-950 to-green-800 flex place-items-center place-content-center p-16 justify-around">
       <article>
         <h1 className="text-6xl mb-4">NextCart</h1>
         <p className="mb-8">An e-commerce page made in Next.js</p>
