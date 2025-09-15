@@ -33,14 +33,16 @@ export async function PagesNav({ className }: { className?: string }) {
               </li>
               {categories.length > 0 &&
                 categories.map((cat, idx) => (
-                  <NavigationMenuLink asChild key={idx}>
-                    <Link
-                      href={`${routes.products.href}?category=${cat.name.toLowerCase()}`}
-                      className="whitespace-nowrap"
-                    >
-                      {cat.name}
-                    </Link>
-                  </NavigationMenuLink>
+                  <li key={idx}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={`${routes.products.href}?category=${cat.name.toLowerCase()}`}
+                        className="whitespace-nowrap"
+                      >
+                        {cat.name}
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
                 ))}
             </ul>
           </NavigationMenuContent>
