@@ -8,6 +8,7 @@ export default async function Products({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
+  // Potential optimization: Use these as default values. Pass them to <ProductFilters/> and use them in their respective components
   const { query = '', category = '' } = await searchParams;
   const products = await getProducts();
   const categories = await getCategories();

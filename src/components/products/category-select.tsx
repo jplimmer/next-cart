@@ -1,6 +1,5 @@
 import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -11,29 +10,17 @@ import {
 
 export default function CategorySelect({
   categories,
-  selectedCategory,
-  setSelectedCategory,
+  defaultCategory,
 }: {
   categories: Category[];
-  selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  defaultCategory: string | null;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  // Read in category param, and if it exists, set the dropdown's starting value to that category
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    const categoryParam = params.get('category');
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-    }
-  }, []);
-
   // Add category to search params
   const handleSelect = (category: string) => {
-    setSelectedCategory(category);
     const params = new URLSearchParams(searchParams.toString());
     params.set('category', category);
     router.push(`${pathname}?${params.toString()}`);
@@ -44,7 +31,7 @@ export default function CategorySelect({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {selectedCategory || 'Choose Category ↓'}
+            {defaultCategory || 'Choose Category ↓'}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
