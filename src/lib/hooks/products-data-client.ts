@@ -93,3 +93,36 @@ export function useCategories() {
     error,
   };
 }
+
+// Hook to fetch paginated products
+export function useProductsPaginated(offset = 0, limit = 20) {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
+          limit,
+          offset,
+        });
+        setProducts(data.products || []);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, [offset, limit]);
+
+  return {
+    products,
+    loading,
+    error,
+  };
+}
