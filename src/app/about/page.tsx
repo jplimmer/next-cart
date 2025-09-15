@@ -1,13 +1,13 @@
-export default function about() {
+export default function About() {
   return (
-    <main>
-      <header className="text-white bg-[#004F44] p-20">
+    <main className="content-grid full-width">
+      <header className="full-width text-white bg-[#004F44] py-20">
         <h1 className="text-5xl w-1/3 mb-12">
           NextCart is more than an e-commerce website
         </h1>
         <p>Our story begins in a galaxy, far, far away</p>
       </header>
-      <section className="flex w-3/4 m-auto p-10 gap-8 flex-col">
+      <section className="full-width py-10 gap-y-8">
         <article className="max-w-1/3">
           <h2 className="text-3xl">Story</h2>
           <p>
@@ -22,7 +22,7 @@ export default function about() {
             aperiam est!
           </p>
         </article>
-        <article className="max-w-1/3 self-end">
+        <article className="max-w-1/3 justify-self-end">
           <h2 className="text-3xl">Goals</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla

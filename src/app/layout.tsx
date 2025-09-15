@@ -34,7 +34,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased`}
+        className={`
+          ${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased
+          min-h-svh content-grid grid-rows-[auto_1fr_auto]
+        `}
       >
         <Header />
         {children}
