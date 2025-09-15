@@ -124,7 +124,7 @@ export function ImageSlider({
                           index: idx.toString(),
                           id: item.id,
                         });
-                        router.push(`/${slug}?${query.toString()}`);
+                        router.push(`products/${slug}?${query.toString()}`);
                       }}
                     />
                   </div>
