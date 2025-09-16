@@ -1,4 +1,5 @@
 'use client';
+import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEventHandler } from 'react';
@@ -17,18 +18,22 @@ export default function ProductFilters({
 
   // Get query and category param to use as default values
   const params = new URLSearchParams(searchParams.toString());
-  const queryParam = params.get('query');
-  const categoryParam = params.get('category');
+  const queryParam = params.get(searchParamKeys.query);
+  const categoryParam = params.get(searchParamKeys.category);
 
   // Add query to search params
   const handleInputOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value.trim();
     const params = new URLSearchParams(searchParams.toString());
+
+    // If you search something, you should be put on the first page of the search
+    params.delete(searchParamKeys.pageNumber);
+
     if (value) {
-      params.set('query', value);
+      params.set(searchParamKeys.query, value);
     } else {
       // If there is nothing in the searchbox, delete the param
-      params.delete('query');
+      params.delete(searchParamKeys.query);
     }
     router.push(`${pathname}?${params.toString()}`);
   };
