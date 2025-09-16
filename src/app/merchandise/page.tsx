@@ -26,10 +26,10 @@ export default async function MerchandisePage() {
     );
 
   return (
-    <main className="min-h-screen">
+    <main className="content-grid full-width">
       <Hero />
-      <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-green-950">
-        <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 row-start-2 w-full">
+      <div className="full-width items-center justify-items-center bg-green-950 font-sans">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 row-start-2 w-full">
           {products.map((product, index) => {
             const delay = usedFallback
               ? // simulate variable network load times for fallback data
@@ -54,7 +54,7 @@ export default async function MerchandisePage() {
               </Suspense>
             );
           })}
-        </main>
+        </div>
       </div>
     </main>
   );

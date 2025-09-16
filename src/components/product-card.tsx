@@ -15,13 +15,17 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const productImages = product.images.filter((image: string) =>
+    image.startsWith('http')
+  );
+
   return (
     <Card className="w-full max-w-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <CardHeader className="p-4">
         <div className="aspect-square relative overflow-hidden rounded-md">
-          {product.images && product.images[0] ? (
+          {productImages && productImages[0] ? (
             <Image
-              src={product.images[0]}
+              src={productImages[0]}
               alt={product.title}
               fill
               className="object-cover hover:scale-105 transition-transform duration-300"

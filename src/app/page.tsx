@@ -3,7 +3,7 @@ import Hero from '@/components/root-page/hero';
 
 export default async function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="content-grid full-width">
       <Hero />
       <FeaturedProducts />
     </main>
