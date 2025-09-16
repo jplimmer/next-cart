@@ -13,11 +13,11 @@ export function capitaliseFirstLetter(string: string) {
 }
 
 export function splitByQuery(result: string, query: string) {
-  const parts = result.split(query);
+  const parts = result.toLowerCase().split(query.toLowerCase());
   return {
     before: parts[0],
-    query: query,
-    after: parts.slice(1).join(query),
+    query: query.toLowerCase(),
+    after: parts.slice(1).join(query.toLowerCase()),
   };
 }
 

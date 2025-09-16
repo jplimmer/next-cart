@@ -21,7 +21,7 @@ export default async function Products({
   );
 
   return (
-    <main>
+    <main className="full-width">
       <h1 className="text-4xl text-center my-16">Products</h1>
       <ProductFilters categories={categories} />
       <section className="flex flex-wrap gap-6 w-5/6 m-auto mb-32 justify-center">
