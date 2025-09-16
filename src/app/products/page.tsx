@@ -24,29 +24,41 @@ export default async function Products({
     pageNumber?: number;
   } = await searchParams;
 
+  const categories = await getCategories();
+  const categoryObject = categories.find(
+    (categoryObject) => categoryObject.name === category
+  );
+
   const products = await getProductsPaginated(
     20,
-    (Math.max(pageNumber, 1) - 1) * 20
+    (Math.max(pageNumber, 1) - 1) * 20,
+    categoryObject ? Number(categoryObject.id) : undefined,
+    query
   );
-  const categories = await getCategories();
 
   // TODO: Look into ways to optimize this. Ideally we dont want to fetch ALL products
-  const totalPages = Math.ceil((await getProductsAmount()).length / 20);
+  const totalProductsAmount = await getProductsAmount();
 
-  const filteredProducts = products.filter(
+  const filteredTotalProductsAmounts = totalProductsAmount.filter(
     (product) =>
       product.title.toLowerCase().includes(query.toLowerCase()) &&
       (category === '' ||
         product.category.name.toLowerCase() === category.toLowerCase())
   );
 
+  const filteredTotalProductsTotalPages = Math.ceil(
+    filteredTotalProductsAmounts.length / 20
+  );
+
   return (
     <main>
       <h1 className="text-4xl text-center my-16">Products</h1>
       <ProductFilters categories={categories} />
-      <ProductPagination totalPages={totalPages} />
+      {filteredTotalProductsTotalPages > 1 && (
+        <ProductPagination totalPages={filteredTotalProductsTotalPages} />
+      )}
       <section className="flex flex-wrap gap-6 w-5/6 m-auto mb-32 justify-center">
-        {filteredProducts.map((product: Product) => (
+        {products.map((product: Product) => (
           <section className="w-1/4" key={product.id}>
             <ProductCard product={product} key={product.id} />
           </section>

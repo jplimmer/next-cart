@@ -34,18 +34,17 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getProductsPaginated(
   limit: number = 20,
-  offset: number = 0
+  offset: number = 0,
+  categoryId?: number,
+  title?: string
 ): Promise<Product[]> {
-  try {
-    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
-      limit,
-      offset,
-    });
-    return data.products || [];
-  } catch (error) {
-    console.error('Error fetching paginated products:', error);
-    return [];
-  }
+  const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
+    limit,
+    offset,
+    categoryId,
+    title,
+  });
+  return data.products || [];
 }
 
 // Lightweight fetch to get the amount of products. Only fetches IDs

@@ -3,6 +3,8 @@ const GRAPHQL_ENDPOINT = 'https://api.escuelajs.co/graphql';
 // Type definitions for GraphQL variables
 interface ProductVariables {
   id: string;
+  categoryId?: number;
+  title?: string;
 }
 
 interface PaginationVariables {
@@ -30,10 +32,6 @@ export async function graphqlFetch(
         variables,
       }),
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
 
     const result = await response.json();
 
@@ -68,8 +66,8 @@ export const QUERIES = {
   `,
 
   GET_PRODUCTS_PAGINATED: `
-    query GetProducts($limit: Int, $offset: Int) {
-      products(limit: $limit, offset: $offset) {
+    query GetPaginatedProducts($limit: Int, $offset: Int, $categoryId: Float, $title: String) {
+      products(limit: $limit, offset: $offset, categoryId: $categoryId, title: $title) {
         id
         title
         price
@@ -88,6 +86,10 @@ export const QUERIES = {
     query {
       products {
         id
+        title
+        category {
+          name
+        }
       }
     }
   `,
