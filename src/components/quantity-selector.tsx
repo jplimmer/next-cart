@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import '../css/QuantitySelector.css';
 
 export default function QuantitySelector({
   className,
