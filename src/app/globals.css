@@ -137,3 +137,14 @@
     /* reveals up to "Loading..." */
   }
 }
+
+/* QuantitySelector.module.css */
+.inputNoSpinner::-webkit-inner-spin-button,
+.inputNoSpinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputNoSpinner {
+  -moz-appearance: textfield;
+}
