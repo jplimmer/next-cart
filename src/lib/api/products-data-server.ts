@@ -47,3 +47,14 @@ export async function getProductsPaginated(
     return [];
   }
 }
+
+// Lightweight fetch to get the amount of products. Only fetches IDs
+export async function getProductsAmount(): Promise<Product[]> {
+  try {
+    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_AMOUNT);
+    return data.products || [];
+  } catch (error) {
+    console.error('Error fetching product amount:', error);
+    return [];
+  }
+}

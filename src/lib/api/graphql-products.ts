@@ -84,6 +84,14 @@ export const QUERIES = {
     }
   `,
 
+  GET_PRODUCTS_AMOUNT: `
+    query {
+      products {
+        id
+      }
+    }
+  `,
+
   GET_PRODUCT_BY_ID: `
     query GetProduct($id: ID!) {
       product(id: $id) {

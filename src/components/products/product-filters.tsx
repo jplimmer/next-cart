@@ -24,6 +24,10 @@ export default function ProductFilters({
   const handleInputOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value.trim();
     const params = new URLSearchParams(searchParams.toString());
+
+    // If you search something, you should be put on the first page of the search
+    params.delete('page');
+
     if (value) {
       params.set('query', value);
     } else {
