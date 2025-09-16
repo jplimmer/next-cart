@@ -55,12 +55,14 @@ export const QUERIES = {
       products {
         id
         title
+        slug
         price
         description
         images
         category {
           id
           name
+          slug
           image
         }
       }
@@ -72,12 +74,14 @@ export const QUERIES = {
       products(limit: $limit, offset: $offset) {
         id
         title
+        slug
         price
         description
         images
         category {
           id
           name
+          slug
           image
         }
       }
@@ -89,11 +93,13 @@ export const QUERIES = {
       product(id: $id) {
         id
         title
+        slug
         price
         description
         category {
           id
           name
+          slug
           image
         }
         images
@@ -106,6 +112,7 @@ export const QUERIES = {
       categories {
         id
         name
+        slug
         image
       }
     }
