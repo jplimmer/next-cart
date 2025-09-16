@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useCart } from '@/lib/hooks/use-cart';
 import { Product } from '@/lib/types/product';
 import Image from 'next/image';
 
@@ -15,6 +18,8 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addToCart, isPending, optimisticCount } = useCart();
+
   const productImages = product.images.filter((image: string) =>
     image.startsWith('http')
   );
@@ -58,7 +63,14 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardContent>
 
       <CardFooter className="p-4 pt-0 mt-auto">
-        <Button className="w-full">Add to Cart</Button>
+        <Button className="w-full" onClick={addToCart} disabled={isPending}>
+          {isPending ? 'Adding...' : 'Add to Cart'}
+          {optimisticCount && (
+            <span className="ml-2 text-xs bg-white/20 px-1 rounded">
+              {optimisticCount}
+            </span>
+          )}
+        </Button>
       </CardFooter>
     </Card>
   );
