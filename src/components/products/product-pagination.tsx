@@ -8,6 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { searchParamKeys } from '@/lib/constants/searchParams';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function ProductPagination({
@@ -18,11 +19,11 @@ export default function ProductPagination({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const currentPage = Number(searchParams.get('pageNumber')) || 1;
+  const currentPage = Number(searchParams.get(searchParamKeys.pageNumber)) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set('pageNumber', pageNumber.toString());
+    params.set(searchParamKeys.pageNumber, pageNumber.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
 
