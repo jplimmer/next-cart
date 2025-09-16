@@ -33,7 +33,7 @@ export default function MerchandiseCard({
               Array.isArray(product?.images) && product.images.length
                 ? product.images
                     .filter((url): url is string => typeof url === 'string')
-                    .map((url, _) => ({
+                    .map((url) => ({
                       id: product?.id,
                       url,
                     }))
