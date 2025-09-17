@@ -1,5 +1,5 @@
 import { Result } from '@/lib/types/types';
-import { capitaliseFirstLetter, splitByQuery } from '@/lib/utils';
+import { splitByQuery } from '@/lib/utils';
 import { use, useEffect, useMemo } from 'react';
 
 interface AutocompleteProps {
@@ -40,11 +40,9 @@ export function AutocompleteDropdown({
     const parts = splitByQuery(match, query);
 
     return (
-      <span>
-        {capitaliseFirstLetter(parts.before)}
-        <b className="underline font-normal">
-          {parts.before ? parts.query : capitaliseFirstLetter(parts.query)}
-        </b>
+      <span className="capitalize">
+        {parts.before}
+        <b className="underline font-normal">{parts.query}</b>
         {parts.after}
       </span>
     );
