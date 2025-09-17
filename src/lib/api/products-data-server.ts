@@ -66,7 +66,7 @@ export async function getSlugFromTitle(
     const data = await graphqlFetch(QUERIES.GET_SLUG_FROM_TITLE, { title });
     return { success: true, data: data.products[0] };
   } catch (error) {
-    const errorMsg = `Error fetching slug for title '${title}': ${error instanceof Error ? error.message : 'Unknown error'}`;
+    const errorMsg = `Error fetching slug for title '${title}': ${error instanceof Error ? error.message : error}`;
     console.error(errorMsg);
     return { success: false, error: errorMsg };
   }
