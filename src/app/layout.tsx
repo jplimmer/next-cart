@@ -31,7 +31,7 @@ export default function RootLayout({
   modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
+  modal?: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -43,8 +43,8 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        {modal}
         <Footer />
+        {modal}
       </body>
     </html>
   );
