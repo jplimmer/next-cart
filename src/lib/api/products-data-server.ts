@@ -1,5 +1,6 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
-import { Category, Product } from '@/lib/types/product';
+import { Category, Product, SlugResponse } from '@/lib/types/product';
+import { Result } from '../types/types';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
@@ -55,5 +56,18 @@ export async function getProductsAmount(): Promise<Product[]> {
   } catch (error) {
     console.error('Error fetching product amount:', error);
     return [];
+  }
+}
+
+export async function getSlugFromTitle(
+  title: string
+): Promise<Result<SlugResponse>> {
+  try {
+    const data = await graphqlFetch(QUERIES.GET_SLUG_FROM_TITLE, { title });
+    return { success: true, data: data.products[0] };
+  } catch (error) {
+    const errorMsg = `Error fetching slug for title '${title}': ${error instanceof Error ? error.message : error}`;
+    console.error(errorMsg);
+    return { success: false, error: errorMsg };
   }
 }
