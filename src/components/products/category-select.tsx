@@ -11,10 +11,10 @@ import {
 
 export default function CategorySelect({
   categories,
-  defaultCategory,
+  categoriesParam,
 }: {
   categories: Category[];
-  defaultCategory: string[] | null;
+  categoriesParam: string[];
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -27,14 +27,12 @@ export default function CategorySelect({
     // Since you checked a new category, you go back to the first page
     params.delete(searchParamKeys.pageNumber);
 
-    const current = params.getAll(searchParamKeys.categories);
-
     let next: string[];
 
     if (checked) {
-      next = Array.from(new Set([...current, category]));
+      next = Array.from(new Set([...categoriesParam, category]));
     } else {
-      next = current.filter((c) => c !== category);
+      next = categoriesParam.filter((c) => c !== category);
     }
 
     // Clear old categories
@@ -46,15 +44,13 @@ export default function CategorySelect({
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const selectedCategories = searchParams.getAll(searchParamKeys.categories);
-
   return (
     <section id="category-filter">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {defaultCategory && defaultCategory.length > 0
-              ? defaultCategory.join(', ')
+            {categoriesParam && categoriesParam.length > 0
+              ? categoriesParam.join(', ')
               : 'Choose Categories ↓'}
           </Button>
         </DropdownMenuTrigger>
@@ -62,7 +58,11 @@ export default function CategorySelect({
           {categories?.map((category) => (
             <DropdownMenuCheckboxItem
               key={category.id}
-              checked={selectedCategories.includes(category.name)}
+              checked={
+                categoriesParam
+                  ? categoriesParam.includes(category.name)
+                  : false
+              }
               onCheckedChange={(checked) => handleCheck(category.name, checked)}
             >
               {category.name}

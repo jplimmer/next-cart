@@ -50,7 +50,7 @@ export default function ProductFilters({
       />
       <CategorySelect
         categories={categories}
-        defaultCategory={categoriesParam}
+        categoriesParam={categoriesParam}
       />
       <div>
         <Button>Apply Filters</Button>
