@@ -20,7 +20,7 @@ export async function PagesNav({ className }: { className?: string }) {
         <NavigationMenuItem>
           <NavigationMenuTrigger>{routes.products.title}</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul>
+            <ul className="max-h-60 overflow-y-auto">
               <li>
                 <NavigationMenuLink asChild>
                   <Link
