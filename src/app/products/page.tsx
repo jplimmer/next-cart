@@ -51,7 +51,7 @@ export default async function Products({
   );
 
   return (
-    <main>
+    <main className="full-width">
       <h1 className="text-4xl text-center my-16">Products</h1>
       <ProductFilters categories={categories} />
       {filteredTotalProductsTotalPages > 1 && (

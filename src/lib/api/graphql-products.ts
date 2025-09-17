@@ -143,4 +143,13 @@ export const QUERIES = {
       }
     }
   `,
+
+  GET_SLUG_FROM_TITLE: `
+    query GetProduct($title: String) {
+      products(title: $title) {
+        title
+        slug
+      }
+    }
+  `,
 };
