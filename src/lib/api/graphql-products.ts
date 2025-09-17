@@ -89,6 +89,7 @@ export const QUERIES = {
   GET_PRODUCTS_AMOUNT: `
     query {
       products {
+        id
         title
         category {
           name

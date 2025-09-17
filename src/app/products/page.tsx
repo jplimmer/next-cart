@@ -4,6 +4,7 @@ import ProductPagination from '@/components/products/product-pagination';
 import {
   getCategories,
   getProductsAmount,
+  getProductsByCategoryIDs,
   getProductsPaginated,
 } from '@/lib/api/products-data-server';
 import { Product } from '@/lib/types/product';
@@ -30,6 +31,11 @@ export default async function Products({
   const categoryIds: number[] = categories
     .filter((c) => categoriesSearchParams.includes(String(c.name)))
     .map((c) => Number(c.id));
+
+  const lightProductsFromCategoryIDs =
+    await getProductsByCategoryIDs(categoryIds);
+
+  console.log(lightProductsFromCategoryIDs);
 
   // A bunch of math to keep up with the fact that when you select
   // multiple categories, the offset and limit on each query needs

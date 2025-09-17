@@ -1,5 +1,6 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
 import { Category, Product } from '@/lib/types/product';
+import { buildProductsQueryByCategoryIDs } from './query-builders';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
@@ -64,6 +65,19 @@ export async function getProductsPaginated(
       title,
     });
     return data.products || [];
+  }
+}
+
+export async function getProductsByCategoryIDs(
+  categoryIDs: number[] = []
+): Promise<Product[]> {
+  if (categoryIDs.length > 0) {
+    const data = await graphqlFetch(
+      buildProductsQueryByCategoryIDs(categoryIDs)
+    );
+    return data;
+  } else {
+    return await graphqlFetch(QUERIES.GET_PRODUCTS_AMOUNT);
   }
 }
 
