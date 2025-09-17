@@ -85,12 +85,13 @@ export const lazyMinLoadTime = <TProps>(
   factory: () => Promise<{ default: ComponentType<TProps> }>,
   minLoadTimeMs = 2000
 ) =>
-  lazy(() =>
-    Promise.all([
+  lazy(async () => {
+    const [moduleExports] = await Promise.all([
       factory(),
       new Promise<void>((resolve) => setTimeout(resolve, minLoadTimeMs)),
-    ] as const).then(([moduleExports]) => moduleExports)
-  );
+    ]);
+    return moduleExports;
+  });
 
 export async function IsImageUrl(url: string): Promise<string | null> {
   try {
@@ -104,3 +105,5 @@ export async function IsImageUrl(url: string): Promise<string | null> {
     return null;
   }
 }
+
+export const isNumeric = (value: string): boolean => !isNaN(Number(value));
