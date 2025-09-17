@@ -1,4 +1,6 @@
+import { getProducts, getSlugFromTitle } from '@/lib/api/products-data-server';
 import { routes } from '@/lib/constants/routes';
+import { Result } from '@/lib/types/types';
 import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -13,12 +15,25 @@ import {
 } from '../ui/navigation-menu';
 
 export function UtilitiesNav({ className }: { className?: string }) {
+  const allProductsPromise = async (): Promise<Result<string[]>> => {
+    try {
+      const products = await getProducts();
+      return { success: true, data: products.map((p) => p.title) };
+    } catch (error) {
+      const errorMsg = typeof error === 'string' ? error : '';
+      return { success: false, error: errorMsg };
+    }
+  };
+
   const navigateToSearchedItem = async (formData: FormData) => {
     'use server';
     const searchTerm = formData.get('search') as string;
     if (!searchTerm) return;
 
-    redirect(`${routes.products.href}?query=${searchTerm.toLowerCase()}`);
+    const slugResult = await getSlugFromTitle(searchTerm);
+    if (!slugResult.success) return;
+
+    redirect(`${routes.products.href}/${slugResult.data.slug}`);
   };
 
   return (
@@ -27,7 +42,8 @@ export function UtilitiesNav({ className }: { className?: string }) {
         <NavigationMenuItem>
           <SearchBar
             searchAction={navigateToSearchedItem}
-            placeholder="Search..."
+            allResultsPromise={allProductsPromise()}
+            placeholder="Ctrl+K to search..."
           />
         </NavigationMenuItem>
         <NavigationMenuItem>
