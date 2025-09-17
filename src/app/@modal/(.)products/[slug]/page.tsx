@@ -1,0 +1,28 @@
+import { Modal } from '@/components/layout/modal';
+import ProductCard from '@/components/product-card';
+import {
+  getProductByTitle,
+  getTitleFromSlug,
+} from '@/lib/api/products-data-server';
+import { notFound } from 'next/navigation';
+
+export default async function ProductModal({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  const title = getTitleFromSlug(slug);
+  const productResult = await getProductByTitle(title);
+  console.log(productResult);
+
+  if (!productResult.success) return notFound();
+  const product = productResult.data;
+
+  return (
+    <Modal title={product.title} description={product.description}>
+      <ProductCard product={product}></ProductCard>
+    </Modal>
+  );
+}
