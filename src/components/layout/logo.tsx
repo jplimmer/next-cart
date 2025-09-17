@@ -4,6 +4,7 @@ interface LogoProps {
   cartColour?: string;
   zapOutlineColour?: string;
   zapFillColour?: string;
+  className?: string;
 }
 
 export function Logo({
@@ -12,12 +13,14 @@ export function Logo({
   cartColour,
   zapOutlineColour,
   zapFillColour = 'none',
+  className,
 }: LogoProps) {
   const finalCartColour = cartColour || colour;
   const finalZapOutlineColour = zapOutlineColour || colour;
 
   return (
     <svg
+      className={`${className}`}
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}

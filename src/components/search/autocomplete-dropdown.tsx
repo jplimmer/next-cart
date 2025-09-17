@@ -9,6 +9,7 @@ interface AutocompleteProps {
   highlightedIndex: number;
   onSetHighlightedIndex: (index: number) => void;
   onSelectMatch: (value: string) => void;
+  className?: string;
 }
 
 export function AutocompleteDropdown({
@@ -18,6 +19,7 @@ export function AutocompleteDropdown({
   highlightedIndex,
   onSetHighlightedIndex,
   onSelectMatch,
+  className,
 }: AutocompleteProps) {
   const allResults = use(allResultsPromise);
 
@@ -50,10 +52,10 @@ export function AutocompleteDropdown({
 
   return (
     <ul
-      className="
+      className={`
         absolute z-50 top-full left-0 right-0 w-full 
         bg-white border-1 border-neutral-300 rounded-md
-        shadow-lg max-h-60 overflow-y-auto"
+        shadow-lg max-h-60 overflow-y-auto ${className} `}
     >
       {matches.map((match, index) => (
         <li

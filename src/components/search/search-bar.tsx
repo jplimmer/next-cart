@@ -136,7 +136,7 @@ export function SearchBar({
   return (
     <div
       ref={containerRef}
-      className="relative flex flex-col items-center text-neutral-800"
+      className="relative flex flex-col items-center text-white"
     >
       <form
         action={searchAction}
@@ -161,7 +161,7 @@ export function SearchBar({
           placeholder={placeholder}
           required
           autoComplete="off"
-          className="focus-visible:outline-none placeholder:text-neutral-600"
+          className="focus-visible:outline-none placeholder:text-white"
         ></input>
         <Button type="submit" variant="ghost">
           <Search />
@@ -176,6 +176,7 @@ export function SearchBar({
             highlightedIndex={highlightedIndex}
             onSetHighlightedIndex={setHighlightedIndex}
             onSelectMatch={selectMatch}
+            className="text-neutral-800"
           />
         </Suspense>
       )}
