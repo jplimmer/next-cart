@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { getSlugFromTitle } from '@/lib/api/products-data-server';
 import { Product } from '@/lib/types/product';
 import { ImageSlider } from '../image-slider';
 import TextOutliner from '../text-outliner';
@@ -28,7 +29,7 @@ export default function MerchandiseCard({
           </header>
 
           <ImageSlider
-            slug={product?.slug}
+            slug={getSlugFromTitle(product.title)}
             imageurl={
               Array.isArray(product?.images) && product.images.length
                 ? product.images
