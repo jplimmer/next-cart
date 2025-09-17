@@ -1,3 +1,4 @@
+import { getCartCount } from '@/lib/actions/cart';
 import { LogOut, Search, ShoppingCart, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import {
@@ -10,7 +11,9 @@ import {
   navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 
-export function UtilitiesNav({ className }: { className?: string }) {
+export async function UtilitiesNav({ className }: { className?: string }) {
+  const cartCount = await getCartCount();
+
   return (
     <NavigationMenu className={className} aria-label="Account and utilities">
       <NavigationMenuList>
@@ -52,12 +55,23 @@ export function UtilitiesNav({ className }: { className?: string }) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="[&>svg:last-child]:hidden">
+          <NavigationMenuTrigger className="[&>svg:last-child]:hidden relative">
             <ShoppingCart />
-            <span className="sr-only">Basket</span>
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cartCount > 99 ? '99+' : cartCount}
+              </span>
+            )}
+            <span className="sr-only">Basket ({cartCount} items)</span>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            Basket component goes here
+            <div className="p-4">
+              <p className="text-sm text-muted-foreground">
+                {cartCount === 0
+                  ? 'Your basket is empty'
+                  : `${cartCount} item${cartCount === 1 ? '' : 's'} in basket`}
+              </p>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>

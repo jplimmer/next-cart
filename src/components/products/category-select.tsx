@@ -1,3 +1,4 @@
+import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
@@ -22,7 +23,7 @@ export default function CategorySelect({
   // Add category to search params
   const handleSelect = (category: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('category', category);
+    params.set(searchParamKeys.category, category);
     router.push(`${pathname}?${params.toString()}`);
   };
 
