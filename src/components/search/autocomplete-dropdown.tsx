@@ -53,9 +53,9 @@ export function AutocompleteDropdown({
   return (
     <ul
       className="
-        absolute top-full left-0 right-0 w-full 
+        absolute z-50 top-full left-0 right-0 w-full 
         bg-white border-1 border-neutral-300 rounded-md
-        shadow-lg max-h-60-overflow-y-auto"
+        shadow-lg max-h-60 overflow-y-auto"
     >
       {matches.map((match, index) => (
         <li

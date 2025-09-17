@@ -3,7 +3,8 @@
 import { Result } from '@/lib/types/types';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
-import { Suspense, use, useEffect, useMemo, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -60,6 +61,22 @@ export function SearchBar({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // Resets search input if not navigating to a product page
+  useEffect(() => {
+    if (!pathname.startsWith('/products/')) {
+      setQuery('');
+      setDebouncedQuery('');
+    }
+  }, [pathname]);
+
+  // Updates showList and reset highlightedIndex when matches change
+  useEffect(() => {
+    if (matches.length === 0) {
+      setShowList(false);
+    }
+    setHighlightedIndex(-1);
+  }, [matches]);
 
   // Handles KeyDown events for navigating results list and submission
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -119,7 +136,7 @@ export function SearchBar({
   return (
     <div
       ref={containerRef}
-      className="flex flex-col items-center text-neutral-800"
+      className="relative flex flex-col items-center text-neutral-800"
     >
       <form
         action={searchAction}
