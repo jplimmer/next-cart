@@ -15,7 +15,6 @@ export default async function ProductModal({
 
   const title = getTitleFromSlug(slug);
   const productResult = await getProductByTitle(title);
-  console.log(productResult);
 
   if (!productResult.success) return notFound();
   const product = productResult.data;
