@@ -1,5 +1,5 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
-import { Category, Product, SlugResponse } from '@/lib/types/product';
+import { Category, Product } from '@/lib/types/product';
 import { Result } from '../types/types';
 
 // Server-side data fetching functions
@@ -26,10 +26,15 @@ export async function getProductById(id: string): Promise<Product | null> {
 export async function getProductByTitle(
   title: string
 ): Promise<Result<Product>> {
-  const productResult = await graphqlFetch(QUERIES.GET_PRODUCT_BY_TITLE, {
-    title,
-  });
-  return productResult;
+  try {
+    const productResult = await graphqlFetch(QUERIES.GET_PRODUCT_BY_TITLE, {
+      title,
+    });
+    return { success: true, data: productResult.products[0] };
+  } catch (error) {
+    console.error(`Failed to get product data for ${title}`, error);
+    return { success: false, error: String(error) };
+  }
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -68,15 +73,10 @@ export async function getProductsAmount(): Promise<Product[]> {
   }
 }
 
-export async function getSlugFromTitle(
-  title: string
-): Promise<Result<SlugResponse>> {
-  try {
-    const data = await graphqlFetch(QUERIES.GET_SLUG_FROM_TITLE, { title });
-    return { success: true, data: data.products[0] };
-  } catch (error) {
-    const errorMsg = `Error fetching slug for title '${title}': ${error instanceof Error ? error.message : error}`;
-    console.error(errorMsg);
-    return { success: false, error: errorMsg };
-  }
+export function getSlugFromTitle(title: string): string {
+  return title.toLowerCase().replace(/\s+/g, '--');
+}
+
+export function getTitleFromSlug(slug: string): string {
+  return slug.replace(/--/g, ' ');
 }

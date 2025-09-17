@@ -1,7 +1,7 @@
 import QuantitySelector from '@/components/quantity-selector';
 import Hero from '@/components/root-page/hero';
 import { Button } from '@/components/ui/button';
-import { getProduct } from '@/lib/api/products-data-server';
+import { getProductById } from '@/lib/api/products-data-server';
 import { isNumeric } from '@/lib/utils';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -22,7 +22,7 @@ export default async function Page({
 
   if (id && !isNumeric(String(id))) return notFound();
 
-  const product = await getProduct(id);
+  const product = await getProductById(id);
   if (product?.slug !== slug) return notFound();
 
   if (!product) return notFound();
