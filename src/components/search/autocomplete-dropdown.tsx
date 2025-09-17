@@ -1,23 +1,43 @@
+import { Result } from '@/lib/types/types';
 import { capitaliseFirstLetter, splitByQuery } from '@/lib/utils';
+import { use, useEffect, useMemo } from 'react';
 
 interface AutocompleteProps {
-  matches: string[];
+  allResultsPromise: Promise<Result<string[]>>;
   query: string;
+  onSetMatches: (matches: string[]) => void;
   highlightedIndex: number;
   onSetHighlightedIndex: (index: number) => void;
   onSelectMatch: (value: string) => void;
 }
 
 export function AutocompleteDropdown({
-  matches,
+  allResultsPromise,
   query,
+  onSetMatches,
   highlightedIndex,
   onSetHighlightedIndex,
   onSelectMatch,
 }: AutocompleteProps) {
+  const allResults = use(allResultsPromise);
+
+  const matches = useMemo(() => {
+    return allResults.success && query.trim()
+      ? allResults.data.filter((res) =>
+          res.toLowerCase().includes(query.toLowerCase())
+        )
+      : [];
+  }, [query, allResults]);
+
+  useEffect(() => {
+    onSetMatches(matches);
+  }, [matches, onSetMatches]);
+
+  if (!allResults.success || !query.trim() || matches.length === 0) return null;
+
   // Returns markup with matching part of result underlined
-  const formatMatch = (result: string, query: string) => {
-    const parts = splitByQuery(result, query);
+  const formatMatch = (match: string, query: string) => {
+    const parts = splitByQuery(match, query);
 
     return (
       <span>
@@ -29,8 +49,6 @@ export function AutocompleteDropdown({
       </span>
     );
   };
-
-  if (matches.length === 0) return null;
 
   return (
     <ul
@@ -46,7 +64,7 @@ export function AutocompleteDropdown({
           onClick={() => {
             onSelectMatch(match);
           }}
-          className={`px-4 rounded-sm border-b border-neutral-100 last:border-b-0 cursor-pointer ${
+          className={`px-4 rounded-sm border-b border-neutral-100 last:border-b-0 cursor-pointer text-sm ${
             index === highlightedIndex ? 'bg-neutral-600 text-white' : ''
           }`}
         >

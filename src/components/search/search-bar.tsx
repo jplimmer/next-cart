@@ -22,39 +22,32 @@ export function SearchBar({
   allResultsPromise,
   wait = 600,
 }: SearchInputProps) {
+  // Separate states for query (updates search input value) and debouncedQuery (used to find matches)
   const [query, setQuery] = useState<string>('');
+  const [debouncedQuery, setDebouncedQuery] = useState<string>('');
+
   const [matches, setMatches] = useState<string[]>([]);
   const [showList, setShowList] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
   const containerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Use Result of allResultsPromise once
-  const allResults: Result<string[]> = useMemo(() => {
-    if (!allResultsPromise)
-      return { success: false, error: 'No Promise received for allResults' };
-    return use(allResultsPromise);
-  }, [allResultsPromise]);
+  const pathname = usePathname();
 
-  // Display list of results matching the query string
+  // Focuses on search input with Ctrl+K keyboard shorcut
   useEffect(() => {
-    if (!allResults.success || !allResults.data) return;
-
-    if (!query.trim()) {
-      setMatches([]);
-      return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
     }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
-    const newMatches = allResults.data.filter((res) =>
-      res.toLowerCase().includes(query.toLowerCase())
-    );
-
-    // Display new list with no items highlighted
-    setShowList(newMatches.length > 0);
-    setMatches(newMatches);
-    setHighlightedIndex(-1);
-  }, [allResults, query]);
-
-  // Closes dropdown on outside click
+  // Closes dropdown on click outside SearchBar component
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -93,9 +86,23 @@ export function SearchBar({
     }
   };
 
+  // Updates debouncedQuery for use by AutocompleteDropdown
+  const debouncedUpdate = useDebouncedCallback((value: string) => {
+    setDebouncedQuery(value);
+    setShowList(value.trim().length > 0);
+  }, wait);
+
+  // Handles input change and show list when user types
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    debouncedUpdate(e.target.value);
+  };
+
   // Sets and submits query when match selected from list
   const selectMatch = (value: string) => {
     setQuery(value);
+    debouncedUpdate.cancel();
+    setDebouncedQuery(value);
     submitQuery(value);
   };
 
@@ -127,11 +134,12 @@ export function SearchBar({
           Search
         </Label>
         <input
+          ref={searchInputRef}
           type="text"
           id="search-input"
           name="search"
-          defaultValue={query}
-          onChange={useDebouncedCallback((e) => setQuery(e.target.value), wait)}
+          value={query}
+          onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           required
@@ -142,11 +150,12 @@ export function SearchBar({
           <Search />
         </Button>
       </form>
-      {allResultsPromise && (
+      {allResultsPromise && showList && (
         <Suspense fallback={null}>
           <AutocompleteDropdown
-            matches={matches}
-            query={query}
+            allResultsPromise={allResultsPromise}
+            query={debouncedQuery}
+            onSetMatches={setMatches}
             highlightedIndex={highlightedIndex}
             onSetHighlightedIndex={setHighlightedIndex}
             onSelectMatch={selectMatch}
