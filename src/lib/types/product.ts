@@ -26,3 +26,8 @@ export interface ProductResponse {
 export interface CategoriesResponse {
   categories: Category[];
 }
+
+export interface SlugResponse {
+  title: string;
+  slug: string;
+}

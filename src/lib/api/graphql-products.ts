@@ -2,7 +2,7 @@ const GRAPHQL_ENDPOINT = 'https://api.escuelajs.co/graphql';
 
 // Type definitions for GraphQL variables
 interface ProductVariables {
-  id: string;
+  id?: string;
   categoryId?: number;
   title?: string;
 }
@@ -123,6 +123,15 @@ export const QUERIES = {
         name
         slug
         image
+      }
+    }
+  `,
+
+  GET_SLUG_FROM_TITLE: `
+    query GetProduct($title: String) {
+      products(title: $title) {
+        title
+        slug
       }
     }
   `,
