@@ -31,10 +31,9 @@ export async function UtilitiesNav({ className }: { className?: string }) {
     const searchTerm = formData.get('search') as string;
     if (!searchTerm) return;
 
-    const slugResult = await getSlugFromTitle(searchTerm);
-    if (!slugResult.success) return;
+    const slug = getSlugFromTitle(searchTerm);
 
-    redirect(`${routes.products.href}/${slugResult.data.slug}`);
+    redirect(`${routes.products.href}/${slug}`);
   };
 
   const cartCount = await getCartCount();
