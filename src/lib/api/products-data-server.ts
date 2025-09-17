@@ -35,16 +35,36 @@ export async function getCategories(): Promise<Category[]> {
 export async function getProductsPaginated(
   limit: number = 20,
   offset: number = 0,
-  categoryId?: number,
+  categoryIds?: number[],
   title?: string
 ): Promise<Product[]> {
-  const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
-    limit,
-    offset,
-    categoryId,
-    title,
-  });
-  return data.products || [];
+  if (typeof categoryIds === 'object' && categoryIds.length > 0) {
+    // Create an array of promises for each category id
+    const dataArr = await Promise.all(
+      categoryIds.map(async (id: number) => {
+        const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
+          limit,
+          offset,
+          categoryId: id,
+          title,
+        });
+        return data.products || [];
+      })
+    );
+
+    // Flatten the results into a single array
+    const joinedData = dataArr.flat();
+
+    return joinedData;
+  } else {
+    // This still needs to be here if we dont want a specified category
+    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
+      limit,
+      offset,
+      title,
+    });
+    return data.products || [];
+  }
 }
 
 // Lightweight fetch to get the amount of products. Only fetches IDs

@@ -16,23 +16,29 @@ export default async function Products({
   // Potential optimization: Use these as default values. Pass them to <ProductFilters/> and use them in their respective components
   const {
     query = '',
-    category = '',
+    categories: categoriesSearchParams = [], // Renaming for clarity
     pageNumber = 1,
   }: {
     query?: string;
-    category?: string;
+    categories?: string[];
     pageNumber?: number;
   } = await searchParams;
 
   const categories = await getCategories();
-  const categoryObject = categories.find(
-    (categoryObject) => categoryObject.name === category
-  );
 
+  // Based on category name, create an array of selected categoryIDs
+  const categoryIds: number[] = categories
+    .filter((c) => categoriesSearchParams.includes(String(c.name)))
+    .map((c) => Number(c.id));
+
+  // A bunch of math to keep up with the fact that when you select
+  // multiple categories, the offset and limit on each query needs
+  // to be reduced
   const products = await getProductsPaginated(
-    20,
-    (Math.max(pageNumber, 1) - 1) * 20,
-    categoryObject ? Number(categoryObject.id) : undefined,
+    Math.ceil(20 / Math.max(categoryIds.length, 1)),
+    (Math.max(pageNumber, 1) - 1) *
+      Math.ceil(20 / Math.max(categoryIds.length, 1)),
+    categoryIds,
     query
   );
 
@@ -42,8 +48,11 @@ export default async function Products({
   const filteredTotalProductsAmounts = totalProductsAmount.filter(
     (product) =>
       product.title.toLowerCase().includes(query.toLowerCase()) &&
-      (category === '' ||
-        product.category.name.toLowerCase() === category.toLowerCase())
+      (categoriesSearchParams.length === 0 ||
+        Array.from(categoriesSearchParams).some(
+          // A bit ugly ^, but if there is only one category, it returns a string for some reason
+          (c: string) => c.toLowerCase() == product.category.name.toLowerCase()
+        ))
   );
 
   const filteredTotalProductsTotalPages = Math.ceil(
@@ -58,8 +67,8 @@ export default async function Products({
         <ProductPagination totalPages={filteredTotalProductsTotalPages} />
       )}
       <section className="flex flex-wrap gap-6 w-5/6 m-auto mb-32 justify-center">
-        {products.map((product: Product) => (
-          <section className="w-1/4" key={product.id}>
+        {products.map((product: Product, index) => (
+          <section className="w-1/4" key={index}>
             <ProductCard product={product} key={product.id} />
           </section>
         ))}

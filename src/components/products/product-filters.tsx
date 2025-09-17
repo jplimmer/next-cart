@@ -19,7 +19,7 @@ export default function ProductFilters({
   // Get query and category param to use as default values
   const params = new URLSearchParams(searchParams.toString());
   const queryParam = params.get(searchParamKeys.query);
-  const categoryParam = params.get(searchParamKeys.category);
+  const categoriesParam = params.getAll(searchParamKeys.categories);
 
   // Add query to search params
   const handleInputOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -48,7 +48,10 @@ export default function ProductFilters({
         onChange={handleInputOnChange}
         className="w-72"
       />
-      <CategorySelect categories={categories} defaultCategory={categoryParam} />
+      <CategorySelect
+        categories={categories}
+        defaultCategory={categoriesParam}
+      />
       <div>
         <Button>Apply Filters</Button>
         <Button type="reset" onClick={() => router.push(pathname)}>
