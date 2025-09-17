@@ -30,6 +30,7 @@ export default function CategorySelect({
     let next: string[];
 
     if (checked) {
+      // "new Set" removes duplicates, according to mr. GPT.
       next = Array.from(new Set([...categoriesParam, category]));
     } else {
       next = categoriesParam.filter((c) => c !== category);
