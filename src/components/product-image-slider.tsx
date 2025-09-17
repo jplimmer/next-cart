@@ -42,8 +42,18 @@ export function ProductImageSlider({ images, title }: ProductImageSliderProps) {
     setCurrentIndex(index);
   };
 
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % validImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex(
+      (prev) => (prev - 1 + validImages.length) % validImages.length
+    );
+  };
+
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full group">
       {/* Image Display */}
       <div className="relative w-full h-full overflow-hidden">
         <Image
@@ -54,6 +64,26 @@ export function ProductImageSlider({ images, title }: ProductImageSliderProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
+
+      {/* Navigation Arrows */}
+      {validImages.length > 1 && (
+        <>
+          <button
+            onClick={prevSlide}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </>
+      )}
 
       {/* Navigation Dots */}
       {validImages.length > 1 && (
