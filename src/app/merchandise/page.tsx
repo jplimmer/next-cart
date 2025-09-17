@@ -27,8 +27,7 @@ export default async function MerchandisePage() {
 
   return (
     <main className="content-grid full-width">
-      <Hero />
-      <div className="full-width items-center justify-items-center bg-green-950 font-sans">
+      <div className="full-width items-center justify-items-center py-8 bg-green-950 font-sans">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 row-start-2 w-full">
           {products.map((product, index) => {
             const delay = usedFallback
