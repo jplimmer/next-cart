@@ -1,5 +1,6 @@
 import { getCartCount } from '@/lib/actions/cart';
-import { getProducts, getSlugFromTitle } from '@/lib/api/products-data-server';
+import { getSlugFromTitle } from '@/lib/api/helpers';
+import { getProducts } from '@/lib/api/products-data-server';
 import { routes } from '@/lib/constants/routes';
 import { Result } from '@/lib/types/types';
 import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
@@ -31,10 +32,9 @@ export async function UtilitiesNav({ className }: { className?: string }) {
     const searchTerm = formData.get('search') as string;
     if (!searchTerm) return;
 
-    const slugResult = await getSlugFromTitle(searchTerm);
-    if (!slugResult.success) return;
+    const slug = getSlugFromTitle(searchTerm);
 
-    redirect(`${routes.products.href}/${slugResult.data.slug}`);
+    redirect(`${routes.products.href}/${slug}`);
   };
 
   const cartCount = await getCartCount();

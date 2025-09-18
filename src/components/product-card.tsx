@@ -27,7 +27,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           <ProductImageSlider images={product.images} title={product.title} />
         </div>
       </CardHeader>
-
       <CardContent className="p-4 pt-0 flex-1">
         <CardTitle className="line-clamp-2 text-lg mb-2">
           {product.title}
