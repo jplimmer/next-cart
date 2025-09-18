@@ -1,4 +1,5 @@
-const GRAPHQL_ENDPOINT = 'https://api.escuelajs.co/graphql';
+//const GRAPHQL_ENDPOINT = 'https://api.escuelajs.co/graphql';
+const GRAPHQL_ENDPOINT = 'http://localhost:8086/graphql';
 
 // Type definitions for GraphQL variables
 interface ProductVariables {
