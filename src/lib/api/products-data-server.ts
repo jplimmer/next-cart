@@ -1,9 +1,23 @@
 import { graphqlFetch } from '@/lib/api/graphql-products';
 import { Category, Product } from '@/lib/types/product';
+import {
+  getMockCategories,
+  getMockProductById,
+  getMockProductByTitle,
+  getMockProducts,
+} from '../mocks/mock-data-server';
 import { Result } from '../types/types';
+import { QUERIES } from './queries';
+
+const useMockData = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
+  if (useMockData) {
+    console.log('Using mock data for products');
+    return await getMockProducts();
+  }
+
   try {
     const data = await graphqlFetch(QUERIES.GET_PRODUCTS);
     return data.products || [];
@@ -14,6 +28,11 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
+  if (useMockData) {
+    console.log(`Using mock data for product ${id}`);
+    return await getMockProductById(id);
+  }
+
   try {
     const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
     return data.product || null;
@@ -26,6 +45,11 @@ export async function getProductById(id: string): Promise<Product | null> {
 export async function getProductByTitle(
   title: string
 ): Promise<Result<Product>> {
+  if (useMockData) {
+    console.log(`Using mock data for product ${title}`);
+    return await getMockProductByTitle(title);
+  }
+
   try {
     const productResult = await graphqlFetch(QUERIES.GET_PRODUCT_BY_TITLE, {
       title,
@@ -38,6 +62,11 @@ export async function getProductByTitle(
 }
 
 export async function getCategories(): Promise<Category[]> {
+  if (useMockData) {
+    console.log('Using mock data for categories ');
+    return await getMockCategories();
+  }
+
   try {
     const data = await graphqlFetch(QUERIES.GET_CATEGORIES);
     return data.categories || [];
