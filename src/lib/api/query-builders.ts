@@ -1,7 +1,8 @@
 import { QueryFilters } from '../types/types';
 
 // These query builders are used when we need to mimic the behavior that "where:" usually enables
-// Since we cant pass arrays into their graphQL filters, we have to generate an alias for each filter that
+// Since we cant pass arrays into their graphQL filters, we have to generate an alias for each categoryID
+// If we dont have any categories, we only need one alias
 
 export function buildProductsQueryByFilters(filters: QueryFilters) {
   const { categoryIDs = [], title = '' } = filters;

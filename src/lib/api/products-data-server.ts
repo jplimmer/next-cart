@@ -52,7 +52,6 @@ export async function getProductsPaginated(
   limit: number = 20,
   offset: number = 0
 ): Promise<Product[]> {
-  // This still needs to be here if we dont want a specified category
   const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
     limit,
     offset,
