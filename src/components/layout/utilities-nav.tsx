@@ -1,5 +1,6 @@
 import { getCartCount } from '@/lib/actions/cart';
-import { getProducts, getSlugFromTitle } from '@/lib/api/products-data-server';
+import { getSlugFromTitle } from '@/lib/api/helpers';
+import { getProducts } from '@/lib/api/products-data-server';
 import { routes } from '@/lib/constants/routes';
 import { Result } from '@/lib/types/types';
 import { LogOut, ShoppingCart, UserRound } from 'lucide-react';

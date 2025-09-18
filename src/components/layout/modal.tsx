@@ -18,7 +18,7 @@ type ModalProps =
       className?: string;
     };
 
-export function Modal({ children, className, ...props }: ModalProps) {
+export default function Modal({ children, className, ...props }: ModalProps) {
   const router = useRouter();
 
   if ('title' in props) {

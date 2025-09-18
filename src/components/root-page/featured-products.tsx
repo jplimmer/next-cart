@@ -1,5 +1,6 @@
 import { ProductCard } from '@/components/product-card';
-import { getProducts, getSlugFromTitle } from '@/lib/api/products-data-server';
+import { getSlugFromTitle } from '@/lib/api/helpers';
+import { getProducts } from '@/lib/api/products-data-server';
 import { routes } from '@/lib/constants/routes';
 import Link from 'next/link';
 
