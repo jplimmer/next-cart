@@ -3,8 +3,8 @@ import ProductFilters from '@/components/products/product-filters';
 import ProductPagination from '@/components/products/product-pagination';
 import {
   getCategories,
+  getProduct,
   getProductsByCategoryIDs,
-  getProductsPaginated,
 } from '@/lib/api/products-data-server';
 import { Product } from '@/lib/types/product';
 
@@ -27,23 +27,23 @@ export default async function Products({
   const categories = await getCategories();
 
   // Based on category name, create an array of selected categoryIDs
-  const categoryIds: number[] = categories
-    .filter((c) => categoriesSearchParams.includes(String(c.name)))
+  const categoryIds = categories
+    .filter((c) => categoriesSearchParams.includes(c.name))
     .map((c) => Number(c.id));
 
   const lightProductsFromCategoryIDs =
     await getProductsByCategoryIDs(categoryIds);
+  // pagination boundaries
+  const start = (pageNumber - 1) * 20;
+  const end = pageNumber * 20;
 
-  // A bunch of math to keep up with the fact that when you select
-  // multiple categories, the offset and limit on each query needs
-  // to be reduced
-  const products = await getProductsPaginated(
-    Math.ceil(20 / Math.max(categoryIds.length, 1)),
-    (Math.max(pageNumber, 1) - 1) *
-      Math.ceil(20 / Math.max(categoryIds.length, 1)),
-    categoryIds,
-    query
-  );
+  const products = (
+    await Promise.all(
+      lightProductsFromCategoryIDs
+        .slice(start, end)
+        .map((p) => getProduct(p.id))
+    )
+  ).filter((p): p is Product => p !== null);
 
   const filteredTotalProductsTotalPages = Math.ceil(
     lightProductsFromCategoryIDs.length / 20

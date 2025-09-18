@@ -68,8 +68,8 @@ export const QUERIES = {
   `,
 
   GET_PRODUCTS_PAGINATED: `
-    query GetPaginatedProducts($limit: Int, $offset: Int, $categoryId: Float, $title: String) {
-      products(limit: $limit, offset: $offset, categoryId: $categoryId, title: $title) {
+    query GetPaginatedProducts($limit: Int, $offset: Int) {
+      products(limit: $limit, offset: $offset) {
         id
         title
         slug
@@ -91,9 +91,6 @@ export const QUERIES = {
       products {
         id
         title
-        category {
-          name
-        }
       }
     }
   `,

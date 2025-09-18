@@ -1,3 +1,6 @@
+// These query builders are used when we need to mimic the behavior that "where:" usually enables
+// Since we cant pass arrays into their graphQL filters, we have to generate an alias for each filter that
+
 export function buildCompleteProductsQueryByIDs(productIDs: number[]) {
   return `
     query {
