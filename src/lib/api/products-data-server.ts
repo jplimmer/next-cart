@@ -9,15 +9,22 @@ import {
 import { Result } from '../types/types';
 import { QUERIES } from './queries';
 
+// Use env variables to point to mock/experimental data
 const useMockData =
   process.env.NODE_ENV === 'development' &&
-  (process.env.NEXT_PUBLIC_USE_MOCK_DATA ?? 'false') === 'true';
+  (process.env.USE_MOCK_DATA ?? 'false') === 'true';
+
+const useExperimentalData =
+  process.env.NODE_ENV === 'development' &&
+  (process.env.USE_EXPERIMENTAL_DATA ?? 'false') === 'true';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
-  if (useMockData) {
-    console.log('Using mock data for products');
-    return await getMockProducts();
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for products`
+    );
+    return await getMockProducts(useExperimentalData);
   }
 
   try {
@@ -30,9 +37,11 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
-  if (useMockData) {
-    console.log(`Using mock data for product ${id}`);
-    return await getMockProductById(id);
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${id}`
+    );
+    return await getMockProductById(id, useExperimentalData);
   }
 
   try {
@@ -47,9 +56,11 @@ export async function getProductById(id: string): Promise<Product | null> {
 export async function getProductByTitle(
   title: string
 ): Promise<Result<Product>> {
-  if (useMockData) {
-    console.log(`Using mock data for product ${title}`);
-    return await getMockProductByTitle(title);
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${title}`
+    );
+    return await getMockProductByTitle(title, useExperimentalData);
   }
 
   try {
@@ -64,9 +75,12 @@ export async function getProductByTitle(
 }
 
 export async function getCategories(): Promise<Category[]> {
-  if (useMockData) {
-    console.log('Using mock data for categories ');
-    return await getMockCategories();
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for categories`
+    );
+
+    return await getMockCategories(useExperimentalData);
   }
 
   try {
