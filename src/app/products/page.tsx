@@ -3,7 +3,7 @@ import ProductFilters from '@/components/products/product-filters';
 import ProductPagination from '@/components/products/product-pagination';
 import {
   getCategories,
-  getProduct,
+  getProductById,
   getProductsByFilters,
 } from '@/lib/api/products-data-server';
 import { Product } from '@/lib/types/product';
@@ -44,7 +44,7 @@ export default async function Products({
     await Promise.all(
       lightProductsFromCategoryIDs
         .slice(startIndex, endIndex)
-        .map((p) => getProduct(p.id))
+        .map((p) => getProductById(p.id))
     )
   ).filter((p): p is Product => p !== null);
 
