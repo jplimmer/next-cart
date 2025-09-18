@@ -17,7 +17,7 @@ interface ProductCardProps {
   product: Product;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart, isPending, optimisticCount } = useCart();
 
   return (
@@ -59,5 +59,3 @@ export function ProductCard({ product }: ProductCardProps) {
     </Card>
   );
 }
-
-export default ProductCard;

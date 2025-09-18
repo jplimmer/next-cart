@@ -8,7 +8,10 @@ interface ProductImageSliderProps {
   title: string;
 }
 
-export function ProductImageSlider({ images, title }: ProductImageSliderProps) {
+export default function ProductImageSlider({
+  images,
+  title,
+}: ProductImageSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Filter valid images
