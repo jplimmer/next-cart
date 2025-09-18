@@ -32,7 +32,7 @@ export async function PagesNav({ className }: { className?: string }) {
                 </NavigationMenuLink>
               </li>
               {categories.map((cat) => (
-                <li key={cat.name}>
+                <li key={cat.id}>
                   <NavigationMenuLink asChild>
                     <Link
                       href={`${routes.products.href}?category=${cat.name.toLowerCase()}`}
