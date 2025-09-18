@@ -1,4 +1,4 @@
-import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
+import { graphqlFetch } from '@/lib/api/graphql-products';
 import { Category, Product } from '@/lib/types/product';
 import { Result } from '../types/types';
 

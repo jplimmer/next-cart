@@ -1,6 +1,7 @@
-import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
+import { graphqlFetch } from '@/lib/api/graphql-products';
 import { Category, Product } from '@/lib/types/product';
 import { useEffect, useState } from 'react';
+import { QUERIES } from '../api/queries';
 
 export function useProducts(offset = 0, limit = 20) {
   const [products, setProducts] = useState<Product[]>([]);
