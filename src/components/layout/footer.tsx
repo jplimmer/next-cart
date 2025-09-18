@@ -5,8 +5,8 @@ import { Logo } from './logo';
 
 export default function Footer() {
   return (
-    <footer className="full-width bg-[#004F44] text-white py-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+    <footer className="full-width bg-[#004F44] text-white py-10">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
         {/* Logo */}
         <Link href={routes.home.href} className="flex items-center gap-2">
           <span className="font-bold">NextCart</span>
@@ -53,13 +53,14 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
       {/* Divider */}
       <div className="border-t border-white my-6"></div>
 
       {/* Bottom Section */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
+      <div className="grid grid-rows-3 md:grid-cols-3 md:grid-rows-1 gap-4 items-center text-sm">
         <p>© 2025 NextCart - order like there´s no tomorrow</p>
-        <div className="flex space-x-4">
+        <div className="flex justify-center space-x-4">
           <Link href="#" className="underline">
             Terms of Use
           </Link>
@@ -70,7 +71,7 @@ export default function Footer() {
         <div className="text-center md:text-right">
           <p>777 Casino Ave. Thackerville, OK 73459</p>
           <p>1-800-622-6317</p>
-        </div>
+        </div>{' '}
       </div>
     </footer>
   );
