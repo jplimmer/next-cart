@@ -3,7 +3,6 @@ import ProductFilters from '@/components/products/product-filters';
 import ProductPagination from '@/components/products/product-pagination';
 import {
   getCategories,
-  getProductsAmount,
   getProductsByCategoryIDs,
   getProductsPaginated,
 } from '@/lib/api/products-data-server';
@@ -35,8 +34,6 @@ export default async function Products({
   const lightProductsFromCategoryIDs =
     await getProductsByCategoryIDs(categoryIds);
 
-  console.log(lightProductsFromCategoryIDs);
-
   // A bunch of math to keep up with the fact that when you select
   // multiple categories, the offset and limit on each query needs
   // to be reduced
@@ -48,21 +45,8 @@ export default async function Products({
     query
   );
 
-  // TODO: Look into ways to optimize this. Ideally we dont want to fetch ALL products
-  const totalProductsAmount = await getProductsAmount();
-
-  const filteredTotalProductsAmounts = totalProductsAmount.filter(
-    (product) =>
-      product.title.toLowerCase().includes(query.toLowerCase()) &&
-      (categoriesSearchParams.length === 0 ||
-        Array.from(categoriesSearchParams).some(
-          // A bit ugly ^, but if there is only one category, it returns a string for some reason
-          (c: string) => c.toLowerCase() == product.category.name.toLowerCase()
-        ))
-  );
-
   const filteredTotalProductsTotalPages = Math.ceil(
-    filteredTotalProductsAmounts.length / 20
+    lightProductsFromCategoryIDs.length / 20
   );
 
   return (
