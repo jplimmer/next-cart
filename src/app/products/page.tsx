@@ -4,9 +4,10 @@ import ProductPagination from '@/components/products/product-pagination';
 import {
   getCategories,
   getProduct,
-  getProductsByCategoryIDs,
+  getProductsByFilters,
 } from '@/lib/api/products-data-server';
 import { Product } from '@/lib/types/product';
+import { QueryFilters } from '@/lib/types/types';
 
 export default async function Products({
   searchParams,
@@ -27,20 +28,22 @@ export default async function Products({
   const categories = await getCategories();
 
   // Based on category name, create an array of selected categoryIDs
-  const categoryIds = categories
+  const categoryIDs = categories
     .filter((c) => categoriesSearchParams.includes(c.name))
     .map((c) => Number(c.id));
 
-  const lightProductsFromCategoryIDs =
-    await getProductsByCategoryIDs(categoryIds);
+  const queryFilters: QueryFilters = { title: query, categoryIDs };
+
+  const lightProductsFromCategoryIDs = await getProductsByFilters(queryFilters);
+
   // pagination boundaries
-  const start = (pageNumber - 1) * 20;
-  const end = pageNumber * 20;
+  const startIndex = (pageNumber - 1) * 20;
+  const endIndex = pageNumber * 20;
 
   const products = (
     await Promise.all(
       lightProductsFromCategoryIDs
-        .slice(start, end)
+        .slice(startIndex, endIndex)
         .map((p) => getProduct(p.id))
     )
   ).filter((p): p is Product => p !== null);
