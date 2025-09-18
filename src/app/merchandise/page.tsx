@@ -1,7 +1,7 @@
 import LoadingDots from '@/components/loading-dots';
 import Hero from '@/components/root-page/hero';
-import { fallbackDataManager } from '@/lib/api/fallback-data/fallback-data-manager';
 import { getProducts } from '@/lib/api/products-data-server';
+import { fallbackDataManager } from '@/lib/mocks/fallback-data/fallback-data-manager';
 import { Product } from '@/lib/types/product';
 import { lazyMinLoadTime } from '@/lib/utils';
 import { Suspense } from 'react';
