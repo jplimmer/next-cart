@@ -1,5 +1,5 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
-import { Category, Product } from '@/lib/types/product';
+import { Category, Product, ProductLight } from '@/lib/types/product';
 import { buildProductsQueryByCategoryIDs } from './query-builders';
 
 // Server-side data fetching functions
@@ -70,12 +70,13 @@ export async function getProductsPaginated(
 
 export async function getProductsByCategoryIDs(
   categoryIDs: number[] = []
-): Promise<Product[]> {
+): Promise<ProductLight[]> {
   if (categoryIDs.length > 0) {
     const data = await graphqlFetch(
       buildProductsQueryByCategoryIDs(categoryIDs)
     );
-    return data;
+    const joinedDatas = Object.values(data).flat() as ProductLight[];
+    return joinedDatas;
   } else {
     return await graphqlFetch(QUERIES.GET_PRODUCTS_AMOUNT);
   }
