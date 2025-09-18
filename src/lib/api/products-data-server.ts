@@ -9,7 +9,9 @@ import {
 import { Result } from '../types/types';
 import { QUERIES } from './queries';
 
-const useMockData = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
+const useMockData =
+  process.env.NODE_ENV === 'development' &&
+  (process.env.NEXT_PUBLIC_USE_MOCK_DATA ?? 'false') === 'true';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
