@@ -8,6 +8,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function capitaliseFirstLetter(string: string) {
+  return String(string).charAt(0).toUpperCase() + String(string).slice(1);
+}
+
+export function splitByQuery(result: string, query: string) {
+  const parts = result.toLowerCase().split(query.toLowerCase());
+  return {
+    before: parts[0],
+    query: query.toLowerCase(),
+    after: parts.slice(1).join(query.toLowerCase()),
+  };
+}
+
 const toRgb = converter('rgb');
 
 export function resolveTailwindColorToHex(

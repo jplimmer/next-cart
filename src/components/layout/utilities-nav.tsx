@@ -1,5 +1,12 @@
-import { LogOut, Search, ShoppingCart, UserRound } from 'lucide-react';
+import { getCartCount } from '@/lib/actions/cart';
+import { getSlugFromTitle } from '@/lib/api/helpers';
+import { getProducts } from '@/lib/api/products-data-server';
+import { routes } from '@/lib/constants/routes';
+import { Result } from '@/lib/types/types';
+import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { SearchBar } from '../search/search-bar';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,16 +14,40 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from '../ui/navigation-menu';
 
-export function UtilitiesNav({ className }: { className?: string }) {
+export async function UtilitiesNav({ className }: { className?: string }) {
+  const allProductsPromise = async (): Promise<Result<string[]>> => {
+    try {
+      const products = await getProducts();
+      return { success: true, data: products.map((p) => p.title) };
+    } catch (error) {
+      const errorMsg = typeof error === 'string' ? error : '';
+      return { success: false, error: errorMsg };
+    }
+  };
+
+  const navigateToSearchedItem = async (formData: FormData) => {
+    'use server';
+    const searchTerm = formData.get('search') as string;
+    if (!searchTerm) return;
+
+    const slug = getSlugFromTitle(searchTerm);
+
+    redirect(`${routes.products.href}/${slug}`);
+  };
+
+  const cartCount = await getCartCount();
+
   return (
     <NavigationMenu className={className} aria-label="Account and utilities">
       <NavigationMenuList>
-        <NavigationMenuItem className={navigationMenuTriggerStyle()}>
-          <Search />
-          <span className="sr-only">Search</span>
+        <NavigationMenuItem>
+          <SearchBar
+            searchAction={navigateToSearchedItem}
+            allResultsPromise={allProductsPromise()}
+            placeholder="Ctrl+K to search..."
+          />
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="[&>svg:last-child]:hidden">
@@ -52,12 +83,23 @@ export function UtilitiesNav({ className }: { className?: string }) {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="[&>svg:last-child]:hidden">
+          <NavigationMenuTrigger className="[&>svg:last-child]:hidden relative">
             <ShoppingCart />
-            <span className="sr-only">Basket</span>
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cartCount > 99 ? '99+' : cartCount}
+              </span>
+            )}
+            <span className="sr-only">Basket ({cartCount} items)</span>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            Basket component goes here
+            <div className="p-4">
+              <p className="text-sm text-muted-foreground">
+                {cartCount === 0
+                  ? 'Your basket is empty'
+                  : `${cartCount} item${cartCount === 1 ? '' : 's'} in basket`}
+              </p>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>

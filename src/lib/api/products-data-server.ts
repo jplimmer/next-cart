@@ -1,6 +1,6 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
 import { Category, Product, ProductLight } from '@/lib/types/product';
-import { QueryFilters } from '../types/types';
+import { QueryFilters, Result } from '../types/types';
 import { buildProductsQueryByFilters } from './query-builders';
 
 // Server-side data fetching functions
@@ -14,13 +14,27 @@ export async function getProducts(): Promise<Product[]> {
   }
 }
 
-export async function getProduct(id: string): Promise<Product | null> {
+export async function getProductById(id: string): Promise<Product | null> {
   try {
     const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
     return data.product || null;
   } catch (error) {
     console.error('Error fetching product:', error);
     return null;
+  }
+}
+
+export async function getProductByTitle(
+  title: string
+): Promise<Result<Product>> {
+  try {
+    const productResult = await graphqlFetch(QUERIES.GET_PRODUCT_BY_TITLE, {
+      title,
+    });
+    return { success: true, data: productResult.products[0] };
+  } catch (error) {
+    console.error(`Failed to get product data for ${title}`, error);
+    return { success: false, error: String(error) };
   }
 }
 

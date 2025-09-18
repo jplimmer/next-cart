@@ -20,7 +20,7 @@ export async function PagesNav({ className }: { className?: string }) {
         <NavigationMenuItem>
           <NavigationMenuTrigger>{routes.products.title}</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul>
+            <ul className="max-h-60 overflow-y-auto">
               <li>
                 <NavigationMenuLink asChild>
                   <Link
@@ -31,9 +31,9 @@ export async function PagesNav({ className }: { className?: string }) {
                   </Link>
                 </NavigationMenuLink>
               </li>
-              {categories.length > 0 &&
-                categories.map((cat, idx) => (
-                  <NavigationMenuLink asChild key={idx}>
+              {categories.map((cat) => (
+                <li key={cat.id}>
+                  <NavigationMenuLink asChild>
                     <Link
                       href={`${routes.products.href}?category=${cat.name.toLowerCase()}`}
                       className="whitespace-nowrap"
@@ -41,7 +41,8 @@ export async function PagesNav({ className }: { className?: string }) {
                       {cat.name}
                     </Link>
                   </NavigationMenuLink>
-                ))}
+                </li>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
