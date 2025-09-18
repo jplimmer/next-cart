@@ -5,7 +5,7 @@ import {
   getMockProductById,
   getMockProductByTitle,
   getMockProducts,
-} from '../mocks/mock-data-server';
+} from '../mocks/mock-data-service';
 import { Result } from '../types/types';
 import { QUERIES } from './queries';
 
