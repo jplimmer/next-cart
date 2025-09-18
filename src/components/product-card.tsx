@@ -1,6 +1,6 @@
 'use client';
 
-import { ProductImageSlider } from '@/components/product-image-slider';
+import ProductImageSlider from '@/components/product-image-slider';
 import { Button } from '@/components/ui/button';
 import {
   Card,
