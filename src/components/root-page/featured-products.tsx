@@ -1,4 +1,4 @@
-import { ProductCard } from '@/components/product-card';
+import ProductCard from '@/components/product-card';
 import { getProducts } from '@/lib/api/products-data-server';
 
 export default async function FeaturedProducts() {
