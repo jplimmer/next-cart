@@ -52,12 +52,6 @@ export default function ProductFilters({
         categories={categories}
         categoriesParam={categoriesParam}
       />
-      <div>
-        <Button>Apply Filters</Button>
-        <Button type="reset" onClick={() => router.push(pathname)}>
-          Clear Filters
-        </Button>
-      </div>
     </section>
   );
 }
