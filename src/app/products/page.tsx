@@ -6,6 +6,7 @@ import {
   getProductsAmount,
   getProductsPaginated,
 } from '@/lib/api/products-data-server';
+import { fallbackDataManager } from '@/lib/api/fallback-data/fallback-data-manager';
 import { Product } from '@/lib/types/product';
 
 export default async function Products({
@@ -29,12 +30,16 @@ export default async function Products({
     (categoryObject) => categoryObject.name === category
   );
 
-  const products = await getProductsPaginated(
-    20,
-    (Math.max(pageNumber, 1) - 1) * 20,
-    categoryObject ? Number(categoryObject.id) : undefined,
-    query
-  );
+  const { data: products } = await fallbackDataManager<Product>({
+    result: await getProductsPaginated(
+      20,
+      (Math.max(pageNumber, 1) - 1) * 20,
+      categoryObject ? Number(categoryObject.id) : undefined,
+      query
+    ),
+    useCleanDataset: true, // Use clean dataset with valid images
+    fallbackIfLessThanNrItems: 20,
+  });
 
   // TODO: Look into ways to optimize this. Ideally we dont want to fetch ALL products
   const totalProductsAmount = await getProductsAmount();
