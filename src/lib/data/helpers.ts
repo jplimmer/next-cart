@@ -1,5 +1,5 @@
+import { QUERIES } from '../data/graphql/queries';
 import { QueryFilters } from '../types/types';
-import { QUERIES } from './queries';
 
 export function getSlugFromTitle(title: string): string {
   return title.toLowerCase().replace(/\s+/g, '--');

@@ -1,6 +1,6 @@
-import * as mockProductService from '../mocks/mock-data-service';
 import { ProductService } from '../types/product';
-import * as apiProductService from './products-data-server';
+import * as apiProductService from './services/api-product-service';
+import * as mockProductService from './services/mock-product-service';
 
 // Determine whether to fallback to mock data based on API response (logic to be implemented)
 const useFallBack = false;

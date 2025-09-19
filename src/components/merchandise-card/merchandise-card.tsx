@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { getSlugFromTitle } from '@/lib/api/helpers';
+import { getSlugFromTitle } from '@/lib/data/helpers';
 import { Product } from '@/lib/types/product';
 import { ImageSlider } from '../image-slider';
 import TextOutliner from '../text-outliner';

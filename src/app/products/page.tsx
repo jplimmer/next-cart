@@ -5,7 +5,7 @@ import {
   getCategories,
   getProductById,
   getProductsByFilters,
-} from '@/lib/api/product-data-service';
+} from '@/lib/data/product-data-service';
 import { Product } from '@/lib/types/product';
 import { QueryFilters } from '@/lib/types/types';
 

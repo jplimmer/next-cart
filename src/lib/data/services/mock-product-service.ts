@@ -1,5 +1,5 @@
-import { Category, Product, ProductLight } from '../types/product';
-import { QueryFilters, Result } from '../types/types';
+import { Category, Product, ProductLight } from '@/lib/types/product';
+import { QueryFilters, Result } from '@/lib/types/types';
 
 const useExperimentalData =
   process.env.NODE_ENV === 'development' &&
@@ -12,11 +12,11 @@ const loadMockData = async (): Promise<Product[]> => {
     if (process.env.NODE_ENV !== 'development') {
       throw new Error('Experimental data only available in development');
     }
-    const { experimentalData } = await import('./experimental-data');
+    const { experimentalData } = await import('../../mocks/experimental-data');
     return experimentalData;
   }
 
-  const { mockData } = await import('./mock-data');
+  const { mockData } = await import('../../mocks/mock-data');
   return mockData;
 };
 
