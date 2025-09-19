@@ -1,12 +1,15 @@
-import { dataSetClean } from '@/lib/api/fallback-data/dataset-clean';
-import { dataSetDirty } from '@/lib/api/fallback-data/dataset-dirty';
 import { graphqlFetch } from '@/lib/api/graphql-products';
 import { Category, Product, ProductLight } from '@/lib/types/product';
+import { dataSetClean } from '../mocks/fallback-data/dataset-clean';
+import { dataSetDirty } from '../mocks/fallback-data/dataset-dirty';
 import {
   getMockCategories,
   getMockProductById,
   getMockProductByTitle,
   getMockProducts,
+  getMockProductsByFilters,
+  getMockProductsLight,
+  getMockProductsPaginated,
 } from '../mocks/mock-data-service';
 import { QueryFilters, Result } from '../types/types';
 import { buildProductsQueryByFilters } from './helpers';
@@ -41,9 +44,9 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProductById(id: string): Promise<Product | null> {
   if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${id}`
-    );
+    // console.log(
+    //   `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${id}`
+    // );
     return await getMockProductById(id, useExperimentalData);
   }
 
@@ -64,9 +67,9 @@ export async function getProductByTitle(
   title: string
 ): Promise<Result<Product>> {
   if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${title}`
-    );
+    // console.log(
+    //   `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${title}`
+    // );
     return await getMockProductByTitle(title, useExperimentalData);
   }
 
@@ -103,6 +106,14 @@ export async function getProductsPaginated(
   limit: number = 20,
   offset: number = 0
 ): Promise<Product[]> {
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for products paginated`
+    );
+
+    return await getMockProductsPaginated(limit, offset, useExperimentalData);
+  }
+
   const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
     limit,
     offset,
@@ -113,18 +124,34 @@ export async function getProductsPaginated(
 export async function getProductsByFilters(
   queryFilters: QueryFilters
 ): Promise<ProductLight[]> {
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for filtered products`
+    );
+
+    return await getMockProductsByFilters(queryFilters, useExperimentalData);
+  }
+
   const data = await graphqlFetch(buildProductsQueryByFilters(queryFilters));
   const joinedDatas = Object.values(data).flat() as ProductLight[];
   return joinedDatas;
 }
 
 // Lightweight fetch to get the amount of products. Only fetches IDs
-export async function getProductsAmount(): Promise<Product[]> {
+export async function getProductsLight(): Promise<ProductLight[]> {
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for products (light)`
+    );
+
+    return await getMockProductsLight(useExperimentalData);
+  }
+
   try {
-    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_AMOUNT);
+    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_LIGHT);
     return data.products || [];
   } catch (error) {
-    console.error('Error fetching product amount:', error);
+    console.error('Error fetching products (light):', error);
     return [];
   }
 }

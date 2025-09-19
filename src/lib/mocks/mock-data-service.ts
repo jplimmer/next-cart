@@ -1,5 +1,5 @@
-import { Category, Product } from '../types/product';
-import { Result } from '../types/types';
+import { Category, Product, ProductLight } from '../types/product';
+import { QueryFilters, Result } from '../types/types';
 
 const loadMockData = async (
   useExperimentalData: boolean
@@ -61,4 +61,49 @@ export const getMockCategories = async (
   }
 
   return categories;
+};
+
+export const getMockProductsPaginated = async (
+  limit = 20,
+  offset = 0,
+  useExperimentalData = false
+): Promise<Product[]> => {
+  const data = await loadMockData(useExperimentalData);
+
+  return data.slice(offset, offset + limit);
+};
+
+export const getMockProductsByFilters = async (
+  queryFilters: QueryFilters,
+  useExperimentalData = false
+): Promise<ProductLight[]> => {
+  const data = await loadMockData(useExperimentalData);
+
+  const { categoryIDs = [], ...filters } = queryFilters;
+
+  let filtered: Product[] = [];
+
+  // Filter by categories (logical 'OR')
+  if (categoryIDs.length > 0) {
+    const categorySet = new Set(categoryIDs.map(String));
+    const matches = data.filter((p) => categorySet.has(p.category.id));
+    filtered.push(...matches);
+  }
+
+  // Filter by title
+  if (filters.title) {
+    filtered = filtered.filter((p) => p.title === filters.title);
+  }
+
+  // Other filters can be added manually here (e.g. price min/max)
+
+  return filtered.map((p) => ({ id: p.id, title: p.title }));
+};
+
+export const getMockProductsLight = async (
+  useExperimentalData = false
+): Promise<ProductLight[]> => {
+  const data = await loadMockData(useExperimentalData);
+
+  return data.map((p) => ({ id: p.id, title: p.title }));
 };
