@@ -1,8 +1,8 @@
 import ProductCard from '@/components/product-card';
-import { fallbackDataManager } from '@/lib/api/fallback-data/fallback-data-manager';
 import { getSlugFromTitle } from '@/lib/api/helpers';
 import { getProducts } from '@/lib/api/products-data-server';
 import { routes } from '@/lib/constants/routes';
+import { fallbackDataManager } from '@/lib/mocks/fallback-data/fallback-data-manager';
 import { Product } from '@/lib/types/product';
 import Link from 'next/link';
 
