@@ -1,12 +1,15 @@
+import { dataSetClean } from '@/lib/api/fallback-data/dataset-clean';
+import { dataSetDirty } from '@/lib/api/fallback-data/dataset-dirty';
 import { graphqlFetch } from '@/lib/api/graphql-products';
-import { Category, Product } from '@/lib/types/product';
+import { Category, Product, ProductLight } from '@/lib/types/product';
 import {
   getMockCategories,
   getMockProductById,
   getMockProductByTitle,
   getMockProducts,
 } from '../mocks/mock-data-service';
-import { Result } from '../types/types';
+import { QueryFilters, Result } from '../types/types';
+import { buildProductsQueryByFilters } from './helpers';
 import { QUERIES } from './queries';
 
 // Use env variables to point to mock/experimental data
@@ -48,8 +51,12 @@ export async function getProductById(id: string): Promise<Product | null> {
     const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
     return data.product || null;
   } catch (error) {
-    console.error('Error fetching product:', error);
-    return null;
+    console.error('Error fetching product by ID:', error);
+    // Fallback to clean dataset first, then dirty
+    const fallbackProduct =
+      dataSetClean.find((p) => p.id === id) ||
+      dataSetDirty.find((p) => p.id === id);
+    return fallbackProduct || null;
   }
 }
 
@@ -94,17 +101,21 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getProductsPaginated(
   limit: number = 20,
-  offset: number = 0,
-  categoryId?: number,
-  title?: string
+  offset: number = 0
 ): Promise<Product[]> {
   const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
     limit,
     offset,
-    categoryId,
-    title,
   });
   return data.products || [];
+}
+
+export async function getProductsByFilters(
+  queryFilters: QueryFilters
+): Promise<ProductLight[]> {
+  const data = await graphqlFetch(buildProductsQueryByFilters(queryFilters));
+  const joinedDatas = Object.values(data).flat() as ProductLight[];
+  return joinedDatas;
 }
 
 // Lightweight fetch to get the amount of products. Only fetches IDs

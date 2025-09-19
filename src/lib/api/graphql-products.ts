@@ -34,14 +34,121 @@ export async function graphqlFetch(
     });
 
     const result = await response.json();
-
+    // Handle GraphQL errors such as syntax errors or validation errors
     if (result.errors) {
       throw new Error(result.errors[0].message);
     }
 
     return result.data;
   } catch (error) {
+    // Handle network errors or other unexpected errors such as CORS issues or server downtime
     console.error('GraphQL fetch error:', error);
     throw error;
   }
 }
+
+// Query strings based on Platzi Api documentation
+export const QUERIES = {
+  GET_PRODUCTS: `
+    query {
+      products {
+        id
+        title
+        slug
+        price
+        description
+        images
+        category {
+          id
+          name
+          slug
+          image
+        }
+      }
+    }
+  `,
+
+  GET_PRODUCTS_PAGINATED: `
+    query GetPaginatedProducts($limit: Int, $offset: Int) {
+      products(limit: $limit, offset: $offset) {
+        id
+        title
+        slug
+        price
+        description
+        images
+        category {
+          id
+          name
+          slug
+          image
+        }
+      }
+    }
+  `,
+
+  GET_PRODUCTS_AMOUNT: `
+    query {
+      products {
+        id
+        title
+      }
+    }
+  `,
+
+  GET_PRODUCT_BY_ID: `
+    query GetProduct($id: ID!) {
+      product(id: $id) {
+        id
+        title
+        slug
+        price
+        description
+        category {
+          id
+          name
+          slug
+          image
+        }
+        images
+      }
+    }
+  `,
+
+  GET_PRODUCT_BY_TITLE: `
+    query GetProducts($title: String) {
+      products(title: $title) {
+        id
+        title
+        price
+        description
+        images
+        category {
+          id
+          name
+          image
+        }
+      }
+    }
+  `,
+
+  GET_CATEGORIES: `
+    query {
+      categories {
+        id
+        name
+        slug
+        image
+      }
+    }
+  `,
+
+  GET_SLUG_FROM_TITLE: `
+    query GetProduct($title: String) {
+      products(title: $title) {
+        title
+        slug
+      }
+    }
+  `,
+};
