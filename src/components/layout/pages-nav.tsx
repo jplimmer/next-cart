@@ -7,7 +7,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { getCategories } from '@/lib/api/products-data-server';
+import { getCategories } from '@/lib/api/product-data-service';
 import { routes } from '@/lib/constants/routes';
 import Link from 'next/link';
 

@@ -1,6 +1,6 @@
 import { getCartCount } from '@/lib/actions/cart';
 import { getSlugFromTitle } from '@/lib/api/helpers';
-import { getProducts } from '@/lib/api/products-data-server';
+import { getProductsLight } from '@/lib/api/product-data-service';
 import { routes } from '@/lib/constants/routes';
 import { Result } from '@/lib/types/types';
 import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
@@ -19,7 +19,7 @@ import {
 export async function UtilitiesNav({ className }: { className?: string }) {
   const allProductsPromise = async (): Promise<Result<string[]>> => {
     try {
-      const products = await getProducts();
+      const products = await getProductsLight();
       return { success: true, data: products.map((p) => p.title) };
     } catch (error) {
       const errorMsg = typeof error === 'string' ? error : '';

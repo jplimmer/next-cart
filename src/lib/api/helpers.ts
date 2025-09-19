@@ -19,7 +19,7 @@ export function buildProductsQueryByFilters(queryFilters: QueryFilters) {
   const filterString = buildFilterString(filters);
 
   if (!(categoryIDs.length > 0) && !filterString) {
-    console.log('No filters provided, returning all products (light)');
+    // console.log('No filters provided, returning all products (light)');
     return QUERIES.GET_PRODUCTS_LIGHT;
   }
 
