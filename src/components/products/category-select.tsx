@@ -1,6 +1,7 @@
 import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -20,59 +21,90 @@ export default function CategorySelect({
   const pathname = usePathname();
   const router = useRouter();
 
-  // Add/remove category from search params array based on checked bool
-  const handleCheck = (category: string, checked: boolean) => {
+  // Add categories as filters based on user selection(s)
+  const handleCheck = (selectedCategories: Category[]) => {
     const params = new URLSearchParams(searchParams.toString());
-
     // Since you checked a new category, you go back to the first page
     params.delete(searchParamKeys.pageNumber);
-
-    let newCategoryParam: string[];
-
-    if (checked) {
-      // "new Set" removes duplicates, according to mr. GPT.
-      newCategoryParam = Array.from(new Set([...categoriesParam, category]));
-    } else {
-      newCategoryParam = categoriesParam.filter((c) => c !== category);
-    }
-
     // Clear old categories
     params.delete(searchParamKeys.categories);
-
+    const uniqueNames: string[] = [];
     // Append all selected categories
-    newCategoryParam.forEach((c) =>
-      params.append(searchParamKeys.categories, c)
-    );
-
+    selectedCategories.forEach((cat) => {
+      // Safe guard
+      if (!uniqueNames.includes(cat?.name)) {
+        uniqueNames.push(cat?.name);
+        params.append(searchParamKeys?.categories, cat?.name);
+      }
+    });
     router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const exists = (): Category[] =>
+    categories?.filter((cat) => categoriesParam?.includes(cat?.name));
+
+  const [selected, setSelected] = useState<Category[]>(exists() || []);
+  const [open, setOpen] = useState(false);
+
+  const toggleCategory = (cat: Category) => {
+    setSelected((prev) =>
+      prev.some((c) => c.id === cat.id)
+        ? prev.filter((c) => c.id !== cat.id)
+        : [...prev, cat]
+    );
   };
 
   return (
     <section id="category-filter">
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {categoriesParam && categoriesParam.length > 0
-              ? categoriesParam.join(', ')
-              : 'Choose Categories ↓'}
+            {exists()
+              ?.map((cat) => cat?.name)
+              ?.join(', ') || 'Choose Categories ↓'}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {categories?.map((category) => (
-            <DropdownMenuCheckboxItem
-              key={category.id}
-              checked={
-                categoriesParam
-                  ? categoriesParam.includes(category.name)
-                  : false
-              }
-              onCheckedChange={(checked) => handleCheck(category.name, checked)}
-            >
-              {category.name}
-            </DropdownMenuCheckboxItem>
-          ))}
+        <DropdownMenuContent className="w-64 p-0">
+          <div className="flex flex-col max-h-96">
+            <div className="flex-1 px-2 py-2">
+              {categories?.map((category) => (
+                <DropdownMenuCheckboxItem
+                  className="cursor-pointer"
+                  key={category.id}
+                  checked={selected.some((c) => c.id === category.id)}
+                  onCheckedChange={() => toggleCategory(category)}
+                  onSelect={(e) => e.preventDefault()}
+                >
+                  {category.name}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </div>
+
+            <div className="border-t px-2 py-2 bg-white shadow-md">
+              <Button
+                onClick={() => {
+                  setOpen(false);
+                  handleCheck(selected);
+                }}
+                className="w-full cursor-pointer"
+              >
+                ✅ Apply Filters
+              </Button>
+            </div>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
+      <Button
+        type="reset"
+        className="block"
+        onClick={() => {
+          setSelected([]); // Clear local state
+          handleCheck([]); // Clear URL params
+          router.push(pathname);
+        }}
+      >
+        Clear Filters
+      </Button>
     </section>
   );
 }
