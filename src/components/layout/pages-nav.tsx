@@ -12,7 +12,21 @@ import { routes } from '@/lib/constants/routes';
 import Link from 'next/link';
 
 export async function PagesNav({ className }: { className?: string }) {
-  const categories = await getCategories();
+  const categories = [
+    {
+      id: '-1' /* In production "mode", first item does not render for unknown reason, this is a dummy that will be hidden ...*/,
+      name: 'dummy',
+      slug: '',
+      image: '',
+    },
+    {
+      id: '0',
+      name: 'All products',
+      slug: '',
+      image: '',
+    },
+    ...(await getCategories()),
+  ];
 
   return (
     <NavigationMenu className={className} aria-label="Main navigation">
@@ -21,22 +35,12 @@ export async function PagesNav({ className }: { className?: string }) {
           <NavigationMenuTrigger>{routes.products.title}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="max-h-60 overflow-y-auto">
-              <li>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={routes.products.href}
-                    className="whitespace-nowrap"
-                  >
-                    All products
-                  </Link>
-                </NavigationMenuLink>
-              </li>
               {categories.map((cat) => (
                 <li key={cat.id}>
                   <NavigationMenuLink asChild>
                     <Link
                       href={`${routes.products.href}?category=${cat.name.toLowerCase()}`}
-                      className="whitespace-nowrap"
+                      className={`whitespace-nowrap ${cat.id === '-1' ? 'hidden' : null}`}
                     >
                       {cat.name}
                     </Link>
