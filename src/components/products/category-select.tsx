@@ -27,20 +27,22 @@ export default function CategorySelect({
     // Since you checked a new category, you go back to the first page
     params.delete(searchParamKeys.pageNumber);
 
-    let next: string[];
+    let newCategoryParam: string[];
 
     if (checked) {
       // "new Set" removes duplicates, according to mr. GPT.
-      next = Array.from(new Set([...categoriesParam, category]));
+      newCategoryParam = Array.from(new Set([...categoriesParam, category]));
     } else {
-      next = categoriesParam.filter((c) => c !== category);
+      newCategoryParam = categoriesParam.filter((c) => c !== category);
     }
 
     // Clear old categories
     params.delete(searchParamKeys.categories);
 
     // Append all selected categories
-    next.forEach((c) => params.append(searchParamKeys.categories, c));
+    newCategoryParam.forEach((c) =>
+      params.append(searchParamKeys.categories, c)
+    );
 
     router.push(`${pathname}?${params.toString()}`);
   };
