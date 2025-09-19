@@ -1,3 +1,5 @@
+import { dataSetClean } from '@/lib/api/fallback-data/dataset-clean';
+import { dataSetDirty } from '@/lib/api/fallback-data/dataset-dirty';
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
 import { Category, Product, ProductLight } from '@/lib/types/product';
 import { QueryFilters, Result } from '../types/types';
@@ -19,8 +21,12 @@ export async function getProductById(id: string): Promise<Product | null> {
     const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
     return data.product || null;
   } catch (error) {
-    console.error('Error fetching product:', error);
-    return null;
+    console.error('Error fetching product by ID:', error);
+    // Fallback to clean dataset first, then dirty
+    const fallbackProduct =
+      dataSetClean.find((p) => p.id === id) ||
+      dataSetDirty.find((p) => p.id === id);
+    return fallbackProduct || null;
   }
 }
 

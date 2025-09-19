@@ -15,9 +15,15 @@ export default function ProductImageSlider({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Filter valid images
-  const validImages = images.filter((image: string) =>
-    image.startsWith('http')
-  );
+  const validImages = images
+    .filter((image: string) => image && typeof image === 'string')
+    .map((image: string) => {
+      if (image.startsWith('http')) return image;
+      if (image.startsWith('//')) return `https:${image}`;
+      if (image.startsWith('www.')) return `https://${image}`;
+      return null; // Or handle other cases
+    })
+    .filter(Boolean) as string[];
 
   // If no valid images, show placeholder
   if (!validImages.length) {

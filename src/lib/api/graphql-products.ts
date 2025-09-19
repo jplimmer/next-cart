@@ -34,13 +34,14 @@ export async function graphqlFetch(
     });
 
     const result = await response.json();
-
+    // Handle GraphQL errors such as syntax errors or validation errors
     if (result.errors) {
       throw new Error(result.errors[0].message);
     }
 
     return result.data;
   } catch (error) {
+    // Handle network errors or other unexpected errors such as CORS issues or server downtime
     console.error('GraphQL fetch error:', error);
     throw error;
   }
