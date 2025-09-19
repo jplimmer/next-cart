@@ -1,7 +1,7 @@
 import Modal from '@/components/layout/modal';
 import ProductCard from '@/components/product-card';
-import { getTitleFromSlug } from '@/lib/api/helpers';
-import { getProductByTitle } from '@/lib/api/products-data-server';
+import { getTitleFromSlug } from '@/lib/data/helpers';
+import { getProductByTitle } from '@/lib/data/product-data-service';
 import { notFound } from 'next/navigation';
 
 export default async function ProductModal({

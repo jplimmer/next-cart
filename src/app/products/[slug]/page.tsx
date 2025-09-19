@@ -1,7 +1,7 @@
 import QuantitySelector from '@/components/quantity-selector';
 import Hero from '@/components/root-page/hero';
 import { Button } from '@/components/ui/button';
-import { getProductById } from '@/lib/api/products-data-server';
+import { getProductById } from '@/lib/data/product-data-service';
 import { isNumeric } from '@/lib/utils';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';

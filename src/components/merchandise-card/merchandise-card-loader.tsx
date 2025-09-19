@@ -1,4 +1,4 @@
-import { getProductById } from '@/lib/api/products-data-server';
+import { getProductById } from '@/lib/data/product-data-service';
 import { Product } from '@/lib/types/product';
 import MerchandiseCard from './merchandise-card';
 

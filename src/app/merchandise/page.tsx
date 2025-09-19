@@ -1,14 +1,14 @@
 import LoadingDots from '@/components/loading-dots';
 import Hero from '@/components/root-page/hero';
-import { fallbackDataManager } from '@/lib/api/fallback-data/fallback-data-manager';
-import { getProducts } from '@/lib/api/products-data-server';
+import { fetchProducts } from '@/lib/data/services/api-product-service';
+import { fallbackDataManager } from '@/lib/mocks/fallback-data/fallback-data-manager';
 import { Product } from '@/lib/types/product';
 import { lazyMinLoadTime } from '@/lib/utils';
 import { Suspense } from 'react';
 
 export default async function MerchandisePage() {
   const { data: products, usedFallback } = await fallbackDataManager<Product>({
-    result: await getProducts(),
+    result: await fetchProducts(),
     useCleanDataset: false,
     fallbackIfLessThanNrItems: 20,
   });
