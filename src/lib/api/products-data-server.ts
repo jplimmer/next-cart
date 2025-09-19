@@ -1,7 +1,7 @@
 import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
 import { Category, Product, ProductLight } from '@/lib/types/product';
 import { QueryFilters, Result } from '../types/types';
-import { buildProductsQueryByFilters } from './query-builders';
+import { buildProductsQueryByFilters } from './helpers';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
