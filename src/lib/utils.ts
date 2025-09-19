@@ -23,7 +23,7 @@ export function splitByQuery(result: string, query: string) {
 
 export const removeFalsyValues = <T extends object>(obj: T): Partial<T> =>
   Object.fromEntries(
-    Object.entries(obj).filter(([_, value]) => Boolean(value))
+    Object.entries(obj).filter(([, value]) => Boolean(value))
   ) as Partial<T>;
 
 const toRgb = converter('rgb');

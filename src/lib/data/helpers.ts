@@ -51,7 +51,7 @@ const buildFilterString = (options: QueryFilters) => {
   return (
     Object.entries(options)
       // Filter out undefined options
-      .filter(([_, value]) => Boolean(value))
+      .filter(([, value]) => Boolean(value))
       // Format as "key: value"
       .map(([key, value]) => `${key}: "${value}"`)
       // Join into a single string
