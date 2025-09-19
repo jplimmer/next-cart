@@ -1,17 +1,11 @@
 import ProductCard from '@/components/product-card';
 import { routes } from '@/lib/constants/routes';
 import { getSlugFromTitle } from '@/lib/data/helpers';
-import { fetchProducts } from '@/lib/data/services/api-product-service';
-import { fallbackDataManager } from '@/lib/mocks/fallback-data/fallback-data-manager';
-import { Product } from '@/lib/types/product';
+import { getProducts } from '@/lib/data/product-data-service';
 import Link from 'next/link';
 
 export default async function FeaturedProducts() {
-  const { data: products } = await fallbackDataManager<Product>({
-    result: await fetchProducts(),
-    useCleanDataset: true, // Use clean dataset for valid images
-    fallbackIfLessThanNrItems: 20,
-  });
+  const products = await getProducts();
 
   if (!products || products.length === 0) {
     return (
