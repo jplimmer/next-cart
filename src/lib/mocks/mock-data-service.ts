@@ -1,9 +1,11 @@
 import { Category, Product, ProductLight } from '../types/product';
 import { QueryFilters, Result } from '../types/types';
 
-const loadMockData = async (
-  useExperimentalData: boolean
-): Promise<Product[]> => {
+const useExperimentalData =
+  process.env.NODE_ENV === 'development' &&
+  (process.env.USE_EXPERIMENTAL_DATA ?? 'false') === 'true';
+
+const loadMockData = async (): Promise<Product[]> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   if (useExperimentalData) {
@@ -18,25 +20,25 @@ const loadMockData = async (
   return mockData;
 };
 
-export const getMockProducts = async (
-  useExperimentalData = false
-): Promise<Product[]> => {
-  return await loadMockData(useExperimentalData);
+export const fetchProducts = async (): Promise<Product[]> => {
+  return await loadMockData();
 };
 
-export const getMockProductById = async (
-  id: string,
-  useExperimentalData = false
-): Promise<Product | null> => {
-  const data = await loadMockData(useExperimentalData);
+export const fetchProductsLight = async (): Promise<ProductLight[]> => {
+  const data = await loadMockData();
+
+  return data.map((p) => ({ id: p.id, title: p.title }));
+};
+
+export const fetchProductById = async (id: string): Promise<Product | null> => {
+  const data = await loadMockData();
   return data.find((p) => p.id === id) || null;
 };
 
-export const getMockProductByTitle = async (
-  title: string,
-  useExperimentalData = false
+export const fetchProductByTitle = async (
+  title: string
 ): Promise<Result<Product>> => {
-  const data = await loadMockData(useExperimentalData);
+  const data = await loadMockData();
   const product = data.find((p) => p.title === title);
 
   if (!product) {
@@ -45,42 +47,16 @@ export const getMockProductByTitle = async (
   return { success: true, data: product };
 };
 
-export const getMockCategories = async (
-  useExperimentalData = false
-): Promise<Category[]> => {
-  const data = await loadMockData(useExperimentalData);
-
-  const categories: Category[] = [];
-  const seen = new Set<string>();
-
-  for (const p of data) {
-    if (!seen.has(p.category.id)) {
-      seen.add(p.category.id);
-      categories.push(p.category);
-    }
-  }
-
-  return categories;
-};
-
-export const getMockProductsPaginated = async (
-  limit = 20,
-  offset = 0,
-  useExperimentalData = false
-): Promise<Product[]> => {
-  const data = await loadMockData(useExperimentalData);
-
-  return data.slice(offset, offset + limit);
-};
-
-export const getMockProductsByFilters = async (
-  queryFilters: QueryFilters,
-  useExperimentalData = false
+export const fetchProductsByFilters = async (
+  queryFilters: QueryFilters
 ): Promise<ProductLight[]> => {
-  const data = await loadMockData(useExperimentalData);
-
   const { categoryIDs = [], ...filters } = queryFilters;
 
+  if (!(categoryIDs.length > 0) || !filters.title) {
+    return fetchProductsLight();
+  }
+
+  const data = await loadMockData();
   let filtered: Product[] = [];
 
   // Filter by categories (logical 'OR')
@@ -100,10 +76,27 @@ export const getMockProductsByFilters = async (
   return filtered.map((p) => ({ id: p.id, title: p.title }));
 };
 
-export const getMockProductsLight = async (
-  useExperimentalData = false
-): Promise<ProductLight[]> => {
-  const data = await loadMockData(useExperimentalData);
+export const fetchProductsPaginated = async (
+  limit = 20,
+  offset = 0
+): Promise<Product[]> => {
+  const data = await loadMockData();
 
-  return data.map((p) => ({ id: p.id, title: p.title }));
+  return data.slice(offset, offset + limit);
+};
+
+export const fetchCategories = async (): Promise<Category[]> => {
+  const data = await loadMockData();
+
+  const categories: Category[] = [];
+  const seen = new Set<string>();
+
+  for (const p of data) {
+    if (!seen.has(p.category.id)) {
+      seen.add(p.category.id);
+      categories.push(p.category);
+    }
+  }
+
+  return categories;
 };

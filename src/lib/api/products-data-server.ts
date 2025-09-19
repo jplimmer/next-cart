@@ -1,38 +1,11 @@
 import { graphqlFetch } from '@/lib/api/graphql-products';
 import { Category, Product, ProductLight } from '@/lib/types/product';
-import { dataSetClean } from '../mocks/fallback-data/dataset-clean';
-import { dataSetDirty } from '../mocks/fallback-data/dataset-dirty';
-import {
-  getMockCategories,
-  getMockProductById,
-  getMockProductByTitle,
-  getMockProducts,
-  getMockProductsByFilters,
-  getMockProductsLight,
-  getMockProductsPaginated,
-} from '../mocks/mock-data-service';
 import { QueryFilters, Result } from '../types/types';
 import { buildProductsQueryByFilters } from './helpers';
 import { QUERIES } from './queries';
 
-// Use env variables to point to mock/experimental data
-const useMockData =
-  process.env.NODE_ENV === 'development' &&
-  (process.env.USE_MOCK_DATA ?? 'false') === 'true';
-
-const useExperimentalData =
-  process.env.NODE_ENV === 'development' &&
-  (process.env.USE_EXPERIMENTAL_DATA ?? 'false') === 'true';
-
 // Server-side data fetching functions
-export async function getProducts(): Promise<Product[]> {
-  if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for products`
-    );
-    return await getMockProducts(useExperimentalData);
-  }
-
+export async function fetchProducts(): Promise<Product[]> {
   try {
     const data = await graphqlFetch(QUERIES.GET_PRODUCTS);
     return data.products || [];
@@ -42,37 +15,30 @@ export async function getProducts(): Promise<Product[]> {
   }
 }
 
-export async function getProductById(id: string): Promise<Product | null> {
-  if (useMockData || useExperimentalData) {
-    // console.log(
-    //   `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${id}`
-    // );
-    return await getMockProductById(id, useExperimentalData);
+// Lightweight fetch to get the amount of products. Only fetches IDs
+export async function fetchProductsLight(): Promise<ProductLight[]> {
+  try {
+    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_LIGHT);
+    return data.products || [];
+  } catch (error) {
+    console.error('Error fetching products (light):', error);
+    return [];
   }
+}
 
+export async function fetchProductById(id: string): Promise<Product | null> {
   try {
     const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
     return data.product || null;
   } catch (error) {
     console.error('Error fetching product by ID:', error);
-    // Fallback to clean dataset first, then dirty
-    const fallbackProduct =
-      dataSetClean.find((p) => p.id === id) ||
-      dataSetDirty.find((p) => p.id === id);
-    return fallbackProduct || null;
+    return null;
   }
 }
 
-export async function getProductByTitle(
+export async function fetchProductByTitle(
   title: string
 ): Promise<Result<Product>> {
-  if (useMockData || useExperimentalData) {
-    // console.log(
-    //   `Using ${useExperimentalData ? 'experimental' : 'mock'} data for product ${title}`
-    // );
-    return await getMockProductByTitle(title, useExperimentalData);
-  }
-
   try {
     const productResult = await graphqlFetch(QUERIES.GET_PRODUCT_BY_TITLE, {
       title,
@@ -84,36 +50,18 @@ export async function getProductByTitle(
   }
 }
 
-export async function getCategories(): Promise<Category[]> {
-  if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for categories`
-    );
-
-    return await getMockCategories(useExperimentalData);
-  }
-
-  try {
-    const data = await graphqlFetch(QUERIES.GET_CATEGORIES);
-    return data.categories || [];
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return [];
-  }
+export async function fetchProductsByFilters(
+  queryFilters: QueryFilters
+): Promise<ProductLight[]> {
+  const data = await graphqlFetch(buildProductsQueryByFilters(queryFilters));
+  const joinedDatas = Object.values(data).flat() as ProductLight[];
+  return joinedDatas;
 }
 
-export async function getProductsPaginated(
+export async function fetchProductsPaginated(
   limit: number = 20,
   offset: number = 0
 ): Promise<Product[]> {
-  if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for products paginated`
-    );
-
-    return await getMockProductsPaginated(limit, offset, useExperimentalData);
-  }
-
   const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
     limit,
     offset,
@@ -121,37 +69,12 @@ export async function getProductsPaginated(
   return data.products || [];
 }
 
-export async function getProductsByFilters(
-  queryFilters: QueryFilters
-): Promise<ProductLight[]> {
-  if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for filtered products`
-    );
-
-    return await getMockProductsByFilters(queryFilters, useExperimentalData);
-  }
-
-  const data = await graphqlFetch(buildProductsQueryByFilters(queryFilters));
-  const joinedDatas = Object.values(data).flat() as ProductLight[];
-  return joinedDatas;
-}
-
-// Lightweight fetch to get the amount of products. Only fetches IDs
-export async function getProductsLight(): Promise<ProductLight[]> {
-  if (useMockData || useExperimentalData) {
-    console.log(
-      `Using ${useExperimentalData ? 'experimental' : 'mock'} data for products (light)`
-    );
-
-    return await getMockProductsLight(useExperimentalData);
-  }
-
+export async function fetchCategories(): Promise<Category[]> {
   try {
-    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_LIGHT);
-    return data.products || [];
+    const data = await graphqlFetch(QUERIES.GET_CATEGORIES);
+    return data.categories || [];
   } catch (error) {
-    console.error('Error fetching products (light):', error);
+    console.error('Error fetching categories:', error);
     return [];
   }
 }
