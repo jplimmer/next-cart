@@ -1,4 +1,5 @@
 import { QueryFilters } from '../types/types';
+import { QUERIES } from './queries';
 
 export function getSlugFromTitle(title: string): string {
   return title.toLowerCase().replace(/\s+/g, '--');
@@ -12,10 +13,15 @@ export function getTitleFromSlug(slug: string): string {
 // Since we cant pass arrays into their graphQL filters, we have to generate an alias for each categoryID
 // If we dont have any categories, we only need one alias
 
-export function buildProductsQueryByFilters(filters: QueryFilters) {
-  const { categoryIDs = [], title = '' } = filters;
+export function buildProductsQueryByFilters(queryFilters: QueryFilters) {
+  const { categoryIDs = [], ...filters } = queryFilters;
 
-  const areThereFilters = title || categoryIDs.length > 0;
+  const filterString = buildFilterString(filters);
+
+  if (!(categoryIDs.length > 0) && !filterString) {
+    console.log('No filters provided, returning all products (light)');
+    return QUERIES.GET_PRODUCTS_LIGHT;
+  }
 
   const query =
     categoryIDs.length > 0
@@ -24,19 +30,32 @@ export function buildProductsQueryByFilters(filters: QueryFilters) {
       ${categoryIDs
         .map(
           (id, i) =>
-            `  Category_${i}: products(categoryId: ${id}, ${title ? `title: "${title}"` : ''}) {
-          id
-          title
-        }`
+            `  Category_${i}: products(categoryId: ${id}, ${filterString}) {
+                  id
+                  title
+                }`
         )
         .join('\n')}
       }`
       : `
       query { 
-        Filtered_Products: products${areThereFilters ? `(${title ? `title: "${title}"` : ''})` : ''}  {
+        Filtered_Products: products(${filterString}) {
           id
           title
         }
       }`;
+  console.log('Query:', query);
   return query;
 }
+
+export const buildFilterString = (options: QueryFilters) => {
+  return (
+    Object.entries(options)
+      // Filter out undefined options
+      .filter(([_, value]) => Boolean(value))
+      // Format as "key: value"
+      .map(([key, value]) => `${key}: ${value}`)
+      // Join into a single string
+      .join(', ')
+  );
+};
