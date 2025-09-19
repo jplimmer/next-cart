@@ -1,8 +1,9 @@
-import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
-import { Category, Product } from '@/lib/types/product';
-import { Result } from '../types/types';
 import { dataSetClean } from '@/lib/api/fallback-data/dataset-clean';
 import { dataSetDirty } from '@/lib/api/fallback-data/dataset-dirty';
+import { graphqlFetch, QUERIES } from '@/lib/api/graphql-products';
+import { Category, Product, ProductLight } from '@/lib/types/product';
+import { QueryFilters, Result } from '../types/types';
+import { buildProductsQueryByFilters } from './helpers';
 
 // Server-side data fetching functions
 export async function getProducts(): Promise<Product[]> {
@@ -55,17 +56,21 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getProductsPaginated(
   limit: number = 20,
-  offset: number = 0,
-  categoryId?: number,
-  title?: string
+  offset: number = 0
 ): Promise<Product[]> {
   const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
     limit,
     offset,
-    categoryId,
-    title,
   });
   return data.products || [];
+}
+
+export async function getProductsByFilters(
+  queryFilters: QueryFilters
+): Promise<ProductLight[]> {
+  const data = await graphqlFetch(buildProductsQueryByFilters(queryFilters));
+  const joinedDatas = Object.values(data).flat() as ProductLight[];
+  return joinedDatas;
 }
 
 // Lightweight fetch to get the amount of products. Only fetches IDs

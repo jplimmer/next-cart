@@ -4,26 +4,46 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 
 export default function CategorySelect({
   categories,
-  defaultCategory,
+  categoriesParam,
 }: {
   categories: Category[];
-  defaultCategory: string | null;
+  categoriesParam: string[];
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  // Add category to search params
-  const handleSelect = (category: string) => {
+  // Add/remove category from search params array based on checked bool
+  const handleCheck = (category: string, checked: boolean) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set(searchParamKeys.category, category);
+
+    // Since you checked a new category, you go back to the first page
+    params.delete(searchParamKeys.pageNumber);
+
+    let newCategoryParam: string[];
+
+    if (checked) {
+      // "new Set" removes duplicates, according to mr. GPT.
+      newCategoryParam = Array.from(new Set([...categoriesParam, category]));
+    } else {
+      newCategoryParam = categoriesParam.filter((c) => c !== category);
+    }
+
+    // Clear old categories
+    params.delete(searchParamKeys.categories);
+
+    // Append all selected categories
+    newCategoryParam.forEach((c) =>
+      params.append(searchParamKeys.categories, c)
+    );
+
     router.push(`${pathname}?${params.toString()}`);
   };
 
@@ -32,17 +52,24 @@ export default function CategorySelect({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {defaultCategory || 'Choose Category ↓'}
+            {categoriesParam && categoriesParam.length > 0
+              ? categoriesParam.join(', ')
+              : 'Choose Categories ↓'}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           {categories?.map((category) => (
-            <DropdownMenuItem
+            <DropdownMenuCheckboxItem
               key={category.id}
-              onSelect={() => handleSelect(category.name)}
+              checked={
+                categoriesParam
+                  ? categoriesParam.includes(category.name)
+                  : false
+              }
+              onCheckedChange={(checked) => handleCheck(category.name, checked)}
             >
               {category.name}
-            </DropdownMenuItem>
+            </DropdownMenuCheckboxItem>
           ))}
         </DropdownMenuContent>
       </DropdownMenu>

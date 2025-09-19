@@ -1,5 +1,5 @@
 export const searchParamKeys = {
-  category: 'category',
+  categories: 'categories',
   query: 'query',
   pageNumber: 'pageNumber',
 };

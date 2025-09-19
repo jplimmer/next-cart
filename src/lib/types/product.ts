@@ -26,3 +26,8 @@ export interface ProductResponse {
 export interface CategoriesResponse {
   categories: Category[];
 }
+
+export interface ProductLight {
+  id: string;
+  title: string;
+}

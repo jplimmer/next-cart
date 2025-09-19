@@ -3,11 +3,11 @@ import ProductFilters from '@/components/products/product-filters';
 import ProductPagination from '@/components/products/product-pagination';
 import {
   getCategories,
-  getProductsAmount,
-  getProductsPaginated,
+  getProductById,
+  getProductsByFilters,
 } from '@/lib/api/products-data-server';
-import { fallbackDataManager } from '@/lib/api/fallback-data/fallback-data-manager';
 import { Product } from '@/lib/types/product';
+import { QueryFilters } from '@/lib/types/types';
 
 export default async function Products({
   searchParams,
@@ -17,42 +17,39 @@ export default async function Products({
   // Potential optimization: Use these as default values. Pass them to <ProductFilters/> and use them in their respective components
   const {
     query = '',
-    category = '',
+    categories: categoriesSearchParams = [], // Renaming for clarity
     pageNumber = 1,
   }: {
     query?: string;
-    category?: string;
+    categories?: string[];
     pageNumber?: number;
   } = await searchParams;
 
   const categories = await getCategories();
-  const categoryObject = categories.find(
-    (categoryObject) => categoryObject.name === category
-  );
 
-  const { data: products } = await fallbackDataManager<Product>({
-    result: await getProductsPaginated(
-      20,
-      (Math.max(pageNumber, 1) - 1) * 20,
-      categoryObject ? Number(categoryObject.id) : undefined,
-      query
-    ),
-    useCleanDataset: true, // Use clean dataset with valid images
-    fallbackIfLessThanNrItems: 20,
-  });
+  // Based on category name, create an array of selected categoryIDs
+  const categoryIDs = categories
+    .filter((c) => categoriesSearchParams.includes(c.name))
+    .map((c) => Number(c.id));
 
-  // TODO: Look into ways to optimize this. Ideally we dont want to fetch ALL products
-  const totalProductsAmount = await getProductsAmount();
+  const queryFilters: QueryFilters = { title: query, categoryIDs };
 
-  const filteredTotalProductsAmounts = totalProductsAmount.filter(
-    (product) =>
-      product.title.toLowerCase().includes(query.toLowerCase()) &&
-      (category === '' ||
-        product.category.name.toLowerCase() === category.toLowerCase())
-  );
+  const lightProductsFromCategoryIDs = await getProductsByFilters(queryFilters);
+
+  // pagination boundaries
+  const startIndex = (pageNumber - 1) * 20;
+  const endIndex = pageNumber * 20;
+
+  const products = (
+    await Promise.all(
+      lightProductsFromCategoryIDs
+        .slice(startIndex, endIndex)
+        .map((p) => getProductById(p.id))
+    )
+  ).filter((p): p is Product => p !== null);
 
   const filteredTotalProductsTotalPages = Math.ceil(
-    filteredTotalProductsAmounts.length / 20
+    lightProductsFromCategoryIDs.length / 20
   );
 
   return (
@@ -63,8 +60,8 @@ export default async function Products({
         <ProductPagination totalPages={filteredTotalProductsTotalPages} />
       )}
       <section className="flex flex-wrap gap-6 w-5/6 m-auto mb-32 justify-center">
-        {products.map((product: Product) => (
-          <section className="w-1/4" key={product.id}>
+        {products.map((product: Product, index) => (
+          <section className="w-1/4" key={index}>
             <ProductCard product={product} key={product.id} />
           </section>
         ))}
