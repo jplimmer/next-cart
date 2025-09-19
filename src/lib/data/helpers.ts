@@ -44,17 +44,16 @@ export function buildProductsQueryByFilters(queryFilters: QueryFilters) {
           title
         }
       }`;
-  console.log('Query:', query);
   return query;
 }
 
-export const buildFilterString = (options: QueryFilters) => {
+const buildFilterString = (options: QueryFilters) => {
   return (
     Object.entries(options)
       // Filter out undefined options
       .filter(([_, value]) => Boolean(value))
       // Format as "key: value"
-      .map(([key, value]) => `${key}: ${value}`)
+      .map(([key, value]) => `${key}: "${value}"`)
       // Join into a single string
       .join(', ')
   );

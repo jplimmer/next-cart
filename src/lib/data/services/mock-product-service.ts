@@ -1,5 +1,6 @@
 import { Category, Product, ProductLight } from '@/lib/types/product';
 import { QueryFilters, Result } from '@/lib/types/types';
+import { removeFalsyValues } from '@/lib/utils';
 
 const useExperimentalData =
   process.env.NODE_ENV === 'development' &&
@@ -52,23 +53,28 @@ export const fetchProductsByFilters = async (
 ): Promise<ProductLight[]> => {
   const { categoryIDs = [], ...filters } = queryFilters;
 
-  if (!(categoryIDs.length > 0) || !filters.title) {
+  const definedFilters = removeFalsyValues<QueryFilters>(filters);
+
+  if (!(categoryIDs.length > 0) && !definedFilters) {
     return fetchProductsLight();
   }
 
   const data = await loadMockData();
-  let filtered: Product[] = [];
+  let filtered = data;
 
   // Filter by categories (logical 'OR')
   if (categoryIDs.length > 0) {
     const categorySet = new Set(categoryIDs.map(String));
     const matches = data.filter((p) => categorySet.has(p.category.id));
-    filtered.push(...matches);
+    filtered = matches;
   }
 
   // Filter by title
-  if (filters.title) {
-    filtered = filtered.filter((p) => p.title === filters.title);
+  if (definedFilters.title) {
+    const title = definedFilters.title;
+    filtered = filtered.filter((p) =>
+      p.title.toLowerCase().includes(title.toLowerCase())
+    );
   }
 
   // Other filters can be added manually here (e.g. price min/max)
