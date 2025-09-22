@@ -1,5 +1,5 @@
 import Modal from '@/components/layout/modal';
-import ProductCard from '@/components/product-card';
+import ProductCard from '@/components/products/product-card';
 import { getTitleFromSlug } from '@/lib/data/helpers';
 import { getProductByTitle } from '@/lib/data/product-data-service';
 import { notFound } from 'next/navigation';
