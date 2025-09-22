@@ -29,6 +29,7 @@ export const getProducts = dataSource.fetchProducts;
 export const getProductsLight = dataSource.fetchProductsLight;
 export const getProductById = dataSource.fetchProductById;
 export const getProductByTitle = dataSource.fetchProductByTitle;
+export const getProductsByIds = dataSource.fetchProductsByIds;
 export const getProductsByFilters = dataSource.fetchProductsByFilters;
 export const getProductsPaginated = dataSource.fetchProductsPaginated;
 export const getCategories = dataSource.fetchCategories;
