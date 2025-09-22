@@ -1,4 +1,5 @@
 import ProductForm from '@/components/admin/product-form';
+import ProductTable from '@/components/admin/products-table';
 import ToggleForm from '@/components/admin/toggle-form-button';
 
 export default function AdminPage() {
@@ -7,6 +8,7 @@ export default function AdminPage() {
       <ToggleForm>
         <ProductForm />
       </ToggleForm>
+      <ProductTable />
     </main>
   );
 }
