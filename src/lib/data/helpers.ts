@@ -2,11 +2,13 @@ import { QUERIES } from '../data/graphql/queries';
 import { QueryFilters } from '../types/types';
 
 export function getSlugFromTitle(title: string): string {
-  return title.toLowerCase().replace(/\s+/g, '--');
+  const slug = title.toLowerCase().replace(/\s+/g, '--');
+  return encodeURIComponent(slug);
 }
 
 export function getTitleFromSlug(slug: string): string {
-  return slug.replace(/--/g, ' ');
+  const title = decodeURIComponent(slug);
+  return title.replace(/--/g, ' ');
 }
 
 // These query builders are used when we need to mimic the behavior that "where:" usually enables

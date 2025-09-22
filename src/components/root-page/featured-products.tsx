@@ -1,4 +1,4 @@
-import ProductCard from '@/components/product-card';
+import ProductCard from '@/components/products/product-card';
 import { routes } from '@/lib/constants/routes';
 import { getSlugFromTitle } from '@/lib/data/helpers';
 import { getProducts } from '@/lib/data/product-data-service';

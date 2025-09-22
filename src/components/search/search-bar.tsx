@@ -1,7 +1,8 @@
 'use client';
 
+import { getTitleFromSlug } from '@/lib/data/helpers';
 import { Result } from '@/lib/types/types';
-import { cn } from '@/lib/utils';
+import { capitaliseWords, cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
@@ -23,9 +24,24 @@ export function SearchBar({
   allResultsPromise,
   wait = 600,
 }: SearchInputProps) {
+  const pathname = usePathname();
+
+  // Gets initial query from pathname to prevent hydration error when user navigates directly to product page
+  const getInitialQuery = (): string => {
+    if (pathname.startsWith('/products/')) {
+      const slug = pathname.replace('/products/', '');
+      if (slug) {
+        const title = getTitleFromSlug(slug);
+        return capitaliseWords(title);
+      }
+    }
+    return '';
+  };
+
   // Separate states for query (updates search input value) and debouncedQuery (used to find matches)
-  const [query, setQuery] = useState<string>('');
-  const [debouncedQuery, setDebouncedQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>(getInitialQuery());
+  const [debouncedQuery, setDebouncedQuery] =
+    useState<string>(getInitialQuery());
 
   const [matches, setMatches] = useState<string[]>([]);
   const [showList, setShowList] = useState(false);
@@ -33,8 +49,6 @@ export function SearchBar({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  const pathname = usePathname();
 
   // Focuses on search input with Ctrl+K keyboard shorcut
   useEffect(() => {
@@ -123,7 +137,7 @@ export function SearchBar({
     submitQuery(value);
   };
 
-  // Closes list and submit query
+  // Closes list and submits query
   const submitQuery = (value: string) => {
     setShowList(false);
 
