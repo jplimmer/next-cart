@@ -7,7 +7,7 @@ const useExperimentalData =
   (process.env.USE_EXPERIMENTAL_DATA ?? 'false') === 'true';
 
 const loadMockData = async (): Promise<Product[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   if (useExperimentalData) {
     if (process.env.NODE_ENV !== 'development') {
@@ -46,6 +46,19 @@ export const fetchProductByTitle = async (
     return { success: false, error: `No product found matching '${title}'` };
   }
   return { success: true, data: product };
+};
+
+export const fetchProductsByIds = async (
+  productIds: string[]
+): Promise<Result<Product[]>> => {
+  const data = await loadMockData();
+  const idsSet = new Set(productIds);
+  const products = data.filter((p) => idsSet.has(p.id));
+
+  if (products.length === 0) {
+    return { success: false, error: 'No products found matching ids' };
+  }
+  return { success: true, data: products };
 };
 
 export const fetchProductsByFilters = async (

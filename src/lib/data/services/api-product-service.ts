@@ -2,7 +2,10 @@ import { graphqlFetch } from '@/lib/data/graphql/graphql-fetch';
 import { Category, Product, ProductLight } from '@/lib/types/product';
 import { QueryFilters, Result } from '../../types/types';
 import { QUERIES } from '../graphql/queries';
-import { buildProductsQueryByFilters } from '../helpers';
+import {
+  buildProductsQueryByFilters,
+  buildProductsQueryByIds,
+} from '../helpers';
 
 // Server-side data fetching functions
 export async function fetchProducts(): Promise<Product[]> {
@@ -46,6 +49,18 @@ export async function fetchProductByTitle(
     return { success: true, data: productResult.products[0] };
   } catch (error) {
     console.error(`Failed to get product data for ${title}`, error);
+    return { success: false, error: String(error) };
+  }
+}
+
+export async function fetchProductsByIds(
+  productIds: string[]
+): Promise<Result<Product[]>> {
+  try {
+    const data = await graphqlFetch(buildProductsQueryByIds(productIds));
+    return { success: true, data: Object.values(data).flat() as Product[] };
+  } catch (error) {
+    console.error('Failed to get product data from list of ids', error);
     return { success: false, error: String(error) };
   }
 }
