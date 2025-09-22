@@ -17,7 +17,7 @@ export default async function Page({
   const product = productResult.data;
 
   return (
-    <main className="full-width place-items-center py-8">
+    <main className="@container full-width place-items-center py-8">
       <ProductDetail product={product} />
     </main>
   );

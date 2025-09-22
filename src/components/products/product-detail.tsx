@@ -5,7 +5,7 @@ import ProductImageCarousel from './product-image-carousel';
 
 export default function ProductDetail({ product }: { product: Product }) {
   return (
-    <article className="w-full flex justify-center items-center gap-16">
+    <article className="@container w-full flex flex-col @lg:flex-row justify-center items-center gap-16 p-4">
       <section className="flex-1">
         <h1
           id={`product-${product.id}-header`}

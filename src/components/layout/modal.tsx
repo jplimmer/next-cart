@@ -18,7 +18,10 @@ export default function Modal({ children, className, ...props }: ModalProps) {
       open={true}
       onOpenChange={(open: boolean) => !open && router.back()}
     >
-      <DialogContent className={`max-h-[90svh] overflow-y-auto ${className}`}>
+      <DialogContent
+        className={`@container max-h-[90svh] overflow-y-auto ${className}`}
+        aria-describedby={undefined}
+      >
         <DialogHeader>
           <DialogTitle className={props.showTitle ? '' : 'sr-only'}>
             {props.title}

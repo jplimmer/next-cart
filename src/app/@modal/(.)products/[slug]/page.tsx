@@ -1,5 +1,5 @@
 import Modal from '@/components/layout/modal';
-import ProductCard from '@/components/products/product-card';
+import ProductDetail from '@/components/products/product-detail';
 import { getTitleFromSlug } from '@/lib/data/helpers';
 import { getProductByTitle } from '@/lib/data/product-data-service';
 import { notFound } from 'next/navigation';
@@ -18,8 +18,8 @@ export default async function ProductModal({
   const product = productResult.data;
 
   return (
-    <Modal title={product.title} description={product.description}>
-      <ProductCard product={product}></ProductCard>
+    <Modal title={product.title} showTitle={false}>
+      <ProductDetail product={product} />
     </Modal>
   );
 }
