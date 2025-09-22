@@ -32,10 +32,10 @@ export async function getDataset<T>({
   useClean: boolean;
 }): Promise<T[]> {
   if (useClean) {
-    const mod = await import('./dataset-clean');
-    return mod.dataSetClean as T[];
+    const mod = await import('../mock-data');
+    return mod.mockData as T[];
   } else {
-    const mod = await import('./dataset-dirty');
-    return mod.dataSetDirty as T[];
+    const mod = await import('../experimental-data');
+    return mod.experimentalData as T[];
   }
 }

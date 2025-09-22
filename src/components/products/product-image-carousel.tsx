@@ -8,7 +8,7 @@ interface ProductImageSliderProps {
   title: string;
 }
 
-export default function ProductImageSlider({
+export default function ProductImageCarousel({
   images,
   title,
 }: ProductImageSliderProps) {

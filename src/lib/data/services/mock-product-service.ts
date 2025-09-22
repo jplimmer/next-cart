@@ -40,7 +40,9 @@ export const fetchProductByTitle = async (
   title: string
 ): Promise<Result<Product>> => {
   const data = await loadMockData();
-  const product = data.find((p) => p.title === title);
+  const product = data.find(
+    (p) => p.title.toLowerCase() === title.toLowerCase()
+  );
 
   if (!product) {
     return { success: false, error: `No product found matching '${title}'` };
