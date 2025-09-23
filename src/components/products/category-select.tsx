@@ -1,3 +1,5 @@
+'use client';
+
 import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -9,41 +11,37 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { filterByParam } from '@/lib/utils';
 
 export default function CategorySelect({
   categories,
   categoriesParam,
+  selected,
+  setSelected,
 }: {
   categories: Category[];
   categoriesParam: string[];
+  selected: Category[];
+  setSelected: React.Dispatch<React.SetStateAction<Category[]>>;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
   // Add categories as filters based on user selection(s)
-  const handleCheck = (selectedCategories: Category[]) => {
+  const handleApplyFilters = (selectedCategories: Category[]) => {
     const params = new URLSearchParams(searchParams.toString());
     // Since you checked a new category, you go back to the first page
     params.delete(searchParamKeys.pageNumber);
     // Clear old categories
     params.delete(searchParamKeys.categories);
-    const uniqueNames: string[] = [];
     // Append all selected categories
-    selectedCategories.forEach((cat) => {
-      // Safe guard
-      if (!uniqueNames.includes(cat?.name)) {
-        uniqueNames.push(cat?.name);
-        params.append(searchParamKeys?.categories, cat?.name);
-      }
-    });
+    selectedCategories.forEach((cat) =>
+      params.append(searchParamKeys?.categories, cat?.name)
+    );
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  const exists = (): Category[] =>
-    categories?.filter((cat) => categoriesParam?.includes(cat?.name));
-
-  const [selected, setSelected] = useState<Category[]>(exists() || []);
   const [open, setOpen] = useState(false);
 
   const toggleCategory = (cat: Category) => {
@@ -59,14 +57,14 @@ export default function CategorySelect({
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {exists()
+            {filterByParam<Category>(categories, categoriesParam, 'name')
               ?.map((cat) => cat?.name)
               ?.join(', ') || 'Choose Categories ↓'}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-64 p-0">
-          <div className="flex flex-col max-h-96">
-            <div className="flex-1 px-2 py-2">
+          <div className="flex flex-col">
+            <div className="overflow-y-auto max-h-80 px-2 py-2">
               {categories?.map((category) => (
                 <DropdownMenuCheckboxItem
                   className="cursor-pointer"
@@ -84,7 +82,7 @@ export default function CategorySelect({
               <Button
                 onClick={() => {
                   setOpen(false);
-                  handleCheck(selected);
+                  handleApplyFilters(selected);
                 }}
                 className="w-full cursor-pointer"
               >
@@ -94,17 +92,6 @@ export default function CategorySelect({
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button
-        type="reset"
-        className="block"
-        onClick={() => {
-          setSelected([]); // Clear local state
-          handleCheck([]); // Clear URL params
-          router.push(pathname);
-        }}
-      >
-        Clear Filters
-      </Button>
     </section>
   );
 }

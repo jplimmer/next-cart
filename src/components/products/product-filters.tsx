@@ -1,8 +1,10 @@
 'use client';
+
 import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
+import { filterByParam } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import CategorySelect from './category-select';
@@ -38,6 +40,10 @@ export default function ProductFilters({
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>(
+    filterByParam<Category>(categories, categoriesParam, 'name')
+  );
+
   return (
     <section>
       <label htmlFor="search-input">Search</label>
@@ -51,7 +57,20 @@ export default function ProductFilters({
       <CategorySelect
         categories={categories}
         categoriesParam={categoriesParam}
+        selected={selectedCategories}
+        setSelected={setSelectedCategories}
       />
+      <div>
+        <Button
+          type="reset"
+          onClick={() => {
+            setSelectedCategories([]); // clear local state for CategorySelect component
+            router.push(pathname);
+          }}
+        >
+          Clear Filters
+        </Button>
+      </div>
     </section>
   );
 }
