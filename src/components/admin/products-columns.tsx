@@ -40,7 +40,10 @@ const ExpandableCell = ({ value, render }: ExpandableCellProps) => {
 export const columns: ColumnDef<ProductTableEntry>[] = [
   {
     accessorKey: 'id',
-    header: 'Product ID',
+    header: () => <div className="text-right pr-1">ID</div>,
+    cell: ({ row }) => {
+      return <div className="text-right pr-1">{row.getValue('id')}</div>;
+    },
   },
   {
     accessorKey: 'title',
