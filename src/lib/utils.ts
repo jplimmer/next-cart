@@ -8,8 +8,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function capitaliseFirstLetter(string: string) {
-  return String(string).charAt(0).toUpperCase() + String(string).slice(1);
+export function capitaliseFirstLetter(str: string) {
+  return String(str).charAt(0).toUpperCase() + String(str).slice(1);
+}
+
+export function capitaliseWords(str: string) {
+  return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 export function splitByQuery(result: string, query: string) {

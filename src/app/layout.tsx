@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 const iconsSocialMedia15Colr = localFont({
-  src: './fonts/Icons Social Media 15-COLR.ttf',
+  src: '../fonts/Icons Social Media 15-COLR.ttf',
   variable: '--iconsSocialMedia15Colr',
   display: 'swap',
 });

@@ -58,6 +58,13 @@ export async function UtilitiesNav({ className }: { className?: string }) {
             <ul className="grid gap-2">
               <li>
                 <NavigationMenuLink asChild>
+                  <Link href={routes.admin.href} className="whitespace-nowrap">
+                    {routes.admin.title}
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
                   <Link href="#" className="whitespace-nowrap">
                     Account settings
                   </Link>

@@ -1,6 +1,6 @@
 'use client';
 
-import ProductImageSlider from '@/components/product-image-slider';
+import ProductImageCarousel from '@/components/products/product-image-carousel';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -24,7 +24,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Card className="w-full max-w-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
       <CardHeader className="p-4">
         <div className="aspect-square relative overflow-hidden rounded-md">
-          <ProductImageSlider images={product.images} title={product.title} />
+          <ProductImageCarousel images={product.images} title={product.title} />
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-1">

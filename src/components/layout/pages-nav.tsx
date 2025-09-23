@@ -16,13 +16,11 @@ export async function PagesNav({ className }: { className?: string }) {
     {
       id: '-1' /* In production "mode", first item does not render for unknown reason, this is a dummy that will be hidden ...*/,
       name: 'dummy',
-      slug: '',
       image: '',
     },
     {
       id: '0',
       name: 'All products',
-      slug: '',
       image: '',
     },
     ...(await getCategories()),

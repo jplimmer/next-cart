@@ -3,14 +3,12 @@ import { QueryFilters, Result } from './types';
 export interface Category {
   id: string;
   name: string;
-  slug: string;
   image: string;
 }
 
 export interface Product {
   id: string;
   title: string;
-  slug: string;
   price: number;
   description: string;
   category: Category;
@@ -39,6 +37,7 @@ export interface ProductService {
   fetchProductsLight: () => Promise<ProductLight[]>;
   fetchProductById: (id: string) => Promise<Product | null>;
   fetchProductByTitle: (title: string) => Promise<Result<Product>>;
+  fetchProductsByIds: (productIds: string[]) => Promise<Result<Product[]>>;
   fetchProductsByFilters: (
     queryFilters: QueryFilters
   ) => Promise<ProductLight[]>;
