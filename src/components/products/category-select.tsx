@@ -2,6 +2,7 @@
 
 import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
+import { filterByParam } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '../ui/button';
@@ -11,23 +12,22 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { filterByParam } from '@/lib/utils';
 
 export default function CategorySelect({
   categories,
   categoriesParam,
-  selected,
-  setSelected,
 }: {
   categories: Category[];
   categoriesParam: string[];
-  selected: Category[];
-  setSelected: React.Dispatch<React.SetStateAction<Category[]>>;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-
+  const categoryFilters = filterByParam<Category, 'name'>(
+    categories,
+    categoriesParam,
+    'name'
+  );
   // Add categories as filters based on user selection(s)
   const handleApplyFilters = (selectedCategories: Category[]) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -43,6 +43,7 @@ export default function CategorySelect({
   };
 
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Category[]>(categoryFilters);
 
   const toggleCategory = (cat: Category) => {
     setSelected((prev) =>
@@ -57,7 +58,11 @@ export default function CategorySelect({
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {filterByParam<Category>(categories, categoriesParam, 'name')
+            {filterByParam<Category, 'name'>(
+              categories,
+              categoriesParam,
+              'name'
+            )
               ?.map((cat) => cat?.name)
               ?.join(', ') || 'Choose Categories ↓'}
           </Button>

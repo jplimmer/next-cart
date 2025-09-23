@@ -108,11 +108,11 @@ export async function IsImageUrl(url: string): Promise<string | null> {
 
 export const isNumeric = (value: string): boolean => !isNaN(Number(value));
 
-export function filterByParam<T>(
+export function filterByParam<T, K extends keyof T>(
   items: T[],
-  paramValues: (string | number)[],
-  key: keyof T
+  paramValues: T[K][],
+  key: K
 ): T[] {
   const paramSet = new Set(paramValues);
-  return items.filter((item) => paramSet.has(item[key] as string | number));
+  return items.filter((item) => paramSet.has(item[key]));
 }
