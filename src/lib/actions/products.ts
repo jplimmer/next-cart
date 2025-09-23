@@ -17,16 +17,6 @@ export const createProduct = async (product: CreateProduct) => {
   }
 };
 
-/* 
-This API sucks so much 
-I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it
-I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it
-I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it
-I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it
-I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it
-I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it I hate it 
-I hate it I hate it I hate it 
-*/
 export const updateProduct = async (
   productID: string,
   changes: UpdateProduct
