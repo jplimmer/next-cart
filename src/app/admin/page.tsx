@@ -1,9 +1,9 @@
-import ProductForm from '@/components/admin/product-form';
+import DataTable from '@/components/admin/data-table';
 import {
-  columns,
+  productColumns,
   ProductTableEntry,
-} from '@/components/admin/products-columns';
-import ProductsTable from '@/components/admin/products-table';
+} from '@/components/admin/product-columns';
+import ProductForm from '@/components/admin/product-form';
 import ToggleForm from '@/components/admin/toggle-form-button';
 import { getProducts } from '@/lib/data/product-data-service';
 
@@ -39,7 +39,7 @@ export default async function AdminPage() {
       <ToggleForm>
         <ProductForm />
       </ToggleForm>
-      <ProductsTable columns={columns} data={products} />
+      <DataTable columns={productColumns} data={products} />
     </main>
   );
 }

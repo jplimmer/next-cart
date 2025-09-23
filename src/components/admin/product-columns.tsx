@@ -46,7 +46,7 @@ const ExpandableCell = ({ value, render }: ExpandableCellProps) => {
   );
 };
 
-export const columns: ColumnDef<ProductTableEntry>[] = [
+export const productColumns: ColumnDef<ProductTableEntry>[] = [
   {
     accessorKey: 'id',
     header: () => <div className="text-right pr-1">ID</div>,
