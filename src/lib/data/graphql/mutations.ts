@@ -22,4 +22,17 @@ export const MUTATIONS = {
       }
     }
   `,
+  UPDATE_PRODUCT: `
+    mutation UpdateProduct(
+      $id: ID!,
+      $changes: UpdateProductDto!
+    ) {
+      updateProduct(
+        id: $id
+        changes: $changes
+      ) {
+        id
+      }
+    }
+  `,
 };
