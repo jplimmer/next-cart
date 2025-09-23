@@ -1,17 +1,21 @@
+export const productQueryString = `
+  id
+  title
+  price
+  description
+  category {
+    id
+    name
+    image
+  }
+  images
+`;
+
 export const QUERIES = {
   GET_PRODUCTS: `
     query {
       products {
-        id
-        title
-        price
-        description
-        images
-        category {
-          id
-          name
-          image
-        }
+        ${productQueryString}
       }
     }
   `,
@@ -19,16 +23,7 @@ export const QUERIES = {
   GET_PRODUCTS_PAGINATED: `
     query GetPaginatedProducts($limit: Int, $offset: Int) {
       products(limit: $limit, offset: $offset) {
-        id
-        title
-        price
-        description
-        images
-        category {
-          id
-          name
-          image
-        }
+        ${productQueryString}
       }
     }
   `,
@@ -45,16 +40,7 @@ export const QUERIES = {
   GET_PRODUCT_BY_ID: `
     query GetProduct($id: ID!) {
       product(id: $id) {
-        id
-        title
-        price
-        description
-        category {
-          id
-          name
-          image
-        }
-        images
+        ${productQueryString}
       }
     }
   `,
@@ -62,16 +48,7 @@ export const QUERIES = {
   GET_PRODUCT_BY_TITLE: `
     query GetProducts($title: String) {
       products(title: $title) {
-        id
-        title
-        price
-        description
-        images
-        category {
-          id
-          name
-          image
-        }
+        ${productQueryString}
       }
     }
   `,

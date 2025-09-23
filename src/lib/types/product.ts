@@ -37,6 +37,7 @@ export interface ProductService {
   fetchProductsLight: () => Promise<ProductLight[]>;
   fetchProductById: (id: string) => Promise<Product | null>;
   fetchProductByTitle: (title: string) => Promise<Result<Product>>;
+  fetchProductsByIds: (productIds: string[]) => Promise<Result<Product[]>>;
   fetchProductsByFilters: (
     queryFilters: QueryFilters
   ) => Promise<ProductLight[]>;

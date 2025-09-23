@@ -15,6 +15,11 @@ export const routes: Record<string, Route> = {
     href: '/about',
     description: '',
   },
+  admin: {
+    title: 'Manage catalog',
+    href: '/admin',
+    description: '',
+  },
   contact: {
     title: 'Contact',
     href: '/contact',
