@@ -35,7 +35,7 @@ export default async function AdminPage() {
   const products = await getProductTableEntries();
 
   return (
-    <main className="content-grid full-width p-8">
+    <main className="content-grid full-width p-8 space-y-8">
       <ToggleForm>
         <ProductForm />
       </ToggleForm>

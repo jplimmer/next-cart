@@ -3,7 +3,16 @@
 import { getSlugFromTitle } from '@/lib/data/helpers';
 import { cn } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
+import { MoreHorizontal } from 'lucide-react';
 import { useState } from 'react';
+import { Button } from '../ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 import { HoverPrefetchLink } from '../ui/hover-prefetch-link';
 
 export type ProductTableEntry = {
@@ -81,6 +90,47 @@ export const columns: ColumnDef<ProductTableEntry>[] = [
       }).format(price);
 
       return <div className="text-right">{formatted}</div>;
+    },
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      const product = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() =>
+                console.log(
+                  'Update function call here. Product id:',
+                  product.id
+                )
+              }
+            >
+              Update
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                console.log(
+                  'Delete function call here. Product id:',
+                  product.id
+                )
+              }
+              variant="destructive"
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
     },
   },
 ];
