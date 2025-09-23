@@ -45,7 +45,6 @@ export interface ProductService {
   fetchCategories: () => Promise<Category[]>;
 }
 
-export interface CreateProduct
-  extends Omit<Product, 'id' | 'slug' | 'category'> {
+export interface CreateProduct extends Omit<Product, 'id' | 'category'> {
   categoryID: number;
 }
