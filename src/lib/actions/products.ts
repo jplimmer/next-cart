@@ -1,17 +1,20 @@
 'use server';
 
-import {
-  graphqlCreateProduct,
-  graphqlUpdateProduct,
-} from '../data/graphql/graphql-fetch';
+import { graphqlUpdateProduct } from '../data/graphql/graphql-fetch';
 import { MUTATIONS } from '../data/graphql/mutations';
 import { getProductById } from '../data/product-data-service';
-import { CreateProduct, UpdateProduct } from '../types/product';
+import { UpdateProduct } from '../types/product';
 
-export const createProduct = async (product: CreateProduct) => {
+export const createProduct = async (formData: FormData) => {
   try {
-    const data = await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, product);
-    return data;
+    const rawFormData = {
+      title: formData.get('title'),
+      description: formData.get('description'),
+      price: Number(formData.get('price')),
+      categoryId: formData.get('categoryId'),
+      images: formData.getAll('image'),
+    };
+    console.log(rawFormData);
   } catch (error) {
     console.error('Error fetching products:', error);
   }
