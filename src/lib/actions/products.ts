@@ -9,6 +9,20 @@ import { MUTATIONS } from '../data/graphql/mutations';
 import { getProductById } from '../data/product-data-service';
 import { CreateProduct, UpdateProduct } from '../types/product';
 
+export type CreateProductFormData = z.infer<typeof createSchema>;
+
+export type CreateProductFormErrors = Partial<
+  Record<keyof CreateProductFormData, string[]>
+>;
+
+export type CreateProductFormState =
+  | { success: true; data: CreateProductFormData }
+  | {
+      success: false;
+      error: CreateProductFormErrors;
+      data: CreateProductFormData;
+    };
+
 const createSchema = z.object({
   title: z
     .string()
@@ -38,25 +52,33 @@ const createSchema = z.object({
   ),
 });
 
-export const createProduct = async (formData: FormData) => {
+export const createProduct = async (
+  state: CreateProductFormState,
+  formData: FormData
+): Promise<CreateProductFormState> => {
   try {
-    const validatedFields = createSchema.safeParse({
+    const rawFormData = {
       title: formData.get('title')?.toString() ?? '',
       description: formData.get('description')?.toString() ?? '',
-      price: formData.get('price'),
-      categoryID: formData.get('categoryId'),
-      images: formData.getAll('image') ?? [''],
-    });
+      price: Number(formData.get('price')),
+      categoryID: Number(formData.get('categoryID')),
+      images: (formData.getAll('images') as string[]).map((img) => img ?? ''),
+    };
+    const validatedFields = createSchema.safeParse(rawFormData);
 
-    if (validatedFields.success) {
-      const validatedData: CreateProduct = validatedFields.data;
+    if (!validatedFields.success) {
+      const errors = z.flattenError(validatedFields.error).fieldErrors;
 
-      await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, validatedData);
-    } else {
-      console.error(validatedFields.error);
+      return { success: false, error: errors, data: rawFormData };
     }
+
+    const validatedData: CreateProduct = validatedFields.data;
+
+    await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, validatedData);
+
+    return { success: true, data: validatedData };
   } catch (error) {
-    console.error('Error fetching products:', error);
+    throw new Error('Error fetching products:' + error);
   }
 };
 
@@ -87,6 +109,6 @@ export const updateProduct = async (
 
     return data;
   } catch (error) {
-    console.error('Error fetching products:', error);
+    throw new Error('Error fetching products: ' + error);
   }
 };
