@@ -32,12 +32,12 @@ export const routes: Record<string, Route> = {
   },
   createProduct: {
     title: 'Create product',
-    href: '/create-product',
+    href: '/admin/create-product',
     description: '',
   },
   createCategory: {
     title: 'Create category',
-    href: '/create-category',
+    href: '/admin/create-category',
     description: '',
   },
   merchandise: {
