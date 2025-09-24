@@ -59,6 +59,8 @@ export async function graphqlCreateProduct(
   variables: CreateProduct
 ) {
   try {
+    console.log(variables);
+
     const response = await fetch(`${GRAPHQL_ENDPOINT}/products`, {
       method: 'POST',
       headers: {

@@ -1,20 +1,37 @@
 'use server';
 
-import { graphqlUpdateProduct } from '../data/graphql/graphql-fetch';
+import z from 'zod';
+import {
+  graphqlCreateProduct,
+  graphqlUpdateProduct,
+} from '../data/graphql/graphql-fetch';
 import { MUTATIONS } from '../data/graphql/mutations';
 import { getProductById } from '../data/product-data-service';
-import { UpdateProduct } from '../types/product';
+import { CreateProduct, UpdateProduct } from '../types/product';
+
+const createSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  price: z.number(),
+  categoryID: z.number(),
+  images: z.array(z.string()),
+});
 
 export const createProduct = async (formData: FormData) => {
   try {
-    const rawFormData = {
-      title: formData.get('title'),
-      description: formData.get('description'),
+    const validatedFields = createSchema.safeParse({
+      title: formData.get('title')?.toString() ?? '',
+      description: formData.get('description')?.toString() ?? '',
       price: Number(formData.get('price')),
-      categoryId: formData.get('categoryId'),
-      images: formData.getAll('image'),
-    };
-    console.log(rawFormData);
+      categoryID: Number(formData.get('categoryId')),
+      images: formData.getAll('image') ?? [''],
+    });
+
+    if (validatedFields.success) {
+      const validatedData: CreateProduct = validatedFields.data;
+
+      await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, validatedData);
+    }
   } catch (error) {
     console.error('Error fetching products:', error);
   }
