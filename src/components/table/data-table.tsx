@@ -6,11 +6,13 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from '@tanstack/react-table';
 import { useState } from 'react';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import {
   Table,
@@ -47,6 +49,7 @@ export default function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       sorting,
       columnFilters,
@@ -55,24 +58,23 @@ export default function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div>
-        <div className="flex items-center justify-between py-4">
-          {filterColumn && (
-            <Input
-              value={
-                (table.getColumn(filterColumn)?.getFilterValue() as string) ??
-                ''
-              }
-              placeholder={filterPlaceholder ?? ''}
-              onChange={(e) =>
-                table.getColumn(filterColumn)?.setFilterValue(e.target.value)
-              }
-              className="max-w-sm"
-            />
-          )}
-          {addNewButton}
-        </div>
+      {/* Filter input & 'Add new' button */}
+      <div className="flex items-center justify-between py-4">
+        {filterColumn && (
+          <Input
+            value={
+              (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ''
+            }
+            placeholder={filterPlaceholder ?? ''}
+            onChange={(e) =>
+              table.getColumn(filterColumn)?.setFilterValue(e.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
+        {addNewButton}
       </div>
+      {/* Main table */}
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -122,6 +124,25 @@ export default function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+      {/* Pagination controls */}
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
