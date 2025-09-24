@@ -42,10 +42,17 @@ export default async function AdminPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="products" className="flex flex-col p-4 space-y-3">
-            <Button asChild className="self-end bg-green-900">
-              <Link href={'#'}>Add new product</Link>
-            </Button>
-            <DataTable columns={productColumns} data={products} />
+            <DataTable
+              columns={productColumns}
+              data={products}
+              filterColumn="title"
+              filterPlaceholder="Filter by product name..."
+              addNewButton={
+                <Button asChild className="self-end bg-green-900">
+                  <Link href={'#'}>Add new product</Link>
+                </Button>
+              }
+            />
           </TabsContent>
           <TabsContent
             value="categories"

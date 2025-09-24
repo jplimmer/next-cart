@@ -24,7 +24,7 @@ export function ActionsMenu({ updateFn, deleteFn }: ActionsMenuProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={updateFn}>Update</DropdownMenuItem>
+        <DropdownMenuItem onClick={updateFn}>Edit</DropdownMenuItem>
         <DropdownMenuItem onClick={deleteFn} variant="destructive">
           Delete
         </DropdownMenuItem>
