@@ -1,5 +1,6 @@
 import Footer from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
@@ -34,18 +35,20 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`
-          ${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased
-          min-h-svh content-grid grid-rows-[auto_1fr_auto]
-        `}
-      >
-        <Header />
-        {children}
-        <Footer />
-        {modal}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`
+            ${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased
+            min-h-svh content-grid grid-rows-[auto_1fr_auto]
+          `}
+        >
+          <Header />
+          {children}
+          <Footer />
+          {modal}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
