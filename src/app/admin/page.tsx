@@ -2,11 +2,11 @@ import {
   productColumns,
   ProductTableEntry,
 } from '@/components/admin/product-columns';
-import ProductForm from '@/components/admin/product-form';
-import ToggleForm from '@/components/admin/toggle-form-button';
 import DataTable from '@/components/table/data-table';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getProducts } from '@/lib/data/product-data-service';
+import Link from 'next/link';
 
 const getProductTableEntries = async (): Promise<ProductTableEntry[]> => {
   const allProducts = await getProducts();
@@ -41,10 +41,10 @@ export default async function AdminPage() {
               Categories
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="products" className="p-4">
-            <ToggleForm>
-              <ProductForm />
-            </ToggleForm>
+          <TabsContent value="products" className="flex flex-col p-4 space-y-3">
+            <Button asChild className="self-end bg-green-900">
+              <Link href={'#'}>Add new product</Link>
+            </Button>
             <DataTable columns={productColumns} data={products} />
           </TabsContent>
           <TabsContent value="categories" className="p-4">
