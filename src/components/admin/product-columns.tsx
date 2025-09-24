@@ -21,9 +21,7 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
     header: ({ column }) => (
       <SortableColumnHeader column={column} header="ID" className="!pl-1" />
     ),
-    cell: ({ row }) => {
-      return <div className="text-right pr-1">{row.getValue('id')}</div>;
-    },
+    meta: { align: 'end' },
   },
   {
     accessorKey: 'title',
@@ -66,8 +64,9 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
         currency: 'USD',
       }).format(price);
 
-      return <div className="text-right">{formatted}</div>;
+      return formatted;
     },
+    meta: { align: 'end' },
   },
   {
     id: 'actions',
