@@ -1,6 +1,10 @@
+'use client';
+
 import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
+import { filterByParam } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -19,58 +23,78 @@ export default function CategorySelect({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-
-  // Add/remove category from search params array based on checked bool
-  const handleCheck = (category: string, checked: boolean) => {
+  const categoryFilters = filterByParam<Category, 'name'>(
+    categories,
+    categoriesParam,
+    'name'
+  );
+  // Add categories as filters based on user selection(s)
+  const handleApplyFilters = (selectedCategories: Category[]) => {
     const params = new URLSearchParams(searchParams.toString());
-
     // Since you checked a new category, you go back to the first page
     params.delete(searchParamKeys.pageNumber);
-
-    let newCategoryParam: string[];
-
-    if (checked) {
-      // "new Set" removes duplicates, according to mr. GPT.
-      newCategoryParam = Array.from(new Set([...categoriesParam, category]));
-    } else {
-      newCategoryParam = categoriesParam.filter((c) => c !== category);
-    }
-
     // Clear old categories
     params.delete(searchParamKeys.categories);
-
     // Append all selected categories
-    newCategoryParam.forEach((c) =>
-      params.append(searchParamKeys.categories, c)
+    selectedCategories.forEach((cat) =>
+      params.append(searchParamKeys?.categories, cat?.name)
     );
-
     router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Category[]>(categoryFilters);
+
+  const toggleCategory = (cat: Category) => {
+    setSelected((prev) =>
+      prev.some((c) => c.id === cat.id)
+        ? prev.filter((c) => c.id !== cat.id)
+        : [...prev, cat]
+    );
   };
 
   return (
     <section id="category-filter">
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {categoriesParam && categoriesParam.length > 0
-              ? categoriesParam.join(', ')
-              : 'Choose Categories ↓'}
+            {filterByParam<Category, 'name'>(
+              categories,
+              categoriesParam,
+              'name'
+            )
+              ?.map((cat) => cat?.name)
+              ?.join(', ') || 'Choose Categories ↓'}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {categories?.map((category) => (
-            <DropdownMenuCheckboxItem
-              key={category.id}
-              checked={
-                categoriesParam
-                  ? categoriesParam.includes(category.name)
-                  : false
-              }
-              onCheckedChange={(checked) => handleCheck(category.name, checked)}
-            >
-              {category.name}
-            </DropdownMenuCheckboxItem>
-          ))}
+        <DropdownMenuContent className="w-64 p-0">
+          <div className="flex flex-col">
+            <div className="overflow-y-auto max-h-80 px-2 py-2">
+              {categories?.map((category) => (
+                <DropdownMenuCheckboxItem
+                  className="cursor-pointer"
+                  key={category.id}
+                  checked={selected.some((c) => c.id === category.id)}
+                  onCheckedChange={() => toggleCategory(category)}
+                  onSelect={(e) => e.preventDefault()}
+                >
+                  {category.name}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </div>
+
+            <div className="border-t px-2 py-2 bg-white shadow-md">
+              <Button
+                onClick={() => {
+                  setOpen(false);
+                  handleApplyFilters(selected);
+                }}
+                className="w-full cursor-pointer"
+              >
+                ✅ Apply Filters
+              </Button>
+            </div>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </section>

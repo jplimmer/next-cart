@@ -44,3 +44,11 @@ export interface ProductService {
   fetchProductsPaginated: (limit: number, offset: number) => Promise<Product[]>;
   fetchCategories: () => Promise<Category[]>;
 }
+
+export interface CreateProduct extends Omit<Product, 'id' | 'category'> {
+  categoryID: number;
+}
+
+export type UpdateProduct = Partial<Omit<Product, 'id' | 'category'>> & {
+  categoryId?: number;
+};
