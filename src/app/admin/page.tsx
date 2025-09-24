@@ -5,6 +5,7 @@ import {
 import DataTable from '@/components/table/data-table';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { routes } from '@/lib/constants/routes';
 import { getProducts } from '@/lib/data/product-data-service';
 import Link from 'next/link';
 
@@ -49,7 +50,7 @@ export default async function AdminPage() {
               filterPlaceholder="Filter by product name..."
               addNewButton={
                 <Button asChild className="self-end bg-green-900">
-                  <Link href={'#'}>Add new product</Link>
+                  <Link href={routes.createProduct.href}>Add new product</Link>
                 </Button>
               }
             />
@@ -59,7 +60,7 @@ export default async function AdminPage() {
             className="flex flex-col p-4 space-y-3"
           >
             <Button asChild className="self-end bg-green-900">
-              <Link href={'#'}>Add new category</Link>
+              <Link href={routes.createCategory.href}>Add new category</Link>
             </Button>
             <p>Categories table to go here</p>
           </TabsContent>
