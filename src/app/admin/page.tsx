@@ -47,7 +47,13 @@ export default async function AdminPage() {
             </Button>
             <DataTable columns={productColumns} data={products} />
           </TabsContent>
-          <TabsContent value="categories" className="p-4">
+          <TabsContent
+            value="categories"
+            className="flex flex-col p-4 space-y-3"
+          >
+            <Button asChild className="self-end bg-green-900">
+              <Link href={'#'}>Add new category</Link>
+            </Button>
             <p>Categories table to go here</p>
           </TabsContent>
         </Tabs>
