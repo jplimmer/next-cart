@@ -48,3 +48,7 @@ export interface ProductService {
 export interface CreateProduct extends Omit<Product, 'id' | 'category'> {
   categoryID: number;
 }
+
+export type UpdateProduct = Partial<Omit<Product, 'id' | 'category'>> & {
+  categoryId?: number;
+};
