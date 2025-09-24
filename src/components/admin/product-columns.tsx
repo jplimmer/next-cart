@@ -1,19 +1,11 @@
 'use client';
 
 import { getSlugFromTitle } from '@/lib/data/helpers';
-import { cn } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
-import { useState } from 'react';
-import { Button } from '../ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
+import { ExpandableCell } from '../table/expandable-cell';
+import { SortableColumnHeader } from '../table/sortable-column-header';
 import { HoverPrefetchLink } from '../ui/hover-prefetch-link';
+import { ActionsMenu } from './actions-menu';
 
 export type ProductTableEntry = {
   id: string;
@@ -23,40 +15,21 @@ export type ProductTableEntry = {
   price: number;
 };
 
-interface ExpandableCellProps {
-  value: string;
-  render?: (value: string) => React.ReactNode;
-}
-
-const ExpandableCell = ({ value, render }: ExpandableCellProps) => {
-  const [expanded, setExpanded] = useState(false);
-  const content = render ? render(value) : value;
-
-  return (
-    <div
-      onClick={() => setExpanded((prev) => !prev)}
-      className={cn(
-        'cursor-default max-w-[40ch]',
-        expanded ? 'whitespace-normal break-words' : 'truncate'
-      )}
-      title={expanded ? undefined : value}
-    >
-      {content}
-    </div>
-  );
-};
-
 export const productColumns: ColumnDef<ProductTableEntry>[] = [
   {
     accessorKey: 'id',
-    header: () => <div className="text-right pr-1">ID</div>,
+    header: ({ column }) => (
+      <SortableColumnHeader column={column} header="ID" className="!pl-1" />
+    ),
     cell: ({ row }) => {
       return <div className="text-right pr-1">{row.getValue('id')}</div>;
     },
   },
   {
     accessorKey: 'title',
-    header: 'Name',
+    header: ({ column }) => (
+      <SortableColumnHeader column={column} header="Name" />
+    ),
     cell: ({ row }) => (
       <ExpandableCell
         value={row.getValue('title') ?? ''}
@@ -77,11 +50,15 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
   },
   {
     accessorKey: 'category',
-    header: 'Category',
+    header: ({ column }) => (
+      <SortableColumnHeader column={column} header="Category" />
+    ),
   },
   {
     accessorKey: 'price',
-    header: () => <div className="text-right">Price</div>,
+    header: ({ column }) => (
+      <SortableColumnHeader column={column} header="Price" className="!pl-1" />
+    ),
     cell: ({ row }) => {
       const price = parseFloat(row.getValue('price'));
       const formatted = new Intl.NumberFormat('en-US', {
@@ -97,40 +74,15 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                console.log(
-                  'Update function call here. Product id:',
-                  product.id
-                )
-              }
-            >
-              Update
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                console.log(
-                  'Delete function call here. Product id:',
-                  product.id
-                )
-              }
-              variant="destructive"
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      const handleUpdate = () => {
+        console.log('Update function call here. Product id:', product.id);
+      };
+
+      const handleDelete = () => {
+        console.log('Delete function call here. Product id:', product.id);
+      };
+
+      return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
     },
   },
 ];
