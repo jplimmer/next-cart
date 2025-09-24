@@ -10,11 +10,32 @@ import { getProductById } from '../data/product-data-service';
 import { CreateProduct, UpdateProduct } from '../types/product';
 
 const createSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  price: z.number(),
-  categoryID: z.number(),
-  images: z.array(z.string()),
+  title: z
+    .string()
+    .min(
+      3,
+      'Your title is too short. Make sure it is at least 3 characters long'
+    ),
+  description: z
+    .string()
+    .min(
+      10,
+      'Your description is too short. Make sure it is at least 10 characters long'
+    ),
+  price: z.coerce
+    .number()
+    .positive(
+      'Your price is a negative number. Make sure its a postive number'
+    ),
+  categoryID: z.coerce.number(),
+  images: z.array(
+    z
+      .string()
+      .startsWith(
+        'https://',
+        'Your image URL isnt safe, make sure it starts with "https://"'
+      )
+  ),
 });
 
 export const createProduct = async (formData: FormData) => {
@@ -22,8 +43,8 @@ export const createProduct = async (formData: FormData) => {
     const validatedFields = createSchema.safeParse({
       title: formData.get('title')?.toString() ?? '',
       description: formData.get('description')?.toString() ?? '',
-      price: Number(formData.get('price')),
-      categoryID: Number(formData.get('categoryId')),
+      price: formData.get('price'),
+      categoryID: formData.get('categoryId'),
       images: formData.getAll('image') ?? [''],
     });
 
@@ -31,6 +52,8 @@ export const createProduct = async (formData: FormData) => {
       const validatedData: CreateProduct = validatedFields.data;
 
       await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, validatedData);
+    } else {
+      console.error(validatedFields.error);
     }
   } catch (error) {
     console.error('Error fetching products:', error);
