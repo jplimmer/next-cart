@@ -1,5 +1,6 @@
 'use client';
-import { createProduct, CreateProductFormState } from '@/lib/actions/products';
+import { createProduct } from '@/lib/actions/products';
+import { CreateProductFormState } from '@/lib/schemas/product-form';
 import { Category } from '@/lib/types/product';
 import Form from 'next/form';
 import { useActionState } from 'react';
