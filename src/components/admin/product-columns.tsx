@@ -6,6 +6,8 @@ import { ExpandableCell } from '../table/expandable-cell';
 import { SortableColumnHeader } from '../table/sortable-column-header';
 import { HoverPrefetchLink } from '../ui/hover-prefetch-link';
 import { ActionsMenu } from './actions-menu';
+import { deleteProduct } from '@/lib/actions/products';
+import { toast } from 'react-hot-toast';
 
 export type ProductTableEntry = {
   id: string;
@@ -77,8 +79,10 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
         console.log('Update function call here. Product id:', product.id);
       };
 
-      const handleDelete = () => {
-        console.log('Delete function call here. Product id:', product.id);
+      const handleDelete = async () => {
+        const result = await deleteProduct(product.id);
+        if (result) toast.success('Product deleted successfully.');
+        else toast.error('Could not delete product.');
       };
 
       return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
