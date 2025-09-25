@@ -1,5 +1,4 @@
 'use client';
-import { createProduct } from '@/lib/actions/products';
 import { ProductFormState } from '@/lib/schemas/product-form';
 import { Category } from '@/lib/types/product';
 import Form from 'next/form';
@@ -15,7 +14,7 @@ import { Label } from '../ui/label';
 // images: string[];
 // categoryId:
 
-const initialState: ProductFormState = {
+const blankFormState: ProductFormState = {
   success: false,
   error: {},
   data: {
@@ -29,19 +28,26 @@ const initialState: ProductFormState = {
 
 export default function ProductForm({
   categories,
+  formActionFunc,
+  initialState,
 }: {
   categories: Category[];
+  formActionFunc: (
+    state: ProductFormState,
+    formData: FormData
+  ) => Promise<ProductFormState>;
+  initialState?: ProductFormState;
 }) {
   const [state, formAction, pending] = useActionState(
-    createProduct,
-    initialState
+    formActionFunc,
+    blankFormState
   );
 
   return (
     <Form action={formAction}>
       <Label className="p-4">
         Title:
-        <Input required name="title" />
+        <Input name="title" />
       </Label>
       {state.success === false && state.error.title && (
         <Alert variant={'destructive'}>
@@ -52,7 +58,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Description:
-        <Input required name="description" />
+        <Input name="description" />
       </Label>
       {state.success === false && state.error.description && (
         <Alert variant={'destructive'}>
@@ -63,7 +69,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Price:
-        <Input required name="price" type="number" />
+        <Input name="price" type="number" />
       </Label>
       {state.success === false && state.error.price && (
         <Alert variant={'destructive'}>
@@ -74,7 +80,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Category:
-        <select name="categoryID" required>
+        <select name="categoryID">
           {categories.map((cat: Category, index: number) => (
             <option value={cat.id} key={index}>
               {cat.name}
@@ -91,7 +97,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Image URL:
-        <Input required name="images" />
+        <Input name="images" />
       </Label>
       {state.success === false && state.error.images && (
         <Alert variant={'destructive'}>
