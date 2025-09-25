@@ -40,7 +40,7 @@ export default function ProductForm({
 }) {
   const [state, formAction, pending] = useActionState(
     formActionFunc,
-    blankFormState
+    initialState ?? blankFormState
   );
 
   return (
