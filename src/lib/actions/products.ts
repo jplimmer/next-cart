@@ -7,13 +7,13 @@ import {
 } from '../data/graphql/graphql-fetch';
 import { MUTATIONS } from '../data/graphql/mutations';
 import { getProductById } from '../data/product-data-service';
-import { CreateProductFormState, createSchema } from '../schemas/product-form';
+import { ProductFormState, createSchema } from '../schemas/product-form';
 import { CreateProduct, UpdateProduct } from '../types/product';
 
 export const createProduct = async (
-  state: CreateProductFormState,
+  state: ProductFormState,
   formData: FormData
-): Promise<CreateProductFormState> => {
+): Promise<ProductFormState> => {
   try {
     const rawFormData = {
       title: formData.get('title')?.toString() ?? '',

@@ -1,6 +1,6 @@
 'use client';
 import { createProduct } from '@/lib/actions/products';
-import { CreateProductFormState } from '@/lib/schemas/product-form';
+import { ProductFormState } from '@/lib/schemas/product-form';
 import { Category } from '@/lib/types/product';
 import Form from 'next/form';
 import { useActionState } from 'react';
@@ -15,7 +15,7 @@ import { Label } from '../ui/label';
 // images: string[];
 // categoryId:
 
-const initialState: CreateProductFormState = {
+const initialState: ProductFormState = {
   success: false,
   error: {},
   data: {
@@ -39,7 +39,7 @@ export default function ProductForm({
 
   return (
     <Form action={formAction}>
-      <Label>
+      <Label className="p-4">
         Title:
         <Input required name="title" />
       </Label>
@@ -50,7 +50,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="mt-4">
+      <Label className="p-4">
         Description:
         <Input required name="description" />
       </Label>
@@ -61,7 +61,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="mt-4">
+      <Label className="p-4">
         Price:
         <Input required name="price" type="number" />
       </Label>
@@ -72,7 +72,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="mt-4">
+      <Label className="p-4">
         Category:
         <select name="categoryID" required>
           {categories.map((cat: Category, index: number) => (
@@ -89,7 +89,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="mt-4">
+      <Label className="p-4">
         Image URL:
         <Input required name="images" />
       </Label>

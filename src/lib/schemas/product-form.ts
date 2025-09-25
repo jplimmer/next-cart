@@ -7,7 +7,7 @@ export type ProductFormErrors = Partial<
   Record<keyof CreateProductFormData | keyof UpdateProductFormData, string[]>
 >;
 
-export type CreateProductFormState =
+export type ProductFormState =
   | { success: true; data: CreateProductFormData | UpdateProductFormData }
   | {
       success: false;
@@ -43,6 +43,7 @@ export const createSchema = z.object({
       )
   ),
 });
+
 export const updateSchema = z.object({
   title: z
     .string()
