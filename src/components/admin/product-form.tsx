@@ -39,9 +39,12 @@ export default function ProductForm({
 
   return (
     <Form action={formAction}>
+      {'id' in state.data && (
+        <Input readOnly hidden name="id" value={state.data.id} />
+      )}
       <Label className="p-4">
         Title:
-        <Input name="title" />
+        <Input name="title" defaultValue={state.data.title} />
       </Label>
       {state.success === false && state.error.title && (
         <Alert variant={'destructive'}>
@@ -52,7 +55,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Description:
-        <Input name="description" />
+        <Input name="description" defaultValue={state.data.description} />
       </Label>
       {state.success === false && state.error.description && (
         <Alert variant={'destructive'}>
@@ -63,7 +66,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Price:
-        <Input name="price" type="number" />
+        <Input name="price" type="number" defaultValue={state.data.price} />
       </Label>
       {state.success === false && state.error.price && (
         <Alert variant={'destructive'}>
@@ -74,7 +77,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Category:
-        <select name="categoryID">
+        <select name="categoryID" defaultValue={state.data.categoryID}>
           {categories.map((cat: Category, index: number) => (
             <option value={cat.id} key={index}>
               {cat.name}
@@ -91,7 +94,7 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Image URL:
-        <Input name="images" />
+        <Input name="images" defaultValue={state.data.images} />
       </Label>
       {state.success === false && state.error.images && (
         <Alert variant={'destructive'}>
@@ -101,9 +104,9 @@ export default function ProductForm({
         </Alert>
       )}
       <Button type="submit" disabled={pending}>
-        Create Product
+        {initialState === undefined ? 'Create Product' : 'Update Product'}
       </Button>
-      {pending ? 'Loading...' : state.success === true && 'Product created'}
+      {pending ? 'Loading...' : state.success === true && 'Done!'}
     </Form>
   );
 }

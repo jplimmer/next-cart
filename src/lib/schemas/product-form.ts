@@ -45,6 +45,7 @@ export const createSchema = z.object({
 });
 
 export const updateSchema = z.object({
+  id: z.string(),
   title: z
     .string()
     .min(

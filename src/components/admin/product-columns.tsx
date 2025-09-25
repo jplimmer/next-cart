@@ -73,15 +73,11 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
-      const handleUpdate = () => {
-        console.log('Update function call here. Product id:', product.id);
-      };
-
       const handleDelete = () => {
         console.log('Delete function call here. Product id:', product.id);
       };
 
-      return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
+      return <ActionsMenu deleteFn={handleDelete} productId={product.id} />;
     },
   },
 ];
