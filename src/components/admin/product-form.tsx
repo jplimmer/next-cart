@@ -8,12 +8,6 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 
-// title: string;
-// description: string;
-// price: number;
-// images: string[];
-// categoryId:
-
 const blankFormState: ProductFormState = {
   success: false,
   error: {},
