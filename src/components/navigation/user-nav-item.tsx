@@ -9,7 +9,7 @@ import {
   SignInButton,
   UserButton,
 } from '@clerk/nextjs';
-import { NotebookPen, UserRound } from 'lucide-react';
+import { Mail, NotebookPen, UserRound } from 'lucide-react';
 import { navigationMenuTriggerStyle } from '../ui/navigation-menu';
 
 export function UserNavItem() {
@@ -29,6 +29,13 @@ export function UserNavItem() {
                   label="Manage catalog"
                   labelIcon={<NotebookPen size={16} />}
                   href={routes.admin.href}
+                />
+                <UserButton.Action
+                  label="Messages"
+                  labelIcon={<Mail size={16} />}
+                  onClick={() =>
+                    alert('Messages feature is not currently enabled')
+                  }
                 />
                 <UserButton.Action label="manageAccount" />
                 <UserButton.Action label="signOut" />
