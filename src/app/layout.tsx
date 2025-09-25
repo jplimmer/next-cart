@@ -1,9 +1,10 @@
-import Footer from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
+import { AuthToaster, Footer, Header } from '@/components/layout';
+import { routes } from '@/lib/constants/routes';
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
+import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
 const geistSans = Geist({
@@ -35,7 +36,7 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={routes.home.href}>
       <html lang="en">
         <body
           className={`
@@ -47,6 +48,8 @@ export default function RootLayout({
           {children}
           <Footer />
           {modal}
+          <AuthToaster />
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
