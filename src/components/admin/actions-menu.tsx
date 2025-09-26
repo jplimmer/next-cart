@@ -11,6 +11,7 @@ import {
   AlertDialogTrigger,
 } from '../ui/alert-dialog';
 import { Button } from '../ui/button';
+import { DisabledTooltipButton } from '../ui/disabled-tooltip-button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,7 +57,7 @@ function DeleteAlert({ deleteFn }: { deleteFn: () => void }) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to delete this product?
+            Are you sure you want to delete this item?
           </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone.
@@ -68,5 +69,20 @@ function DeleteAlert({ deleteFn }: { deleteFn: () => void }) {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+}
+
+export function DisabledActionsMenu({ tooltip }: { tooltip: string }) {
+  return (
+    <DisabledTooltipButton
+      variant="ghost"
+      tooltip={tooltip}
+      className="h-8 w-8 p-0"
+    >
+      <span className="sr-only" aria-disabled="true">
+        Open menu
+      </span>
+      <MoreHorizontal className="h-4 w-4" />
+    </DisabledTooltipButton>
   );
 }

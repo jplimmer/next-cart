@@ -2,7 +2,7 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { SortableColumnHeader } from '../table/sortable-column-header';
-import { ActionsMenu } from './actions-menu';
+import { DisabledActionsMenu } from './actions-menu';
 
 export type CategoryTableEntry = {
   id: string;
@@ -36,17 +36,21 @@ export const categoryColumns: ColumnDef<CategoryTableEntry>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const category = row.original;
+      return (
+        <DisabledActionsMenu tooltip="Actions are not currently enabled for Categories" />
+      );
 
-      const handleUpdate = () => {
-        console.log('Update function call here. Category id:', category.id);
-      };
+      // const category = row.original;
 
-      const handleDelete = () => {
-        console.log('Update function call here. Category id:', category.id);
-      };
+      // const handleUpdate = () => {
+      //   console.log('Update function call here. Category id:', category.id);
+      // };
 
-      return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
+      // const handleDelete = () => {
+      //   console.log('Update function call here. Category id:', category.id);
+      // };
+
+      // return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
     },
   },
 ];
