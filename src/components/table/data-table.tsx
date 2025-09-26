@@ -69,7 +69,7 @@ export default function DataTable<TData, TValue>({
             onChange={(e) =>
               table.getColumn(filterColumn)?.setFilterValue(e.target.value)
             }
-            className="max-w-sm"
+            className="max-w-xs"
           />
         )}
         {addNewButton}

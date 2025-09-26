@@ -1,6 +1,18 @@
 import { MoreHorizontal } from 'lucide-react';
 import Link from 'next/link';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '../ui/alert-dialog';
 import { Button } from '../ui/button';
+import { DisabledTooltipButton } from '../ui/disabled-tooltip-button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,16 +38,58 @@ export function ActionsMenu({ deleteFn, updateHref }: ActionsMenuProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-        <DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link href={updateHref} className="w-full">
             Edit
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={deleteFn} variant="destructive">
-          Delete
-        </DropdownMenuItem>
+        <DeleteAlert deleteFn={deleteFn} />
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function DeleteAlert({ deleteFn }: { deleteFn: () => void }) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={(e) => e.preventDefault()}
+        >
+          Delete
+        </DropdownMenuItem>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Are you sure you want to delete this item?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteFn}>Confirm</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+export function DisabledActionsMenu({ tooltip }: { tooltip: string }) {
+  return (
+    <DisabledTooltipButton
+      variant="ghost"
+      tooltip={tooltip}
+      className="h-8 w-8 p-0"
+    >
+      <span className="sr-only" aria-disabled="true">
+        Open menu
+      </span>
+      <MoreHorizontal className="h-4 w-4" />
+    </DisabledTooltipButton>
   );
 }

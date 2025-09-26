@@ -7,7 +7,9 @@ import { toast } from 'react-hot-toast';
 import { ExpandableCell } from '../table/expandable-cell';
 import { SortableColumnHeader } from '../table/sortable-column-header';
 import { HoverPrefetchLink } from '../ui/hover-prefetch-link';
-import { ActionsMenu } from './actions-menu';
+import { ActionsMenu, DisabledActionsMenu } from './actions-menu';
+
+const useApi = true;
 
 export type ProductTableEntry = {
   id: string;
@@ -78,8 +80,14 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
       const handleDelete = async () => {
         const result = await deleteProduct(product.id);
         if (result) toast.success('Product deleted successfully.');
-        else toast.error('Could not delete product.');
+        else toast.error('Could not delete product, please try again.');
       };
+
+      if (!useApi) {
+        return (
+          <DisabledActionsMenu tooltip="Actions are disabled for mock data" />
+        );
+      }
 
       const updateHref = `/admin/update-product/${product.id}`;
 

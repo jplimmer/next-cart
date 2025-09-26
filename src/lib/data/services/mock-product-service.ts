@@ -7,7 +7,7 @@ const useExperimentalData =
   (process.env.USE_EXPERIMENTAL_DATA ?? 'false') === 'true';
 
 const loadMockData = async (): Promise<Product[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   if (useExperimentalData) {
     if (process.env.NODE_ENV !== 'development') {
