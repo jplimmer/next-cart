@@ -43,7 +43,7 @@ export default function ProductForm({
       {'id' in state.data && (
         <Input readOnly hidden name="id" value={state.data.id} />
       )}
-      <Label className="p-4">
+      <Label className="p-4 grid grid-cols-2">
         Title:
         <Input name="title" defaultValue={state.data.title} />
       </Label>
@@ -55,7 +55,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="p-4">
+      <Label className="p-4 grid grid-cols-2">
         Description:
         <Input name="description" defaultValue={state.data.description} />
       </Label>
@@ -67,7 +67,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="p-4">
+      <Label className="p-4 grid grid-cols-2">
         Price:
         <Input name="price" type="number" defaultValue={state.data.price} />
       </Label>
@@ -79,7 +79,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="p-4">
+      <Label className="p-4 grid grid-cols-2">
         Category:
         <select
           name="categoryID"
@@ -105,7 +105,7 @@ export default function ProductForm({
           ))}
         </Alert>
       )}
-      <Label className="p-4">
+      <Label className="p-4 grid grid-cols-2">
         Image URL:
         <Input name="images" defaultValue={state.data.images} />
       </Label>
