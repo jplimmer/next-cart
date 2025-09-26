@@ -35,4 +35,11 @@ export const MUTATIONS = {
       }
     }
   `,
+  DELETE_PRODUCT: `
+  mutation DeleteProduct(
+    $id: ID!
+  ) {
+    deleteProduct(id: $id)
+  }
+`,
 };

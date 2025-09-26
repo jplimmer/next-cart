@@ -117,3 +117,33 @@ export async function graphqlUpdateProduct(
     throw error;
   }
 }
+
+export async function graphqlDeleteProduct(
+  query: string,
+  variables: GraphQLVariables
+): Promise<boolean> {
+  try {
+    const response = await fetch(GRAPHQL_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    });
+
+    const result = await response.json();
+    // Handle GraphQL errors such as syntax errors or validation errors
+    if (result.errors) {
+      throw new Error(result.errors[0].message);
+    }
+    const { deleteProduct } = result.data;
+    return deleteProduct;
+  } catch (error) {
+    // Handle network errors or other unexpected errors such as CORS issues or server downtime
+    console.error('GraphQL fetch error:', error);
+    throw error;
+  }
+}

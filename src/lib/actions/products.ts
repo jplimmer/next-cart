@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import z from 'zod';
 import {
   graphqlCreateProduct,
+  graphqlDeleteProduct,
   graphqlUpdateProduct,
 } from '../data/graphql/graphql-fetch';
 import { MUTATIONS } from '../data/graphql/mutations';
@@ -93,5 +94,17 @@ export const updateProduct = async (
     return { success: true, data: validatedData };
   } catch (error) {
     throw new Error('Error fetching products: ' + error);
+  }
+};
+
+export const deleteProduct = async (id: string) => {
+  try {
+    const res = await graphqlDeleteProduct(MUTATIONS.DELETE_PRODUCT, { id });
+    if (!res) throw new Error(`id: ${String(id)}`);
+    revalidatePath('/');
+    return true;
+  } catch (error) {
+    console.error(`Error delete product:`, error);
+    return false;
   }
 };

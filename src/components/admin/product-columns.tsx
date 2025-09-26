@@ -1,7 +1,9 @@
 'use client';
 
+import { deleteProduct } from '@/lib/actions/products';
 import { getSlugFromTitle } from '@/lib/data/helpers';
 import { ColumnDef } from '@tanstack/react-table';
+import { toast } from 'react-hot-toast';
 import { ExpandableCell } from '../table/expandable-cell';
 import { SortableColumnHeader } from '../table/sortable-column-header';
 import { HoverPrefetchLink } from '../ui/hover-prefetch-link';
@@ -73,8 +75,10 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
-      const handleDelete = () => {
-        console.log('Delete function call here. Product id:', product.id);
+      const handleDelete = async () => {
+        const result = await deleteProduct(product.id);
+        if (result) toast.success('Product deleted successfully.');
+        else toast.error('Could not delete product.');
       };
 
       return <ActionsMenu deleteFn={handleDelete} productId={product.id} />;
