@@ -81,9 +81,17 @@ export default function ProductForm({
       )}
       <Label className="p-4">
         Category:
-        <select name="categoryID" defaultValue={state.data.categoryID}>
+        <select
+          name="categoryID"
+          defaultValue={state.data.categoryID}
+          className="p-2 border-2 border-gray-200 rounded-[10px]"
+        >
           {categories.map((cat: Category, index: number) => (
-            <option value={cat.id} key={index}>
+            <option
+              value={cat.id}
+              key={index}
+              className="bg-gray-100 active:bg-gray-100"
+            >
               {cat.name}
             </option>
           ))}
