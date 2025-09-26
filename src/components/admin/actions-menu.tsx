@@ -1,4 +1,5 @@
 import { MoreHorizontal } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -9,11 +10,11 @@ import {
 } from '../ui/dropdown-menu';
 
 interface ActionsMenuProps {
-  updateFn: () => void;
   deleteFn: () => void;
+  updateHref: string;
 }
 
-export function ActionsMenu({ updateFn, deleteFn }: ActionsMenuProps) {
+export function ActionsMenu({ deleteFn, updateHref }: ActionsMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,7 +25,13 @@ export function ActionsMenu({ updateFn, deleteFn }: ActionsMenuProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuItem onClick={updateFn}>Edit</DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Link href={updateHref} className="w-full">
+            Edit
+          </Link>
+        </DropdownMenuItem>
+
         <DropdownMenuItem onClick={deleteFn} variant="destructive">
           Delete
         </DropdownMenuItem>
