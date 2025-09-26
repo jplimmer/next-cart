@@ -13,7 +13,7 @@ export default async function Page({
 
   const productResult = await getProductByTitle(title);
 
-  if (!productResult.success) return notFound();
+  if (!productResult.success) notFound();
   const product = productResult.data;
 
   return (
