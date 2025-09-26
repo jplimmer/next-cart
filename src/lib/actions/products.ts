@@ -14,6 +14,7 @@ import {
   updateSchema,
 } from '../schemas/product-form';
 import { CreateProduct, UpdateProduct } from '../types/product';
+import { extractFormField } from '../utils';
 
 export const createProduct = async (
   state: ProductFormState,
@@ -21,10 +22,10 @@ export const createProduct = async (
 ): Promise<ProductFormState> => {
   try {
     const rawFormData = {
-      title: formData.get('title')?.toString() ?? '',
-      description: formData.get('description')?.toString() ?? '',
-      price: Number(formData.get('price')),
-      categoryID: Number(formData.get('categoryID')),
+      title: extractFormField(formData, 'title'),
+      description: extractFormField(formData, 'description'),
+      price: Number(extractFormField(formData, 'price')),
+      categoryID: Number(extractFormField(formData, 'categoryID')),
       images: (formData.getAll('images') as string[]).map((img) => img ?? ''),
     };
     const validatedFields = createSchema.safeParse(rawFormData);
@@ -53,11 +54,11 @@ export const updateProduct = async (
 ): Promise<ProductFormState> => {
   try {
     const rawFormData = {
-      id: formData.get('id')?.toString() ?? '',
-      title: formData.get('title')?.toString() ?? '',
-      description: formData.get('description')?.toString() ?? '',
-      price: Number(formData.get('price')),
-      categoryID: Number(formData.get('categoryID')),
+      id: extractFormField(formData, 'id'),
+      title: extractFormField(formData, 'title'),
+      description: extractFormField(formData, 'description'),
+      price: Number(extractFormField(formData, 'price')),
+      categoryID: Number(extractFormField(formData, 'categoryID')),
       images: (formData.getAll('images') as string[]).map((img) => img ?? ''),
     };
 

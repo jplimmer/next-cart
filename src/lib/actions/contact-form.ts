@@ -6,11 +6,7 @@ import {
   contactFormSchema,
   ContactFormState,
 } from '../schemas/contactForm';
-
-const extractFormField = (formData: FormData, fieldName: string): string => {
-  const value = formData.get(fieldName);
-  return typeof value === 'string' ? value : '';
-};
+import { extractFormField } from '../utils';
 
 const sanitiseFormData = (formData: FormData): ContactFormData => {
   return {

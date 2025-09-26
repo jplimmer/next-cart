@@ -125,3 +125,11 @@ export function filterByParam<T, K extends keyof T>(
   const paramSet = new Set(paramValues);
   return items.filter((item) => paramSet.has(item[key]));
 }
+
+export const extractFormField = (
+  formData: FormData,
+  fieldName: string
+): string => {
+  const value = formData.get(fieldName);
+  return typeof value === 'string' ? value : '';
+};
