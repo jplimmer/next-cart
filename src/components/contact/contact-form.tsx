@@ -1,6 +1,6 @@
 'use client';
 
-import { processContactForm } from '@/lib/actions/contactForm';
+import { processContactForm } from '@/lib/actions/contact-form';
 import React, { startTransition, useActionState, useRef } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
