@@ -1,9 +1,7 @@
 import { ProductService } from '../types/product';
+import { getAPIHealthStatus } from './api-health-check';
 import * as apiProductService from './services/api-product-service';
 import * as mockProductService from './services/mock-product-service';
-
-// Determine whether to fallback to mock data based on API response (logic to be implemented)
-const useFallBack = false;
 
 // Check env variables for using mock/experimental data
 const useMockData =
@@ -14,15 +12,30 @@ const useExperimentalData =
   process.env.NODE_ENV === 'development' &&
   (process.env.USE_EXPERIMENTAL_DATA ?? 'false') === 'true';
 
-// Select data source functions
-const useApi = !useFallBack && !useMockData && !useExperimentalData;
+/**
+ * Determines which data source to be used based on environment and API health
+ * @returns {Promise<ProductService>} The appropriate data service
+ */
+const getDataSource = async (): Promise<ProductService> => {
+  // Use mock/experimental data if env vars are set
+  if (useMockData || useExperimentalData) {
+    console.log(
+      `Using ${useExperimentalData ? 'experimental' : 'mock'} data (env override)`
+    );
+  }
 
-const dataSource: ProductService = useApi
-  ? apiProductService
-  : mockProductService;
-if (!useApi) {
-  console.log(`Using ${useExperimentalData ? 'experimental' : 'mock'} data`);
-}
+  // Check API health and return appropriate service
+  const useApi = await getAPIHealthStatus();
+
+  if (useApi) {
+    return apiProductService;
+  } else {
+    console.log('Using mock data (API unhealthy');
+    return mockProductService;
+  }
+};
+
+const dataSource = await getDataSource();
 
 // Export functions for UI usage
 export const getProducts = dataSource.fetchProducts;
