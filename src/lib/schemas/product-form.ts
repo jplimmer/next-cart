@@ -44,35 +44,6 @@ export const createSchema = z.object({
   ),
 });
 
-export const updateSchema = z.object({
+export const updateSchema = createSchema.extend({
   id: z.string(),
-  title: z
-    .string()
-    .min(
-      3,
-      'Your title is too short. Make sure it is at least 3 characters long'
-    )
-    .optional(),
-  description: z
-    .string()
-    .min(
-      10,
-      'Your description is too short. Make sure it is at least 10 characters long'
-    )
-    .optional(),
-  price: z.coerce
-    .number()
-    .positive('Your price is a negative number. Make sure its a postive number')
-    .optional(),
-  categoryID: z.coerce.number().optional(),
-  images: z
-    .array(
-      z
-        .string()
-        .startsWith(
-          'https://',
-          'Your image URL isnt safe, make sure it starts with "https://"'
-        )
-    )
-    .optional(),
 });
