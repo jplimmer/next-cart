@@ -11,7 +11,7 @@ import { routes } from '@/lib/constants/routes';
 import { getCategories } from '@/lib/data/product-data-service';
 import Link from 'next/link';
 
-export async function PagesNav({ className }: { className?: string }) {
+export async function PagesNavMenu({ className }: { className?: string }) {
   const categories = [
     {
       id: '-1' /* In production "mode", first item does not render for unknown reason, this is a dummy that will be hidden ...*/,
