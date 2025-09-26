@@ -77,10 +77,6 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
-      const handleUpdate = () => {
-        console.log('Update function call here. Product id:', product.id);
-      };
-
       const handleDelete = async () => {
         const result = await deleteProduct(product.id);
         if (result) toast.success('Product deleted successfully.');
@@ -93,7 +89,9 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
         );
       }
 
-      return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
+      const updateHref = `/admin/update-product/${product.id}`;
+
+      return <ActionsMenu deleteFn={handleDelete} updateHref={updateHref} />;
     },
   },
 ];
