@@ -11,10 +11,10 @@ import {
 
 interface ActionsMenuProps {
   deleteFn: () => void;
-  productId: string;
+  updateHref: string;
 }
 
-export function ActionsMenu({ deleteFn, productId }: ActionsMenuProps) {
+export function ActionsMenu({ deleteFn, updateHref }: ActionsMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,10 +26,11 @@ export function ActionsMenu({ deleteFn, productId }: ActionsMenuProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-        <Link href={`/admin/update-product/${productId}`}>
-          {' '}
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-        </Link>
+        <DropdownMenuItem>
+          <Link href={updateHref} className="w-full">
+            Edit
+          </Link>
+        </DropdownMenuItem>
 
         <DropdownMenuItem onClick={deleteFn} variant="destructive">
           Delete

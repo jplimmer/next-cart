@@ -81,7 +81,9 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
         else toast.error('Could not delete product.');
       };
 
-      return <ActionsMenu deleteFn={handleDelete} productId={product.id} />;
+      const updateHref = `/admin/update-product/${product.id}`;
+
+      return <ActionsMenu deleteFn={handleDelete} updateHref={updateHref} />;
     },
   },
 ];
