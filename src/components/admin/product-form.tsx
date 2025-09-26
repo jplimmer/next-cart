@@ -1,6 +1,7 @@
 'use client';
 import { ProductFormState } from '@/lib/schemas/product-form';
 import { Category } from '@/lib/types/product';
+import { AlertCircleIcon } from 'lucide-react';
 import Form from 'next/form';
 import { useActionState } from 'react';
 import { Alert, AlertDescription } from '../ui/alert';
@@ -48,6 +49,7 @@ export default function ProductForm({
       </Label>
       {state.success === false && state.error.title && (
         <Alert variant={'destructive'}>
+          <AlertCircleIcon />
           {state.error.title.map((error, index) => (
             <AlertDescription key={index}>{error}</AlertDescription>
           ))}
@@ -59,6 +61,7 @@ export default function ProductForm({
       </Label>
       {state.success === false && state.error.description && (
         <Alert variant={'destructive'}>
+          <AlertCircleIcon />
           {state.error.description.map((error, index) => (
             <AlertDescription key={index}>{error}</AlertDescription>
           ))}
@@ -70,6 +73,7 @@ export default function ProductForm({
       </Label>
       {state.success === false && state.error.price && (
         <Alert variant={'destructive'}>
+          <AlertCircleIcon />
           {state.error.price.map((error, index) => (
             <AlertDescription key={index}>{error}</AlertDescription>
           ))}
@@ -87,6 +91,7 @@ export default function ProductForm({
       </Label>
       {state.success === false && state.error.categoryID && (
         <Alert variant={'destructive'}>
+          <AlertCircleIcon />
           {state.error.categoryID.map((error, index) => (
             <AlertDescription key={index}>{error}</AlertDescription>
           ))}
@@ -98,6 +103,7 @@ export default function ProductForm({
       </Label>
       {state.success === false && state.error.images && (
         <Alert variant={'destructive'}>
+          <AlertCircleIcon />
           {state.error.images.map((error, index) => (
             <AlertDescription key={index}>{error}</AlertDescription>
           ))}
