@@ -3,15 +3,18 @@ import z from 'zod';
 export type CreateProductFormData = z.infer<typeof createSchema>;
 export type UpdateProductFormData = z.infer<typeof updateSchema>;
 
-export type ProductFormErrors = Partial<
-  Record<keyof CreateProductFormData | keyof UpdateProductFormData, string[]>
+export type CreateProductFormErrors = Partial<
+  Record<keyof CreateProductFormData, string[]>
+>;
+export type UpdateProductFormErrors = Partial<
+  Record<keyof UpdateProductFormData, string[]>
 >;
 
 export type ProductFormState =
   | { success: true; data: CreateProductFormData | UpdateProductFormData }
   | {
       success: false;
-      error: ProductFormErrors;
+      error: CreateProductFormErrors | UpdateProductFormErrors;
       data: CreateProductFormData | UpdateProductFormData;
     };
 
