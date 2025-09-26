@@ -26,6 +26,29 @@ const getProductTableEntries = async (): Promise<ProductTableEntry[]> => {
   return ptes;
 };
 
+const getCategoryTableEntries = async (): Promise<CategoryTableEntry[]> => {
+  const allProducts = await getProducts();
+
+  if (allProducts.length === 0) {
+    return [];
+  }
+
+  const categoryMap = new Map<string, CategoryTableEntry>();
+
+  for (const p of allProducts) {
+    const { id, name } = p.category;
+    const existing = categoryMap.get(id);
+
+    if (existing) {
+      existing.numProducts += 1;
+    } else {
+      categoryMap.set(id, { id, name, numProducts: 1 });
+    }
+  }
+
+  return Array.from(categoryMap.values());
+};
+
 export default async function AdminPage() {
   const products = await getProductTableEntries();
 
