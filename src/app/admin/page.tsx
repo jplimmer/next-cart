@@ -1,58 +1,7 @@
-import {
-  categoryColumns,
-  CategoryTableEntry,
-} from '@/components/admin/category-colums';
-import {
-  productColumns,
-  ProductTableEntry,
-} from '@/components/admin/product-columns';
-import DataTable from '@/components/table/data-table';
-import { Button } from '@/components/ui/button';
+import CategoriesTab from '@/components/admin/categories-tab';
+import ProductsTab from '@/components/admin/products-tab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { routes } from '@/lib/constants/routes';
-import { getProducts } from '@/lib/data/product-data-service';
-import Link from 'next/link';
 import { Suspense } from 'react';
-
-const getProductTableEntries = async (): Promise<ProductTableEntry[]> => {
-  const allProducts = await getProducts();
-
-  if (allProducts.length === 0) {
-    return [];
-  }
-
-  const ptes: ProductTableEntry[] = allProducts.map((p) => ({
-    id: p.id,
-    title: p.title,
-    description: p.description,
-    category: p.category.name,
-    price: p.price,
-  }));
-  return ptes;
-};
-
-const getCategoryTableEntries = async (): Promise<CategoryTableEntry[]> => {
-  const allProducts = await getProducts();
-
-  if (allProducts.length === 0) {
-    return [];
-  }
-
-  const categoryMap = new Map<string, CategoryTableEntry>();
-
-  for (const p of allProducts) {
-    const { id, name } = p.category;
-    const existing = categoryMap.get(id);
-
-    if (existing) {
-      existing.numProducts += 1;
-    } else {
-      categoryMap.set(id, { id, name, numProducts: 1 });
-    }
-  }
-
-  return Array.from(categoryMap.values());
-};
 
 export default async function AdminPage() {
   return (
@@ -99,41 +48,3 @@ export default async function AdminPage() {
     </main>
   );
 }
-
-const ProductsTab = async () => {
-  const products = await getProductTableEntries();
-
-  return (
-    <DataTable
-      columns={productColumns}
-      data={products}
-      filterColumn="title"
-      filterPlaceholder="Filter by product name..."
-      addNewButton={
-        <Button asChild className="self-end bg-green-900">
-          <Link href={routes.createProduct.href}>Add new product</Link>
-        </Button>
-      }
-    />
-  );
-};
-
-const CategoriesTab = async () => {
-  const categories = await getCategoryTableEntries();
-
-  return (
-    <div className="w-2/3">
-      <DataTable
-        columns={categoryColumns}
-        data={categories}
-        filterColumn="name"
-        filterPlaceholder="Filter by category name..."
-        addNewButton={
-          <Button asChild className="self-end bg-green-900">
-            <Link href={routes.createCategory.href}>Add new category</Link>
-          </Button>
-        }
-      />
-    </div>
-  );
-};
