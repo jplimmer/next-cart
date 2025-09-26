@@ -35,22 +35,8 @@ export const categoryColumns: ColumnDef<CategoryTableEntry>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => {
-      return (
-        <DisabledActionsMenu tooltip="Actions are not currently enabled for Categories" />
-      );
-
-      // const category = row.original;
-
-      // const handleUpdate = () => {
-      //   console.log('Update function call here. Category id:', category.id);
-      // };
-
-      // const handleDelete = () => {
-      //   console.log('Update function call here. Category id:', category.id);
-      // };
-
-      // return <ActionsMenu updateFn={handleUpdate} deleteFn={handleDelete} />;
-    },
+    cell: () => (
+      <DisabledActionsMenu tooltip="Actions are not currently enabled for Categories" />
+    ),
   },
 ];

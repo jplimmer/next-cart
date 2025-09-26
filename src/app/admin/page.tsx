@@ -122,16 +122,18 @@ const CategoriesTab = async () => {
   const categories = await getCategoryTableEntries();
 
   return (
-    <DataTable
-      columns={categoryColumns}
-      data={categories}
-      filterColumn="name"
-      filterPlaceholder="Filter by category name..."
-      addNewButton={
-        <Button asChild className="self-end bg-green-900">
-          <Link href={routes.createCategory.href}>Add new category</Link>
-        </Button>
-      }
-    />
+    <div className="w-2/3">
+      <DataTable
+        columns={categoryColumns}
+        data={categories}
+        filterColumn="name"
+        filterPlaceholder="Filter by category name..."
+        addNewButton={
+          <Button asChild className="self-end bg-green-900">
+            <Link href={routes.createCategory.href}>Add new category</Link>
+          </Button>
+        }
+      />
+    </div>
   );
 };
