@@ -18,7 +18,7 @@ export default function Footer() {
 
         {/* Social Icons */}
         <div className="text-center">
-          <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+          <p className="text-lg font-semibold mb-4">Follow Us</p>
           <div
             className="flex justify-center space-x-4"
             style={{
