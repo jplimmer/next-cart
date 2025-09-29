@@ -178,6 +178,7 @@ export function SearchBar({
           className="focus-visible:outline-none placeholder:text-neutral-600"
         ></input>
         <Button type="submit" variant="ghost">
+          <p className="sr-only">search button</p>
           <Search />
         </Button>
       </form>
