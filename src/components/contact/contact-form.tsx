@@ -51,6 +51,7 @@ export default function ContactForm() {
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
+            id="email"
             type="email"
             name="email"
             placeholder="example@domain.com"
@@ -64,6 +65,7 @@ export default function ContactForm() {
         <div className="grid gap-2">
           <Label htmlFor="subject">Subject</Label>
           <Input
+            id="subject"
             type="text"
             name="subject"
             placeholder="Let us know what your query is about..."
@@ -77,6 +79,7 @@ export default function ContactForm() {
         <div className="grid gap-2">
           <Label htmlFor="message">Message</Label>
           <Textarea
+            id="message"
             name="message"
             placeholder="...then hit submit and we'll get back to you as soon as we can!"
             defaultValue={state.formData.message}
