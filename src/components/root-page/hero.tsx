@@ -20,7 +20,7 @@ export default async function Hero() {
         )
       : productsFromApi;
 
-  const generateProducts = (product: Product) => {
+  const drawProduct = (product: Product) => {
     let txt =
       product.title?.split(' ')?.filter(Boolean)?.slice(-2)?.join(' ') ||
       product.title;
@@ -65,7 +65,7 @@ export default async function Hero() {
           </Button>
         </div>
         <section className="flex flex-wrap gap-2 w-1/3">
-          {rndProducts.map((product) => generateProducts(product))}
+          {rndProducts.map((product) => drawProduct(product))}
         </section>
       </div>
     </section>
