@@ -1,34 +1,10 @@
-import {
-  productColumns,
-  ProductTableEntry,
-} from '@/components/admin/product-columns';
-import DataTable from '@/components/table/data-table';
-import { Button } from '@/components/ui/button';
+import CategoriesTab from '@/components/admin/categories-tab';
+import ProductsTab from '@/components/admin/products-tab';
+import { LoadingSpinner } from '@/components/loading/loading-spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { routes } from '@/lib/constants/routes';
-import { getProducts } from '@/lib/data/product-data-service';
-import Link from 'next/link';
+import { Suspense } from 'react';
 
-const getProductTableEntries = async (): Promise<ProductTableEntry[]> => {
-  const allProducts = await getProducts();
-
-  if (allProducts.length === 0) {
-    return [];
-  }
-
-  const ptes: ProductTableEntry[] = allProducts.map((p) => ({
-    id: p.id,
-    title: p.title,
-    description: p.description,
-    category: p.category.name,
-    price: p.price,
-  }));
-  return ptes;
-};
-
-export default async function AdminPage() {
-  const products = await getProductTableEntries();
-
+export default function AdminPage() {
   return (
     <main className="full-width p-8 space-y-8">
       <div className="flex flex-col">
@@ -43,26 +19,17 @@ export default async function AdminPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="products" className="flex flex-col p-4 space-y-3">
-            <DataTable
-              columns={productColumns}
-              data={products}
-              filterColumn="title"
-              filterPlaceholder="Filter by product name..."
-              addNewButton={
-                <Button asChild className="self-end bg-green-900">
-                  <Link href={routes.createProduct.href}>Add new product</Link>
-                </Button>
-              }
-            />
+            <Suspense fallback={<LoadingSpinner />}>
+              <ProductsTab />
+            </Suspense>
           </TabsContent>
           <TabsContent
             value="categories"
             className="flex flex-col p-4 space-y-3"
           >
-            <Button asChild className="self-end bg-green-900">
-              <Link href={routes.createCategory.href}>Add new category</Link>
-            </Button>
-            <p>Categories table to go here</p>
+            <Suspense fallback={<LoadingSpinner />}>
+              <CategoriesTab />
+            </Suspense>
           </TabsContent>
         </Tabs>
       </div>
