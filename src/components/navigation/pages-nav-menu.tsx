@@ -58,13 +58,6 @@ export async function PagesNavMenu({ className }: { className?: string }) {
             <Link href={routes.contact.href}>{routes.contact.title}</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={routes.merchandise.href}>
-              {routes.merchandise.title}
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
