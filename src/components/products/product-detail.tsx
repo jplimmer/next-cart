@@ -14,9 +14,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           {product.title}
         </h1>
         <p className="my-2 text-lg font-semibold">${product.price}</p>
-        <p id={`product-${product.id}-description`} className="text-justify">
-          {product.description}
-        </p>
+        <p id={`product-${product.id}-description`}>{product.description}</p>
 
         <section className="flex items-baseline justify-between w-full">
           <QuantitySelector className="my-3" />
