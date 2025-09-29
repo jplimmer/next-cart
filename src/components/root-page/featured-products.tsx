@@ -3,13 +3,14 @@ import { getProductsPaginated } from '@/lib/data/product-data-service';
 
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { CardGridSkeleton } from '../loading/card-grid-skeleton';
 import { CardGrid, CardGridLayout } from '../products/card-grid';
 
 export default function FeaturedProducts() {
   const numProducts = 4;
 
   return (
-    <section className="content-grid full-width bg-gray-50 space-y-8 py-8">
+    <section className="content-grid full-width bg-gray-50 space-y-8 py-16">
       <header className={CardGridLayout}>
         <div className="col-span-full flex justify-between items-baseline text-green-800">
           <h2 className="flex-1 text-3xl text-center md:text-left">
@@ -20,7 +21,7 @@ export default function FeaturedProducts() {
           </Link>
         </div>
       </header>
-      <Suspense fallback={''}>
+      <Suspense fallback={<CardGridSkeleton cards={numProducts} />}>
         <CardGrid productsPromise={getProductsPaginated(numProducts, 0)} />
       </Suspense>
     </section>

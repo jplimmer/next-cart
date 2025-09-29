@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator';
 
 export default function Home() {
   return (
-    <main className="content-grid full-width space-y-8">
+    <main className="content-grid full-width">
       <Hero />
       <FeaturedProducts />
       <Separator />
