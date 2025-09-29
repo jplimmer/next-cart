@@ -26,16 +26,16 @@ export default function Footer() {
               fontSize: '3.125rem',
             }}
           >
-            <Link href="#">
+            <Link href="https://www.facebook.com/">
               <span className="w-5 h-5">f</span>
             </Link>
-            <Link href="#">
+            <Link href="https://twitter.com/">
               <span className="w-5 h-5">t</span>
             </Link>
-            <Link href="#">
+            <Link href="https://www.youtube.com/">
               <span className="w-5 h-5">y</span>
             </Link>
-            <Link href="#">
+            <Link href="https://rss.com/">
               <span className="w-5 h-5">r</span>
             </Link>
           </div>
@@ -66,10 +66,10 @@ export default function Footer() {
           © 2025 NextCart - order like there´s no tomorrow
         </p>
         <div className="flex justify-center space-x-4">
-          <Link href="#" className="underline">
+          <Link href={routes.about.href} className="underline">
             Terms of Use
           </Link>
-          <Link href="#" className="underline">
+          <Link href={routes.contact.href} className="underline">
             Privacy Policy
           </Link>
         </div>
