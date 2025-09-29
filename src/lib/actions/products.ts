@@ -50,11 +50,11 @@ export const createProduct = async (
 
 export const updateProduct = async (
   state: ProductFormState,
-  formData: FormData,
-  id: string
+  formData: FormData
 ): Promise<ProductFormState> => {
   try {
     const rawFormData = {
+      id: extractFormField(formData, 'id'),
       title: extractFormField(formData, 'title'),
       description: extractFormField(formData, 'description'),
       price: Number(extractFormField(formData, 'price')),
@@ -62,7 +62,7 @@ export const updateProduct = async (
       images: (formData.getAll('images') as string[]).map((img) => img ?? ''),
     };
 
-    if (id === '') {
+    if (rawFormData.id === '') {
       throw new Error('Product ID cant be found');
     }
 
@@ -86,7 +86,7 @@ export const updateProduct = async (
     };
 
     await graphqlUpdateProduct(MUTATIONS.UPDATE_PRODUCT, {
-      id: id,
+      id: validatedData.id,
       changes: newProductData,
     });
 
