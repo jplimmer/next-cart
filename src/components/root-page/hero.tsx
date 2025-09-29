@@ -33,9 +33,7 @@ export default async function Hero() {
       >
         <HeroImgText
           text={txt}
-          className={
-            product?.title?.length > 35 ? 'truncate w-[10.625rem]' : ''
-          }
+          className={txt?.length > 35 ? 'truncate w-[10.625rem]' : ''}
         />
         {product?.images.length > 0 ? (
           <Image
