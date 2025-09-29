@@ -41,7 +41,10 @@ export default function ProductForm({
   return (
     <Form action={formAction}>
       {'id' in state.data && (
-        <Input readOnly hidden name="id" value={state.data.id} />
+        <Label htmlFor="id" className="sr-only">
+          Id
+          <Input readOnly hidden name="id" id="id" value={state.data.id} />
+        </Label>
       )}
       <Label className="p-4 grid gap-2">
         Title:
