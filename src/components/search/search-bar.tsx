@@ -161,13 +161,13 @@ export function SearchBar({
           'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
         )}
       >
-        <Label htmlFor="search-input" className="sr-only">
+        <Label htmlFor="navigation-search-input" className="sr-only">
           Search
         </Label>
         <input
           ref={searchInputRef}
           type="text"
-          id="search-input"
+          id="navigation-search-input"
           name="search"
           value={query}
           onChange={handleInputChange}
