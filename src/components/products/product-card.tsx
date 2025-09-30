@@ -6,7 +6,7 @@ import ProductImageCarousel from './product-image-carousel';
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Card className="grid grid-rows-subgrid row-span-5 gap-3 hover:shadow-xl transition-shadow duration-300 p-4">
-      <h3 className="line-clamp-2 text-lg font-semibold">{product.title}</h3>
+      <h2 className="line-clamp-2 text-lg font-semibold">{product.title}</h2>
       <div className="aspect-square relative overflow-hidden rounded-md order-first">
         <ProductImageCarousel images={product.images} title={product.title} />
       </div>
