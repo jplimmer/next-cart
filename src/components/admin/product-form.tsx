@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '../ui/alert';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import SuccessMessage from './success-message';
 
 const blankFormState: ProductFormState = {
   success: false,
@@ -127,7 +128,7 @@ export default function ProductForm({
         <Button type="submit" disabled={pending}>
           {initialState === undefined ? 'Create Product' : 'Update Product'}
         </Button>
-        {pending ? 'Loading...' : state.success === true && 'Done!'}
+        {pending ? 'Loading...' : state.success === true && <SuccessMessage />}
       </Form>
     </>
   );
