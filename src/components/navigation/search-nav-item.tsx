@@ -88,7 +88,7 @@ function SearchResults({
     return (
       <span className="capitalize text-xs">
         {parts.before}
-        <b className="underline font-normal">{parts.query}</b>
+        <b className="underline font-medium">{parts.query}</b>
         {parts.after}
       </span>
     );
@@ -104,19 +104,21 @@ function SearchResults({
           const url = `${routes.products.href}/${getSlugFromTitle(match.title)}`;
 
           return (
-            <CommandItem key={match.id} className="!py-0">
-              <Button
-                asChild
-                variant="ghost"
-                className="w-full flex justify-between items-baseline"
+            <CommandItem
+              key={match.id}
+              value={match.title}
+              keywords={[match.title]}
+              asChild
+            >
+              <a
+                href={url}
+                className="h-full w-full flex justify-between items-baseline cursor-pointer font-medium"
               >
-                <a href={url} className="">
-                  {formatMatch(match.title, query)}
-                  <span className="text-xs text-muted-foreground font-normal">
-                    {match.category.name.toLowerCase()}
-                  </span>
-                </a>
-              </Button>
+                {formatMatch(match.title, query)}
+                <span className="text-xs text-muted-foreground font-normal">
+                  {match.category.name.toLowerCase()}
+                </span>
+              </a>
             </CommandItem>
           );
         })}
