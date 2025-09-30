@@ -1,4 +1,4 @@
-import ProductCard from '@/components/products/product-card';
+import { ProductCard } from '@/components/products/product-card';
 import ProductFilters from '@/components/products/product-filters';
 import ProductPagination from '@/components/products/product-pagination';
 import {
