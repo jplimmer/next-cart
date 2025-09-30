@@ -19,7 +19,7 @@ export default function AdminPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="products" className="flex flex-col p-4 space-y-3">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={<LoadingSpinner className="mt-12" />}>
               <ProductsTab />
             </Suspense>
           </TabsContent>
@@ -27,7 +27,7 @@ export default function AdminPage() {
             value="categories"
             className="flex flex-col p-4 space-y-3"
           >
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={<LoadingSpinner className="mt-12" />}>
               <CategoriesTab />
             </Suspense>
           </TabsContent>
