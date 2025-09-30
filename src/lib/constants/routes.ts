@@ -30,6 +30,11 @@ export const routes: Record<string, Route> = {
     href: '/products',
     description: '',
   },
+  search: {
+    title: 'Search',
+    href: '/search',
+    description: '',
+  },
   createProduct: {
     title: 'Create product',
     href: '/admin/create-product',
