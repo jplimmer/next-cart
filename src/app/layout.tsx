@@ -1,7 +1,8 @@
 import { AuthToaster, Footer, Header } from '@/components/layout';
-import { MobileMenu } from '@/components/navigation/mobile-menu';
+import { MobileNav } from '@/components/navigation';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { routes } from '@/lib/constants/routes';
+import { getNavigationData } from '@/lib/data/pages-nav-data';
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -48,7 +49,7 @@ export default function RootLayout({
           <SidebarProvider defaultOpen={false}>
             <div className="min-h-svh content-grid grid-rows-[auto_1fr_auto]">
               <Header />
-              <MobileMenu />
+              <MobileNav pages={getNavigationData()} />
               {children}
               <Footer />
               {modal}
