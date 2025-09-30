@@ -56,7 +56,7 @@ export function SearchNavItem({
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput
-          placeholder="Ctrl+K to search..."
+          placeholder="Search products..."
           value={query}
           onValueChange={setQuery}
         />
