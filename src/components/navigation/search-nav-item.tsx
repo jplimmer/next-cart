@@ -45,15 +45,11 @@ export function SearchNavItem({
           setOpen((open) => !open);
         }}
         variant="ghost"
-        className="flex h-9 items-center gap-6 px-3 rounded-lg border text-muted-foreground font-normal"
+        className="flex h-9 items-center gap-6 px-3 rounded-lg border text-muted-foreground font-normal cursor-text"
       >
         <div className="hidden md:flex gap-1">
-          <kbd className="inline-flex items-end border-1 rounded-sm bg-white px-1 text-xs">
-            Ctrl
-          </kbd>
-          <kbd className="inline-flex items-end border-1 rounded-sm bg-white px-1 text-xs">
-            K
-          </kbd>
+          <Kbd>Ctrl</Kbd>
+          <Kbd>K</Kbd>
           <span>to search...</span>
         </div>
         <Search className="size-4 shrink-0 opacity-50" />
@@ -126,5 +122,21 @@ function SearchResults({
         })}
       </CommandGroup>
     </CommandList>
+  );
+}
+
+// Styled keyboard element
+function Kbd({
+  children,
+  className = '',
+  ...props
+}: React.ComponentPropsWithoutRef<'kbd'>) {
+  return (
+    <kbd
+      className={`inline-flex items-end border-1 rounded-sm bg-white px-1 text-xs ${className}`}
+      {...props}
+    >
+      {children}
+    </kbd>
   );
 }
