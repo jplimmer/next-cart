@@ -39,5 +39,6 @@ export const categoryColumns: ColumnDef<CategoryTableEntry>[] = [
     cell: () => (
       <DisabledActionsMenu tooltip="Actions are not currently enabled for Categories" />
     ),
+    meta: { align: 'end' },
   },
 ];
