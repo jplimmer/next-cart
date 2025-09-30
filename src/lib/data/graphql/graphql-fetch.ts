@@ -20,11 +20,15 @@ type GraphQLVariables =
   | PaginationVariables
   | Record<string, never>;
 
-export async function graphqlFetch(
+type GraphQLReturn<T> =
+  | { success: true; data: T }
+  | { success: false; error: unknown };
+
+export async function graphqlFetch<T>(
   query: string,
   variables?: GraphQLVariables,
   endpoint: string = ''
-) {
+): Promise<GraphQLReturn<T>> {
   try {
     const response = await fetch(`${GRAPHQL_ENDPOINT + endpoint}`, {
       method: 'POST',
@@ -40,10 +44,10 @@ export async function graphqlFetch(
     const result = await response.json();
     // Handle GraphQL errors such as syntax errors or validation errors
     if (result.errors) {
-      throw new Error(result.errors[0].message);
+      return { success: false, error: result.errors };
     }
 
-    return result.data;
+    return { success: true, data: result.data as T };
   } catch (error) {
     // Handle network errors or other unexpected errors such as CORS issues or server downtime
     console.error('GraphQL fetch error:', error);

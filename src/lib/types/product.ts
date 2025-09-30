@@ -1,4 +1,4 @@
-import { QueryFilters, Result } from './types';
+import { QueryFilters } from './types';
 
 export interface Category {
   id: string;
@@ -35,9 +35,9 @@ export interface ProductLight {
 export interface ProductService {
   fetchProducts: () => Promise<Product[]>;
   fetchProductsLight: () => Promise<ProductLight[]>;
-  fetchProductById: (id: string) => Promise<Product | null>;
-  fetchProductByTitle: (title: string) => Promise<Result<Product>>;
-  fetchProductsByIds: (productIds: string[]) => Promise<Result<Product[]>>;
+  fetchProductById: (id: string) => Promise<Product>;
+  fetchProductByTitle: (title: string) => Promise<Product | null>;
+  fetchProductsByIds: (productIds: string[]) => Promise<Product[]>;
   fetchProductsByFilters: (
     queryFilters: QueryFilters
   ) => Promise<ProductLight[]>;
