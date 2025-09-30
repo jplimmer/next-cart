@@ -8,7 +8,7 @@ import { Logo } from './logo';
 
 export function Header() {
   return (
-    <header className={`full-width py-2`}>
+    <header className="sticky top-0 z-50 full-width py-2 bg-white/50 backdrop-blur-xs border-b">
       <div className="grid grid-cols-2 items-center justify-between md:grid-cols-3 md:justify-items-center">
         {/* Trigger for mobile pages menu (sidebar) */}
         <div className="flex items-end md:hidden">
