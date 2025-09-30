@@ -1,26 +1,37 @@
 import { Button } from '@/components/ui/button';
 import { getSlugFromTitle } from '@/lib/data/helpers';
-import { getProducts } from '@/lib/data/product-data-service';
+import { getProductsPaginated } from '@/lib/data/product-data-service';
 import { Product } from '@/lib/types/product';
+import { IsImageUrl } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroImgText from './hero-img-text';
 
 export default async function Hero() {
-  const productsFromApi = (await getProducts())?.slice(0, 20); // get 20 first products from api
+  const productsFromApi = await getProductsPaginated(30, 0);
+
+  const results = await Promise.all(
+    productsFromApi.map(async (p) => {
+      const url = p?.images[0] ?? '';
+      const isValid = await IsImageUrl(url, false);
+      return isValid ? p : null;
+    })
+  );
+
+  const filterForImage = results.filter(Boolean);
   const rndProducts =
-    productsFromApi.length > 3
+    filterForImage.length > 3
       ? Array.from(
           { length: 3 },
           () =>
-            productsFromApi.splice(
-              Math.floor(Math.random() * productsFromApi.length),
+            filterForImage.splice(
+              Math.floor(Math.random() * filterForImage.length),
               1
             )[0]
         )
-      : productsFromApi;
+      : filterForImage;
 
-  const drawProduct = (product: Product) => {
+  const drawProduct = (product: Product, style: React.CSSProperties) => {
     let txt =
       product.title?.split(' ')?.filter(Boolean)?.slice(-2)?.join(' ') ||
       product.title;
@@ -29,7 +40,8 @@ export default async function Hero() {
       <Link
         key={product.id}
         href={`/products/${getSlugFromTitle(product.title)}`}
-        className="bg-purple-200/50 p-9 flex-1/3 relative"
+        className="bg-purple-200/50 p-3 flex-1/3 relative"
+        style={style}
       >
         <HeroImgText
           text={txt}
@@ -62,8 +74,20 @@ export default async function Hero() {
             <Link href={'/products'}>Shop Now &rarr;</Link>
           </Button>
         </div>
-        <section className="flex flex-wrap gap-2 w-1/3">
-          {rndProducts.map((product) => drawProduct(product))}
+        <section
+          className="grid grid-rows-2 grid-cols-4 gap-2"
+          style={{
+            gridTemplateAreas: `
+              "a c c"
+              "b c c"
+            `,
+          }}
+        >
+          {rndProducts.map(
+            (product, idx) =>
+              product &&
+              drawProduct(product, { gridArea: String.fromCharCode(97 + idx) })
+          )}
         </section>
       </div>
     </section>

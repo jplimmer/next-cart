@@ -102,8 +102,13 @@ export const lazyMinLoadTime = <TProps>(
     return moduleExports;
   });
 
-export async function IsImageUrl(url: string): Promise<string | null> {
+export async function IsImageUrl(
+  url: string,
+  takePlacehold = true
+): Promise<string | null> {
   try {
+    if (!url || (!takePlacehold && url.toLowerCase().includes('placehold.co')))
+      return null;
     const res = await fetch(url, { method: 'HEAD' });
     const type = res.headers.get('Content-Type');
     if (res.ok && type?.startsWith('image/')) {
