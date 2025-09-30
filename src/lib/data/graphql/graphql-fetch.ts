@@ -1,4 +1,5 @@
 import { UpdateProduct } from '@/lib/types/product';
+import { Result } from '@/lib/types/types';
 
 const GRAPHQL_ENDPOINT = 'https://api.escuelajs.co/graphql';
 
@@ -20,15 +21,11 @@ type GraphQLVariables =
   | PaginationVariables
   | Record<string, never>;
 
-type GraphQLReturn<T> =
-  | { success: true; data: T }
-  | { success: false; error: unknown };
-
 export async function graphqlFetch<T>(
   query: string,
   variables?: GraphQLVariables,
   endpoint: string = ''
-): Promise<GraphQLReturn<T>> {
+): Promise<Result<T>> {
   try {
     const response = await fetch(`${GRAPHQL_ENDPOINT + endpoint}`, {
       method: 'POST',
