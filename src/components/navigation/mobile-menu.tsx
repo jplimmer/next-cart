@@ -1,6 +1,10 @@
+'use client';
+
 import { routes } from '@/lib/constants/routes';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import { Logo } from '../layout';
 import {
   Accordion,
@@ -15,23 +19,18 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
+  useSidebar,
 } from '../ui/sidebar';
 
-// SidebarMenuItem with Accordion styling
-function SidebarAccItem({ children }: { children: React.ReactNode }) {
-  return (
-    <SidebarMenuItem
-      className={cn(
-        'focus-visible:border-ring focus-visible:ring-ring/50 rounded-md py-4 text-left text-sm font-medium outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50',
-        'border-b last_border-b-0'
-      )}
-    >
-      {children}
-    </SidebarMenuItem>
-  );
-}
-
 export function MobileMenu() {
+  const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
+
+  // Close sidebar on navigation (pathname change)
+  useEffect(() => {
+    setOpenMobile(false);
+  }, [pathname, setOpenMobile]);
+
   return (
     <Sidebar side="left" collapsible="offcanvas">
       <SidebarHeader className="p-4">
@@ -72,5 +71,19 @@ export function MobileMenu() {
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
+  );
+}
+
+// SidebarMenuItem with Accordion styling
+function SidebarAccItem({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarMenuItem
+      className={cn(
+        'focus-visible:border-ring focus-visible:ring-ring/50 rounded-md py-4 text-left text-sm font-medium outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50',
+        'border-b last_border-b-0'
+      )}
+    >
+      {children}
+    </SidebarMenuItem>
   );
 }
