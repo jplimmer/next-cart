@@ -8,7 +8,11 @@ export default async function CreateProductModal() {
 
   return (
     <Modal title={'Create new product'} showTitle={false}>
-      <ProductForm categories={categories} formActionFunc={createProduct} />
+      <ProductForm
+        formTitle="Create new product"
+        categories={categories}
+        formActionFunc={createProduct}
+      />
     </Modal>
   );
 }

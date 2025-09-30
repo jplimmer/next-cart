@@ -35,8 +35,10 @@ export const categoryColumns: ColumnDef<CategoryTableEntry>[] = [
   },
   {
     id: 'actions',
+    header: 'Actions',
     cell: () => (
       <DisabledActionsMenu tooltip="Actions are not currently enabled for Categories" />
     ),
+    meta: { align: 'end' },
   },
 ];

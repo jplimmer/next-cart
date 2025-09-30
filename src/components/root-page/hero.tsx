@@ -15,7 +15,7 @@ export default function Hero() {
           </Button>
         </div>
         <section className="flex flex-wrap gap-2 w-1/3">
-          <Link href={'/'} className="bg-purple-200/50 p-9 flex-1/3 relative">
+          <section className="bg-purple-200/50 p-9 flex-1/3 relative">
             <HeroImgText text="Popular Laptop" />
             <Image
               src={'/hero/laptop.png'}
@@ -24,8 +24,8 @@ export default function Hero() {
               height={150}
               className="size-full"
             />
-          </Link>
-          <Link href={'/'} className="bg-purple-200/50 p-9 flex-1/3 relative">
+          </section>
+          <section className="bg-purple-200/50 p-9 flex-1/3 relative">
             <HeroImgText text="New T-Shirt" />
             <Image
               src={'/hero/tshirt.png'}
@@ -34,8 +34,8 @@ export default function Hero() {
               height={150}
               className="size-full"
             />
-          </Link>
-          <Link href={'/'} className="bg-purple-200/50 p-9 flex-1/3 relative">
+          </section>
+          <section className="bg-purple-200/50 p-9 flex-1/3 relative">
             <HeroImgText text="Featured Couch" />
             <Image
               src={'/hero/couch.png'}
@@ -44,7 +44,7 @@ export default function Hero() {
               height={150}
               className="size-full"
             />
-          </Link>
+          </section>
         </section>
       </div>
     </section>
