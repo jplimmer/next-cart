@@ -103,9 +103,9 @@ export const deleteProduct = async (id: string) => {
     const res = await graphqlFetch(MUTATIONS.DELETE_PRODUCT, { id });
     if (!res) throw new Error(`id: ${String(id)}`);
     revalidatePath('/');
-    return true;
+    return { success: true, data: { id } };
   } catch (error) {
     console.error(`Error delete product:`, error);
-    return false;
+    return { success: true, error, data: { id } };
   }
 };
