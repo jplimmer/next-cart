@@ -3,8 +3,8 @@
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
 import {
-  graphqlCreateProduct,
   graphqlDeleteProduct,
+  graphqlFetch,
   graphqlUpdateProduct,
 } from '../data/graphql/graphql-fetch';
 import { MUTATIONS } from '../data/graphql/mutations';
@@ -38,7 +38,7 @@ export const createProduct = async (
 
     const validatedData: CreateProduct = validatedFields.data;
 
-    await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, validatedData);
+    await graphqlFetch(MUTATIONS.CREATE_PRODUCT, validatedData, '/product');
 
     revalidatePath('/');
 
