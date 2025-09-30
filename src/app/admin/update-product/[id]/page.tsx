@@ -33,6 +33,7 @@ export default async function UpdateProduct({
 
   return (
     <ProductForm
+      formTitle="Update Product"
       categories={categories}
       formActionFunc={updateProduct}
       initialState={initialState}
