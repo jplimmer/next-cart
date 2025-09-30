@@ -47,15 +47,15 @@ export default function RootLayout({
           `}
         >
           <SidebarProvider defaultOpen={false}>
-            <div className="min-h-svh content-grid grid-rows-[auto_1fr_auto]">
+            <div className="w-full min-h-svh content-grid grid-rows-[auto_1fr_auto]">
               <Header />
-              <MobileNav pages={getNavigationData()} />
               {children}
               <Footer />
-              {modal}
-              <AuthToaster />
-              <Toaster />
             </div>
+            <MobileNav pages={getNavigationData()} />
+            {modal}
+            <AuthToaster />
+            <Toaster />
           </SidebarProvider>
         </body>
       </html>
