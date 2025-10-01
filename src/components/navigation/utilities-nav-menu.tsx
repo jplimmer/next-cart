@@ -9,6 +9,7 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
+  NavigationMenuTrigger,
 } from '../ui/navigation-menu';
 import { BasketNavItem } from './basket-nav-item';
 import { UserNavItem } from './user-nav-item';
@@ -34,10 +35,20 @@ export async function UtilitiesNavMenu({ className }: { className?: string }) {
             placeholder="Ctrl+K to search..."
           />
         </NavigationMenuItem>
-        <UserNavItem />
-        <Suspense fallback={<ShoppingCart />}>
-          <BasketNavItem cartCountPromise={getCartCount()} />
-        </Suspense>
+        <NavigationMenuItem>
+          <UserNavItem />
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Suspense
+            fallback={
+              <NavigationMenuTrigger className="min-w-[2.5] [&>svg:last-child]:hidden relative">
+                <ShoppingCart />
+              </NavigationMenuTrigger>
+            }
+          >
+            <BasketNavItem cartCountPromise={getCartCount()} />
+          </Suspense>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
