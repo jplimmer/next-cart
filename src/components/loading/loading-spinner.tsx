@@ -10,9 +10,7 @@ export function LoadingSpinner({
   className,
 }: LoadingSpinnerProps) {
   return (
-    <div
-      className={`flex w-full justify-center items-center mt-12 gap-4 ${className}`}
-    >
+    <div className={`flex justify-center items-center gap-4 ${className}`}>
       {text}
       <div
         className={`h-4 w-4 animate-spin rounded-full ${spinnerBorder} border-t-transparent`}
