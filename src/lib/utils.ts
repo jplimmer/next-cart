@@ -102,8 +102,13 @@ export const lazyMinLoadTime = <TProps>(
     return moduleExports;
   });
 
-export async function IsImageUrl(url: string): Promise<string | null> {
+export async function IsImageUrl(
+  url: string,
+  takePlacehold = true
+): Promise<string | null> {
   try {
+    if (!url || (!takePlacehold && url.toLowerCase().includes('placehold.co')))
+      return null;
     const res = await fetch(url, { method: 'HEAD' });
     const type = res.headers.get('Content-Type');
     if (res.ok && type?.startsWith('image/')) {
@@ -132,4 +137,10 @@ export const extractFormField = (
 ): string => {
   const value = formData.get(fieldName);
   return typeof value === 'string' ? value : '';
+};
+
+export const hardTruncateText = (text: string, length: number) => {
+  if (!(text.length > length)) return text;
+  const res = text.slice(0, length)?.trim();
+  return res ? `${res}...` : text;
 };
