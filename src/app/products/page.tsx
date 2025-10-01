@@ -1,19 +1,22 @@
-import { ProductCard } from '@/components/products/product-card';
+import { PaginatedCardGridSkeleton } from '@/components/loading/card-grid-skeleton';
+import { PaginatedCardGrid } from '@/components/products/paginated-card-grid';
 import ProductFilters from '@/components/products/product-filters';
-import ProductPagination from '@/components/products/product-pagination';
+import { Separator } from '@/components/ui/separator';
 import {
   getCategories,
-  getProductById,
   getProductsByFilters,
 } from '@/lib/data/product-data-service';
-import { Product } from '@/lib/types/product';
+import { ProductLight } from '@/lib/types/product';
 import { QueryFilters } from '@/lib/types/types';
+import { Suspense } from 'react';
 
 export default async function Products({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const MAX_PRODUCTS_PER_PAGE = 20;
+
   // Potential optimization: Use these as default values. Pass them to <ProductFilters/> and use them in their respective components
   const {
     query = '',
@@ -25,47 +28,36 @@ export default async function Products({
     pageNumber?: number;
   } = await searchParams;
 
-  const categories = await getCategories();
+  const getFilteredProducts = async (): Promise<ProductLight[]> => {
+    const categories = await getCategories();
 
-  // Based on category name, create an array of selected categoryIDs
-  const categoryIDs = categories
-    .filter((c) => categoriesSearchParams.includes(c.name))
-    .map((c) => Number(c.id));
+    // Based on category name, create an array of selected categoryIDs
+    const categoryIDs = categories
+      .filter((c) => categoriesSearchParams.includes(c.name))
+      .map((c) => Number(c.id));
 
-  const queryFilters: QueryFilters = { title: query, categoryIDs };
+    const queryFilters: QueryFilters = { title: query, categoryIDs };
 
-  const lightProductsFromCategoryIDs = await getProductsByFilters(queryFilters);
+    const lightProductsFromCategoryIDs =
+      await getProductsByFilters(queryFilters);
 
-  // pagination boundaries
-  const startIndex = (pageNumber - 1) * 20;
-  const endIndex = pageNumber * 20;
-
-  const products = (
-    await Promise.all(
-      lightProductsFromCategoryIDs
-        .slice(startIndex, endIndex)
-        .map((p) => getProductById(p.id))
-    )
-  ).filter((p): p is Product => p !== null);
-
-  const filteredTotalProductsTotalPages = Math.ceil(
-    lightProductsFromCategoryIDs.length / 20
-  );
+    return lightProductsFromCategoryIDs;
+  };
 
   return (
-    <main className="full-width">
-      <h1 className="text-4xl text-center my-16">Products</h1>
-      <ProductFilters categories={categories} />
-      {filteredTotalProductsTotalPages > 1 && (
-        <ProductPagination totalPages={filteredTotalProductsTotalPages} />
-      )}
-      <section className="flex flex-wrap gap-6 w-5/6 m-auto mb-32 justify-center">
-        {products.map((product: Product, index) => (
-          <section className="w-1/4" key={index}>
-            <ProductCard product={product} key={product.id} />
-          </section>
-        ))}
-      </section>
+    <main className="full-width bg-gray-50 p-12 space-y-8">
+      <h1 className="text-4xl text-center">Products</h1>
+      <ProductFilters />
+      <Separator />
+      <Suspense
+        fallback={<PaginatedCardGridSkeleton cards={MAX_PRODUCTS_PER_PAGE} />}
+      >
+        <PaginatedCardGrid
+          productsPromise={getFilteredProducts()}
+          maxPerPage={MAX_PRODUCTS_PER_PAGE}
+          currentPage={pageNumber}
+        />
+      </Suspense>
     </main>
   );
 }

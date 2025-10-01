@@ -1,18 +1,15 @@
 'use client';
 
 import { searchParamKeys } from '@/lib/constants/searchParams';
-import { Category } from '@/lib/types/product';
+import { getCategories } from '@/lib/data/product-data-service';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEventHandler, useRef } from 'react';
+import { ChangeEventHandler, Suspense, useRef } from 'react';
+import { LoadingSpinner } from '../loading/loading-spinner';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import CategorySelect from './category-select';
 
-export default function ProductFilters({
-  categories,
-}: {
-  categories: Category[];
-}) {
+export default function ProductFilters() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -46,31 +43,40 @@ export default function ProductFilters({
   };
 
   return (
-    <section>
-      <label htmlFor="search-input">Search</label>
-      <Input
-        defaultValue={queryParam || ''}
-        id="search-input"
-        placeholder="Toaster..."
-        onChange={handleInputOnChange}
-        className="w-72"
-      />
-      <CategorySelect
-        key={refForCategorySelect.current}
-        categories={categories}
-        categoriesParam={categoriesParam}
-      />
-      <div>
-        <Button
-          type="reset"
-          onClick={() => {
-            refForCategorySelect.current += 1;
-            router.push(pathname);
-          }}
-        >
-          Clear Filters
-        </Button>
+    <section className="flex w-full items-center justify-around px-8">
+      <div className="flex items-center gap-2">
+        <label htmlFor="search-input">Search:</label>
+        <Input
+          defaultValue={queryParam || ''}
+          id="search-input"
+          placeholder="Toaster..."
+          onChange={handleInputOnChange}
+          className="w-72 bg-white"
+        />
       </div>
+      <Suspense
+        fallback={
+          <LoadingSpinner
+            text="Loading categories..."
+            className="border-1 bg-white py-1 w-[255]"
+          />
+        }
+      >
+        <CategorySelect
+          key={refForCategorySelect.current}
+          categoriesPromise={getCategories()}
+          categoriesParam={categoriesParam}
+        />
+      </Suspense>
+      <Button
+        type="reset"
+        onClick={() => {
+          refForCategorySelect.current += 1;
+          router.push(pathname);
+        }}
+      >
+        Clear Filters
+      </Button>
     </section>
   );
 }

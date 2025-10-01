@@ -4,7 +4,7 @@ import { searchParamKeys } from '@/lib/constants/searchParams';
 import { Category } from '@/lib/types/product';
 import { filterByParam } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -14,12 +14,14 @@ import {
 } from '../ui/dropdown-menu';
 
 export default function CategorySelect({
-  categories,
+  categoriesPromise,
   categoriesParam,
 }: {
-  categories: Category[];
+  categoriesPromise: Promise<Category[]>;
   categoriesParam: string[];
 }) {
+  const categories = use(categoriesPromise);
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -57,7 +59,7 @@ export default function CategorySelect({
     <section id="category-filter">
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" className="w-[255]">
             {filterByParam<Category, 'name'>(
               categories,
               categoriesParam,
