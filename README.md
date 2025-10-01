@@ -1,156 +1,144 @@
-# 🛍️ E-handelsplattform i Next.js
+# 🛍️ E-commerce Platform in Next.js
 
-Kort beskrivning av projektet, lite om tekniker, vad syftet är.
-En minimalistisk e-handelsplattform byggd med **Next.js 15 App Router** och **TypeScript**. 
-Projektet gör det här och det här, innehåller detta...
+Short description of the project, some about technologies, what the purpose is.  
+A minimalist e-commerce platform built with **Next.js 15 App Router** and **TypeScript**.  
+The project does this and that, includes this...
 
 ---
 
-## 📑 Innehåll
-- 📖 [Om projektet](#-om-projektet)
-- ✨ [Funktioner](#-funktioner)
-- 🛠 [Teknologier](#-teknologier)
+## 📑 Table of Contents
+- 📖 [About the Project](#-about-the-project)
+- ✨ [Features](#-features)
+- 🛠 [Technologies](#-technologies)
 - ⚙️ [Installation](#-installation)
-- 🚀 [Användning](#-användning)
-- 📂 [Projektstruktur](#-projektstruktur)
-- 📈 [Arbetsflöde](#-arbetsflöde)
-- 🗓 [Sprintplan](#-sprintplan)
-- 🤝 [Bidra](#-bidra)
-- 📚 [Lärdomar](#-lärdomar)
-- 📜 [Licens](#-licens)
-- ✍️ [Kontakt](#-kontakt)
-
-
----
-
-## 📖 Om projektet
-Detta är en gruppövning där målet var att bygga en **minimalistisk e-handelsplattform**.
-Syftet är att träna på:
-- detta
-- och detta
-- även detta
+- 🚀 [Usage](#-usage)
+- 📂 [Project Structure](#-project-structure)
+- 📈 [Workflow](#-workflow)
+- 🗓 [Sprint Plan](#-sprint-plan)
+- 🤝 [Contributing](#-contributing)
+- 📚 [Learnings](#-learnings)
+- 📜 [License](#-license)
+- ✍️ [Contact](#-contact)
 
 ---
 
-## ✨ Funktioner
-- ✅ Startsida med produköversikt
-- ✅ Hero-sektion med CTA
-- ✅ olika sidor
-- ✅ Sök
-- ✅ Lägg till
-- CRUD Funktioner i /admin
+## 📖 About the Project
+This is a group exercise where the goal was to build a **minimalist e-commerce platform**.  
+The purpose is to practice:  
+- this  
+- and this  
+- also this  
 
 ---
 
-## 🛠 Teknologier
-- [Next.js 15 (App Router)](https://nextjs.org/)
-- [WAVE](https://wave.webaim.org/)
-- [API]
+## ✨ Features
+- ✅ Homepage with product overview  
+- ✅ Hero section with CTA  
+- ✅ Different pages  
+- ✅ Search  
+- ✅ Add  
+- CRUD functions in /admin  
+
+---
+
+## 🛠 Technologies
+- [Next.js 15 (App Router)](https://nextjs.org/)  
+- [WAVE](https://wave.webaim.org/)  
+- [API]  
 
 ---
 
 ## ⚙️ Installation
 ```bash
-# Klona repo
+# Clone repo
 git clone https://github.com/jplimmer/next-cart.git
 
-# Gå in i projektmappen
-cd repo-namn
+# Go into project folder
+cd repo-name
 
-# Installera beroenden
+# Install dependencies
 npm install
 
-# Starta utvecklingsserver
+# Start development server
 npm run dev
 ```
 
 ---
 
-## 🚀 Användning
-* Startsida -> visar produkter + hero
-* Om oss -> statisk sida med text och bild
-* osv
-* osv
-* osv
+## 🚀 Usage
+* Homepage -> shows products + hero  
+* About us -> static page with text and image  
+* etc  
+* etc  
+* etc  
 
 ---
 
-## 📂 Projektstruktur
-
+## 📂 Project Structure
 ```
 |-- app/
-|  |-- page.tsx            # Startsida
-|  |-- about/page.tsx      # Om oss
-|-- components/            # Återanvändbara komponenter                
+|  |-- page.tsx            # Homepage
+|  |-- about/page.tsx      # About us
+|-- components/            # Reusable components                
 |
 |
 ```
 
 ---
 
-## 📈 Arbetsflöde
-
-* 👥 Grupparbete i agila sprintar (SCRUM)
-* 🌱 Feature branches
-* 🔍 PR + kodgranskning
-* DSUs
-* Hålla team möte öppet
-
+## 📈 Workflow
+* 👥 Group work in agile sprints (SCRUM)  
+* 🌱 Feature branches  
+* 🔍 PR + code review  
+* DSUs  
+* Keep team meeting open  
 
 ---
 
-## 🗓 Sprintplan
+## 🗓 Sprint Plan
 
-### Sprint 1 - Grundläggande struktur
+### Sprint 1 - Basic Structure
+* Set up Next.js project  
+* Created menus & static pages  
 
-* Satte upp Next.js-projektet
-* Skapade menyer & statiska sidor
+### Sprint 2 - Basic Structure
+* Uses [slug] for dynamic routing  
+* Filter and search for /products  
 
-### Sprint 2 - Grundläggande struktur
+### Sprint 3 - Basic Structure
+* Created /admin route with a DataTable  
+* Create, Update, and Delete functionality for products with server actions  
+* Zod validation on create/update forms  
 
-* Använder [slug] för dynamisk routing
-* Filter och sök för /products
-
-### Sprint 3 - Grundläggande struktur
-
-* Skapade /admin route med ett DataTable
-* Create, Update, och Delete funktionalitet för products med server actions
-* Zod validation på create/update forms
-
-### Sprint 4 - Finputs
-
-* WAVE och Lighthouse analys
-* Refactor fetch- och graphql funktioner
-* Responsivitet styling
+### Sprint 4 - Fine Tuning
+* WAVE and Lighthouse analysis  
+* Refactor fetch and GraphQL functions  
+* Responsive styling  
 
 ---
 
-## 🤝 Bidra
+## 🤝 Contributing
+Want to contribute?  
 
-Vill du bidra?
-
-1. Forka projektet
-2. Skapa en feature-branch (`git checkout ......`)
-3. Commit & push
-4. Skicka en Pull Request
-
----
-
-## 📚 Lärdomar
-
-* Skillnaden mellan Server & Client Components i Next.js
-* Agila metoder
-* API
-* Responsivitet
+1. Fork the project  
+2. Create a feature branch (`git checkout ......`)  
+3. Commit & push  
+4. Send a Pull Request  
 
 ---
 
-## 📜 Licens
-
-Detta projekt är utvecklat i utbildningssyfte och är inte avsett för produktion.
+## 📚 Learnings
+* Difference between Server & Client Components in Next.js  
+* Agile methods  
+* API  
+* Responsiveness  
 
 ---
 
-## ✍️ Kontakt
+## 📜 License
+This project is developed for educational purposes and is not intended for production.  
 
-Ev. kontaktuppgifter
+---
+
+## ✍️ Contact
+Any contact details  
