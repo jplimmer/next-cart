@@ -1,7 +1,5 @@
 import { getProductById } from '@/lib/data/product-data-service';
 import { Product, ProductLight } from '@/lib/types/product';
-import { Suspense } from 'react';
-import { CardGridSkeleton } from '../loading/card-grid-skeleton';
 import { CardGrid } from './card-grid';
 import ProductPagination from './product-pagination';
 
@@ -38,9 +36,7 @@ export async function PaginatedCardGrid({
   return (
     <section className="space-y-4">
       {totalPages > 1 && <ProductPagination totalPages={totalPages} />}
-      <Suspense fallback={<CardGridSkeleton cards={maxPerPage} />}>
-        <CardGrid productsPromise={pageProducts()}></CardGrid>
-      </Suspense>
+      <CardGrid productsPromise={pageProducts()}></CardGrid>
     </section>
   );
 }

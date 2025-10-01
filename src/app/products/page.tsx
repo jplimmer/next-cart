@@ -1,3 +1,4 @@
+import { PaginatedCardGridSkeleton } from '@/components/loading/card-grid-skeleton';
 import { PaginatedCardGrid } from '@/components/products/paginated-card-grid';
 import ProductFilters from '@/components/products/product-filters';
 import { Separator } from '@/components/ui/separator';
@@ -7,6 +8,7 @@ import {
 } from '@/lib/data/product-data-service';
 import { ProductLight } from '@/lib/types/product';
 import { QueryFilters } from '@/lib/types/types';
+import { Suspense } from 'react';
 
 export default async function Products({
   searchParams,
@@ -47,11 +49,15 @@ export default async function Products({
       <h1 className="text-4xl text-center">Products</h1>
       <ProductFilters />
       <Separator />
-      <PaginatedCardGrid
-        productsPromise={getFilteredProducts()}
-        maxPerPage={MAX_PRODUCTS_PER_PAGE}
-        currentPage={pageNumber}
-      />
+      <Suspense
+        fallback={<PaginatedCardGridSkeleton cards={MAX_PRODUCTS_PER_PAGE} />}
+      >
+        <PaginatedCardGrid
+          productsPromise={getFilteredProducts()}
+          maxPerPage={MAX_PRODUCTS_PER_PAGE}
+          currentPage={pageNumber}
+        />
+      </Suspense>
     </main>
   );
 }
