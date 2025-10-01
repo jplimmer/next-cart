@@ -38,6 +38,7 @@ Syftet är att träna på:
 - ✅ olika sidor
 - ✅ Sök
 - ✅ Lägg till
+- CRUD Funktioner i /admin
 
 ---
 
@@ -51,7 +52,7 @@ Syftet är att träna på:
 ## ⚙️ Installation
 ```bash
 # Klona repo
-git clone https://github.com/username/repo.git
+git clone https://github.com/jplimmer/next-cart.git
 
 # Gå in i projektmappen
 cd repo-namn
@@ -92,6 +93,9 @@ npm run dev
 * 👥 Grupparbete i agila sprintar (SCRUM)
 * 🌱 Feature branches
 * 🔍 PR + kodgranskning
+* DSUs
+* Hålla team möte öppet
+
 
 ---
 
@@ -104,18 +108,20 @@ npm run dev
 
 ### Sprint 2 - Grundläggande struktur
 
-* Satte upp Next.js-projektet
-* Skapade menyer & statiska sidor
+* Använder [slug] för dynamisk routing
+* Filter och sök för /products
 
 ### Sprint 3 - Grundläggande struktur
 
-* Satte upp Next.js-projektet
-* Skapade menyer & statiska sidor
+* Skapade /admin route med ett DataTable
+* Create, Update, och Delete funktionalitet för products med server actions
+* Zod validation på create/update forms
 
 ### Sprint 4 - Finputs
 
-* Satte upp Next.js-projektet
-* Skapade menyer & statiska sidor
+* WAVE och Lighthouse analys
+* Refactor fetch- och graphql funktioner
+* Responsivitet styling
 
 ---
 
