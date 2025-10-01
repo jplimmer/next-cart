@@ -1,9 +1,19 @@
 import { Product } from '@/lib/types/product';
+import { notFound } from 'next/navigation';
 import QuantitySelector from '../quantity-selector';
 import { Button } from '../ui/button';
 import ProductImageCarousel from './product-image-carousel';
 
-export default function ProductDetail({ product }: { product: Product }) {
+export default async function ProductDetail({
+  productPromise,
+}: {
+  productPromise: Promise<Product | null>;
+}) {
+  const product = await productPromise;
+
+  console.log(product);
+  if (!product) notFound();
+
   return (
     <article className="@container w-full flex flex-col @lg:flex-row justify-center items-center gap-16 p-4">
       <section className="flex-1">
