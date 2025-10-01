@@ -7,11 +7,7 @@ export default async function Home() {
   return (
     <main className="content-grid full-width">
       <Hero />
-      <Suspense
-        fallback={<LoadingSpinner text="Loading featured products..." />}
-      >
-        <FeaturedProducts />
-      </Suspense>
+      <FeaturedProducts />
     </main>
   );
 }
