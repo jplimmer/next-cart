@@ -74,6 +74,7 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
   },
   {
     id: 'actions',
+    header: 'Actions',
     cell: ({ row }) => {
       const product = row.original;
 

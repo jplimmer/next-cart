@@ -33,8 +33,9 @@ export default async function UpdateProduct({
   };
 
   return (
-    <Modal title={'Create new product'} showTitle={false}>
+    <Modal title={'Update product'} showTitle={false}>
       <ProductForm
+        formTitle="Update product"
         categories={categories}
         formActionFunc={updateProduct}
         initialState={initialState}

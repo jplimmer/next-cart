@@ -1,40 +1,29 @@
-import ProductCard from '@/components/products/product-card';
 import { routes } from '@/lib/constants/routes';
-import { getSlugFromTitle } from '@/lib/data/helpers';
-import { getProducts } from '@/lib/data/product-data-service';
+import { getProductsPaginated } from '@/lib/data/product-data-service';
+
 import Link from 'next/link';
+import { Suspense } from 'react';
+import { CardGridSkeleton } from '../loading/card-grid-skeleton';
+import { CardGrid, CardGridLayout } from '../products/card-grid';
 
-export default async function FeaturedProducts() {
-  const products = await getProducts();
-
-  if (!products || products.length === 0) {
-    return (
-      <div className="text-center py-8">
-        <p className="text-muted-foreground">No products found</p>
-      </div>
-    );
-  }
+export default function FeaturedProducts() {
+  const numProducts = 4;
 
   return (
-    <section className="full-width py-12 bg-gray-100">
-      <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Featured Products
-        </h2>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.slice(0, 20).map((product) => {
-            const slug = getSlugFromTitle(product.title);
-
-            return (
-              <li key={product.id}>
-                <Link href={`${routes.products.href}/${slug}`} scroll={false}>
-                  <ProductCard product={product} />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+    <section className="content-grid full-width bg-gray-50 space-y-8 py-16">
+      <header className={CardGridLayout}>
+        <div className="col-span-full flex justify-between items-baseline text-green-800">
+          <h2 className="flex-1 text-3xl text-center md:text-left">
+            Featured Products
+          </h2>
+          <Link href={routes.products.href} className="text-xl hidden md:block">
+            view all
+          </Link>
+        </div>
+      </header>
+      <Suspense fallback={<CardGridSkeleton cards={numProducts} />}>
+        <CardGrid productsPromise={getProductsPaginated(numProducts, 0)} />
+      </Suspense>
     </section>
   );
 }
