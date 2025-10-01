@@ -47,7 +47,7 @@ export default async function Products({
   return (
     <main className="full-width bg-gray-50 p-12 space-y-8">
       <h1 className="text-4xl text-center">Products</h1>
-      <ProductFilters />
+      <ProductFilters categoriesPromise={getCategories()} />
       <Separator />
       <Suspense
         fallback={<PaginatedCardGridSkeleton cards={MAX_PRODUCTS_PER_PAGE} />}

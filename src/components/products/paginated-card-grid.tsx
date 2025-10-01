@@ -17,9 +17,9 @@ export async function PaginatedCardGrid({
   const allFilteredProducts = await productsPromise;
 
   // Pagination boundaries
-  const startIndex = (currentPage - 1) * 20;
-  const endIndex = currentPage * 20;
-  const totalPages = Math.ceil(allFilteredProducts.length / 20);
+  const startIndex = (currentPage - 1) * maxPerPage;
+  const endIndex = currentPage * maxPerPage;
+  const totalPages = Math.ceil(allFilteredProducts.length / maxPerPage);
 
   const pageProducts = async (): Promise<Product[]> => {
     const products = (
