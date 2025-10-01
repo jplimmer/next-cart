@@ -25,7 +25,7 @@ async function getCategoryList(): Promise<NavProductCategory[]> {
     ...cats.map((cat) => ({
       id: cat.id,
       name: cat.name,
-      href: `${routes.products.href}/?category=${cat.name.toLowerCase()}`,
+      href: `${routes.products.href}/?category=${cat.name}`,
     })),
   ];
 }
