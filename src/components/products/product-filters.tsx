@@ -1,7 +1,7 @@
 'use client';
 
 import { searchParamKeys } from '@/lib/constants/searchParams';
-import { getCategories } from '@/lib/data/product-data-service';
+import { Category } from '@/lib/types/product';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEventHandler, Suspense, useRef } from 'react';
 import { LoadingSpinner } from '../loading/loading-spinner';
@@ -9,7 +9,11 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import CategorySelect from './category-select';
 
-export default function ProductFilters() {
+export default function ProductFilters({
+  categoriesPromise,
+}: {
+  categoriesPromise: Promise<Category[]>;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -20,7 +24,7 @@ export default function ProductFilters() {
   const categoriesParam = params.getAll(searchParamKeys.categories);
   // This value is used as a key={value} to CategorySelect component,
   // it´s lifetime is as long as the CategorySelect component itself
-  // and vill preserve its value between sessions,
+  // and will preserve its value between sessions,
   // we increment its value in "Clear Filters" button to tell CategorySelect to reset
   // its internal state.
   const refForCategorySelect = useRef<number>(0);
@@ -64,7 +68,7 @@ export default function ProductFilters() {
       >
         <CategorySelect
           key={refForCategorySelect.current}
-          categoriesPromise={getCategories()}
+          categoriesPromise={categoriesPromise}
           categoriesParam={categoriesParam}
         />
       </Suspense>
