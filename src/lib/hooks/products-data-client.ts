@@ -13,8 +13,10 @@ export function useProducts(offset = 0, limit = 20) {
       try {
         setLoading(true);
         setError(null);
-        const data = await graphqlFetch(QUERIES.GET_PRODUCTS);
-        setProducts(data.products || []);
+        const result = await graphqlFetch<{ products: Product[] }>(
+          QUERIES.GET_PRODUCTS
+        );
+        setProducts(result.success === true ? result.data.products : []);
       } catch (err) {
         setError(err as Error);
       } finally {
@@ -47,8 +49,10 @@ export function useProduct(id: string) {
       try {
         setLoading(true);
         setError(null);
-        const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
-        setProduct(data.product || null);
+        const result = await graphqlFetch<Product>(QUERIES.GET_PRODUCT_BY_ID, {
+          id,
+        });
+        setProduct(result.success === true ? result.data : null);
       } catch (err) {
         setError(err as Error);
       } finally {
@@ -76,8 +80,10 @@ export function useCategories() {
       try {
         setLoading(true);
         setError(null);
-        const data = await graphqlFetch(QUERIES.GET_CATEGORIES);
-        setCategories(data.categories || []);
+        const result = await graphqlFetch<{ categories: Category[] }>(
+          QUERIES.GET_CATEGORIES
+        );
+        setCategories(result.success === true ? result.data.categories : []);
       } catch (err) {
         setError(err as Error);
       } finally {
@@ -106,11 +112,14 @@ export function useProductsPaginated(offset = 0, limit = 20) {
       try {
         setLoading(true);
         setError(null);
-        const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
-          limit,
-          offset,
-        });
-        setProducts(data.products || []);
+        const result = await graphqlFetch<{ products: Product[] }>(
+          QUERIES.GET_PRODUCTS_PAGINATED,
+          {
+            limit,
+            offset,
+          }
+        );
+        setProducts(result.success === true ? result.data.products : []);
       } catch (err) {
         setError(err as Error);
       } finally {

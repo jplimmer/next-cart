@@ -13,12 +13,11 @@ export default async function Page({
 
   const productResult = await getProductByTitle(title);
 
-  if (!productResult.success) notFound();
-  const product = productResult.data;
+  if (productResult === null) notFound();
 
   return (
     <main className="@container full-width place-items-center py-8">
-      <ProductDetail product={product} />
+      <ProductDetail product={productResult} />
     </main>
   );
 }

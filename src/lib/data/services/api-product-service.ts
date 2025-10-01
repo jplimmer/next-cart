@@ -1,6 +1,6 @@
 import { graphqlFetch } from '@/lib/data/graphql/graphql-fetch';
-import { Category, Product, ProductLight } from '@/lib/types/product';
-import { QueryFilters, Result } from '../../types/types';
+import { Category, type Product, ProductLight } from '@/lib/types/product';
+import { QueryFilters } from '../../types/types';
 import { QUERIES } from '../graphql/queries';
 import {
   buildProductsQueryByFilters,
@@ -9,87 +9,103 @@ import {
 
 // Server-side data fetching functions
 export async function fetchProducts(): Promise<Product[]> {
-  try {
-    const data = await graphqlFetch(QUERIES.GET_PRODUCTS);
-    return data.products || [];
-  } catch (error) {
-    console.error('Error fetching products:', error);
+  const result = await graphqlFetch<{ products: Product[] }>(
+    QUERIES.GET_PRODUCTS
+  );
+  if (result.success === false) {
     return [];
   }
+
+  return result.data.products;
 }
 
 // Lightweight fetch to get the amount of products. Only fetches IDs
 export async function fetchProductsLight(): Promise<ProductLight[]> {
-  try {
-    const data = await graphqlFetch(QUERIES.GET_PRODUCTS_LIGHT);
-    return data.products || [];
-  } catch (error) {
-    console.error('Error fetching products (light):', error);
+  const result = await graphqlFetch<{ products: Product[] }>(
+    QUERIES.GET_PRODUCTS_LIGHT
+  );
+  if (result.success === false) {
     return [];
   }
+
+  return result.data.products;
 }
 
 export async function fetchProductById(id: string): Promise<Product | null> {
-  try {
-    const data = await graphqlFetch(QUERIES.GET_PRODUCT_BY_ID, { id });
-    return data.product || null;
-  } catch (error) {
-    console.error('Error fetching product by ID:', error);
+  const result = await graphqlFetch<Product | null>(QUERIES.GET_PRODUCT_BY_ID, {
+    id,
+  });
+  if (result.success === false) {
     return null;
   }
+  return result.data;
 }
 
 export async function fetchProductByTitle(
   title: string
-): Promise<Result<Product>> {
-  try {
-    const productResult = await graphqlFetch(QUERIES.GET_PRODUCT_BY_TITLE, {
+): Promise<Product | null> {
+  const result = await graphqlFetch<{ products: Product[] | null }>(
+    QUERIES.GET_PRODUCT_BY_TITLE,
+    {
       title,
-    });
-    return { success: true, data: productResult.products[0] };
-  } catch (error) {
-    console.error(`Failed to get product data for ${title}`, error);
-    return { success: false, error: String(error) };
+    }
+  );
+  if (result.success === false || result.data.products === null) {
+    return null;
   }
+  console.log(result.data.products[0]);
+
+  return result.data.products[0];
 }
 
 export async function fetchProductsByIds(
   productIds: string[]
-): Promise<Result<Product[]>> {
-  try {
-    const data = await graphqlFetch(buildProductsQueryByIds(productIds));
-    return { success: true, data: Object.values(data).flat() as Product[] };
-  } catch (error) {
-    console.error('Failed to get product data from list of ids', error);
-    return { success: false, error: String(error) };
+): Promise<Product[]> {
+  const result = await graphqlFetch<{ products: Product[] }>(
+    buildProductsQueryByIds(productIds)
+  );
+  if (result.success === false) {
+    return [];
   }
+  return result.data.products;
 }
 
 export async function fetchProductsByFilters(
   queryFilters: QueryFilters
 ): Promise<ProductLight[]> {
-  const data = await graphqlFetch(buildProductsQueryByFilters(queryFilters));
-  const joinedDatas = Object.values(data).flat() as ProductLight[];
-  return joinedDatas;
+  const result = await graphqlFetch<{ products: ProductLight[] }>(
+    buildProductsQueryByFilters(queryFilters)
+  );
+  if (result.success === false) {
+    return [];
+  }
+  return result.data.products;
 }
 
 export async function fetchProductsPaginated(
   limit: number = 20,
   offset: number = 0
 ): Promise<Product[]> {
-  const data = await graphqlFetch(QUERIES.GET_PRODUCTS_PAGINATED, {
-    limit,
-    offset,
-  });
-  return data.products || [];
+  const result = await graphqlFetch<{ products: Product[] }>(
+    QUERIES.GET_PRODUCTS_PAGINATED,
+    {
+      limit,
+      offset,
+    }
+  );
+  if (result.success === false) {
+    return [];
+  }
+  return result.data.products;
 }
 
 export async function fetchCategories(): Promise<Category[]> {
-  try {
-    const data = await graphqlFetch(QUERIES.GET_CATEGORIES);
-    return data.categories || [];
-  } catch (error) {
-    console.error('Error fetching categories:', error);
+  const result = await graphqlFetch<{ categories: Category[] }>(
+    QUERIES.GET_CATEGORIES
+  );
+  if (result.success === false) {
     return [];
   }
+
+  return result.data.categories;
 }
