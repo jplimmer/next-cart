@@ -108,6 +108,9 @@ function SearchResults({
               key={match.id}
               value={match.title}
               keywords={[match.title]}
+              onSelect={() => {
+                window.location.href = url;
+              }}
               asChild
             >
               <a
