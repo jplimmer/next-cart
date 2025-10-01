@@ -2,11 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import z from 'zod';
-import {
-  graphqlCreateProduct,
-  graphqlDeleteProduct,
-  graphqlUpdateProduct,
-} from '../data/graphql/graphql-fetch';
+import { graphqlFetch } from '../data/graphql/graphql-fetch';
 import { MUTATIONS } from '../data/graphql/mutations';
 import {
   ProductFormState,
@@ -38,7 +34,7 @@ export const createProduct = async (
 
     const validatedData: CreateProduct = validatedFields.data;
 
-    await graphqlCreateProduct(MUTATIONS.CREATE_PRODUCT, validatedData);
+    await graphqlFetch(MUTATIONS.CREATE_PRODUCT, validatedData, '/product');
 
     revalidatePath('/');
 
@@ -85,10 +81,14 @@ export const updateProduct = async (
       images: validatedData.images,
     };
 
-    await graphqlUpdateProduct(MUTATIONS.UPDATE_PRODUCT, {
-      id: validatedData.id,
-      changes: newProductData,
-    });
+    await graphqlFetch(
+      MUTATIONS.UPDATE_PRODUCT,
+      {
+        id: validatedData.id,
+        changes: newProductData,
+      },
+      `/products/${validatedData.id}`
+    );
 
     revalidatePath('/');
 
@@ -100,12 +100,12 @@ export const updateProduct = async (
 
 export const deleteProduct = async (id: string) => {
   try {
-    const res = await graphqlDeleteProduct(MUTATIONS.DELETE_PRODUCT, { id });
+    const res = await graphqlFetch(MUTATIONS.DELETE_PRODUCT, { id });
     if (!res) throw new Error(`id: ${String(id)}`);
     revalidatePath('/');
-    return true;
+    return { success: true, data: { id } };
   } catch (error) {
     console.error(`Error delete product:`, error);
-    return false;
+    return { success: true, error, data: { id } };
   }
 };

@@ -14,12 +14,11 @@ export default async function ProductModal({
   const title = getTitleFromSlug(slug);
   const productResult = await getProductByTitle(title);
 
-  if (!productResult.success) notFound();
-  const product = productResult.data;
+  if (productResult === null) notFound();
 
   return (
-    <Modal title={product.title} showTitle={false}>
-      <ProductDetail product={product} />
+    <Modal title={productResult.title} showTitle={false}>
+      <ProductDetail product={productResult} />
     </Modal>
   );
 }

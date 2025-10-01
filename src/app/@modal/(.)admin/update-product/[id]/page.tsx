@@ -3,6 +3,7 @@ import Modal from '@/components/layout/modal';
 import { updateProduct } from '@/lib/actions/products';
 import { getCategories, getProductById } from '@/lib/data/product-data-service';
 import { ProductFormState } from '@/lib/schemas/product-form';
+import { notFound } from 'next/navigation';
 
 export default async function UpdateProduct({
   params,
@@ -15,9 +16,7 @@ export default async function UpdateProduct({
 
   const product = await getProductById(id);
 
-  if (!product) {
-    throw new Error('Product not found in page');
-  }
+  if (product === null) notFound();
 
   const initialState: ProductFormState = {
     success: false,
