@@ -1,5 +1,8 @@
 import { AuthToaster, Footer, Header } from '@/components/layout';
+import { MobileNav } from '@/components/navigation';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { routes } from '@/lib/constants/routes';
+import { getNavigationData } from '@/lib/data/pages-nav-data';
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -41,15 +44,19 @@ export default function RootLayout({
         <body
           className={`
             ${geistSans.variable} ${geistMono.variable} ${iconsSocialMedia15Colr.variable} antialiased
-            min-h-svh content-grid grid-rows-[auto_1fr_auto]
           `}
         >
-          <Header />
-          {children}
-          <Footer />
-          {modal}
-          <AuthToaster />
-          <Toaster />
+          <SidebarProvider defaultOpen={false}>
+            <div className="w-full min-h-svh content-grid grid-rows-[auto_1fr_auto]">
+              <Header />
+              {children}
+              <Footer />
+            </div>
+            <MobileNav pages={getNavigationData()} />
+            {modal}
+            <AuthToaster />
+            <Toaster />
+          </SidebarProvider>
         </body>
       </html>
     </ClerkProvider>
