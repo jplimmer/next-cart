@@ -12,7 +12,7 @@ import { BasketNavItem } from './basket-nav-item';
 import { SearchNavItem } from './search-nav-item';
 import { UserNavItem } from './user-nav-item';
 
-export async function UtilitiesNavMenu({ className }: { className?: string }) {
+export function UtilitiesNavMenu({ className }: { className?: string }) {
   return (
     <NavigationMenu className={className} aria-label="Account and utilities">
       <NavigationMenuList>
