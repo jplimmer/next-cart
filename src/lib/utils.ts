@@ -138,3 +138,9 @@ export const extractFormField = (
   const value = formData.get(fieldName);
   return typeof value === 'string' ? value : '';
 };
+
+export const hardTruncateText = (text: string, length: number) => {
+  if (!(text.length > length)) return text;
+  const res = text.slice(0, length)?.trim();
+  return res ? `${res}...` : text;
+};

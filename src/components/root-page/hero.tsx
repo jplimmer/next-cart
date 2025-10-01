@@ -2,7 +2,11 @@ import { Button } from '@/components/ui/button';
 import { getSlugFromTitle } from '@/lib/data/helpers';
 import { getProductsPaginated } from '@/lib/data/product-data-service';
 import { Product } from '@/lib/types/product';
-import { IsImageUrl } from '@/lib/utils';
+import {
+  capitaliseFirstLetter,
+  hardTruncateText,
+  IsImageUrl,
+} from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroImgText from './hero-img-text';
@@ -19,6 +23,7 @@ export default async function Hero() {
   );
 
   const filterForImage = results.filter(Boolean);
+
   const rndProducts =
     filterForImage.length > 3
       ? Array.from(
@@ -31,21 +36,25 @@ export default async function Hero() {
         )
       : filterForImage;
 
-  const drawProduct = (product: Product, style: React.CSSProperties) => {
+  const drawProduct = (
+    product: Product,
+    style: React.CSSProperties,
+    txtLimit: number
+  ) => {
     let txt =
       product.title?.split(' ')?.filter(Boolean)?.slice(-2)?.join(' ') ||
       product.title;
     txt = txt?.toLowerCase().startsWith('and ') ? product.title : txt;
+
     return (
       <Link
         key={product.id}
         href={`/products/${getSlugFromTitle(product.title)}`}
-        className="bg-purple-200/50 p-3 flex-1/3 relative"
+        className="bg-purple-200/50 p-1 flex-1/3 relative"
         style={style}
       >
         <HeroImgText
-          text={txt}
-          className={txt?.length > 35 ? 'truncate w-[10.625rem]' : ''}
+          text={capitaliseFirstLetter(hardTruncateText(txt, txtLimit))}
         />
         {product?.images.length > 0 ? (
           <Image
@@ -66,8 +75,8 @@ export default async function Hero() {
 
   return (
     <section className="full-width bg-gradient-to-tr from-green-950 to-green-800 text-white">
-      <div className="flex items-center justify-around py-16">
-        <div>
+      <div className="flex flex-col md:flex-row items-center justify-around py-16">
+        <div className="md:w-1/2 w-full">
           <h1 className="text-6xl mb-4">NextCart</h1>
           <p className="mb-8">An e-commerce page made in Next.js</p>
           <Button asChild variant={'secondary'}>
@@ -75,18 +84,22 @@ export default async function Hero() {
           </Button>
         </div>
         <section
-          className="grid grid-rows-2 grid-cols-4 gap-2"
+          className="grid grid-rows-2 grid-cols-6 gap-2 md:w-1/2 w-full"
           style={{
             gridTemplateAreas: `
-              "a c c"
-              "b c c"
+              "a a c c c"
+              "b b c c c"
             `,
           }}
         >
           {rndProducts.map(
             (product, idx) =>
               product &&
-              drawProduct(product, { gridArea: String.fromCharCode(97 + idx) })
+              drawProduct(
+                product,
+                { gridArea: String.fromCharCode(97 + idx) },
+                idx <= 1 ? 35 : 50
+              )
           )}
         </section>
       </div>
