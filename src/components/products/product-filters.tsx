@@ -24,7 +24,7 @@ export default function ProductFilters({
   const categoriesParam = params.getAll(searchParamKeys.categories);
   // This value is used as a key={value} to CategorySelect component,
   // it´s lifetime is as long as the CategorySelect component itself
-  // and vill preserve its value between sessions,
+  // and will preserve its value between sessions,
   // we increment its value in "Clear Filters" button to tell CategorySelect to reset
   // its internal state.
   const refForCategorySelect = useRef<number>(0);
