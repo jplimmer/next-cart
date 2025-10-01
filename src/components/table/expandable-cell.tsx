@@ -17,7 +17,7 @@ export const ExpandableCell = ({ value, render }: ExpandableCellProps) => {
         'cursor-default max-w-[40ch]',
         expanded ? 'whitespace-normal break-words' : 'truncate'
       )}
-      title={expanded ? undefined : value}
+      title={expanded ? undefined : 'Click to read more'}
     >
       {content}
     </div>

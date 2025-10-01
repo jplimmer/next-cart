@@ -14,6 +14,7 @@ import {
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import {
   Table,
   TableBody,
@@ -61,16 +62,23 @@ export default function DataTable<TData, TValue>({
       {/* Filter input & 'Add new' button */}
       <div className="flex items-center justify-between py-4">
         {filterColumn && (
-          <Input
-            value={
-              (table.getColumn(filterColumn)?.getFilterValue() as string) ?? ''
-            }
-            placeholder={filterPlaceholder ?? ''}
-            onChange={(e) =>
-              table.getColumn(filterColumn)?.setFilterValue(e.target.value)
-            }
-            className="max-w-xs"
-          />
+          <>
+            <Label htmlFor="table-filter-input" className="sr-only">
+              Table Filter Input
+            </Label>
+            <Input
+              id="table-filter-input"
+              value={
+                (table.getColumn(filterColumn)?.getFilterValue() as string) ??
+                ''
+              }
+              placeholder={filterPlaceholder ?? ''}
+              onChange={(e) =>
+                table.getColumn(filterColumn)?.setFilterValue(e.target.value)
+              }
+              className="max-w-xs"
+            />
+          </>
         )}
         {addNewButton}
       </div>
