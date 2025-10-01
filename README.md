@@ -76,172 +76,50 @@ npm run dev
 
 ## 📂 Project Structure
 ```
-├── app
-│   ├── about
-│   │   └── page.tsx
-│   ├── admin
-│   │   ├── create-category
-│   │   │   └── page.tsx
-│   │   ├── create-product
-│   │   │   └── page.tsx
-│   │   ├── page.tsx
-│   │   └── update-product
-│   │       ├── [id]
-│   │       │   └── page.tsx
-│   │       └── page.tsx
-│   ├── contact
-│   │   └── page.tsx
-│   ├── favicon.ico
-│   ├── globals.css
-│   ├── layout.tsx
-│   ├── loading.tsx
-│   ├── merchandise
-│   │   └── page.tsx
-│   ├── @modal
-│   │   ├── (.)admin
-│   │   │   ├── create-category
-│   │   │   │   └── page.tsx
-│   │   │   ├── create-product
-│   │   │   │   └── page.tsx
-│   │   │   └── update-product
-│   │   │       ├── [id]
-│   │   │       │   └── page.tsx
-│   │   │       └── page.tsx
-│   │   ├── default.tsx
-│   │   └── (.)products
-│   │       └── [slug]
-│   │           └── page.tsx
-│   ├── not-found.tsx
-│   ├── page.tsx
-│   └── products
-│       ├── page.tsx
-│       └── [slug]
-│           └── page.tsx
-├── components
-│   ├── admin
-│   │   ├── actions-menu.tsx
-│   │   ├── categories-tab.tsx
-│   │   ├── category-colums.tsx
-│   │   ├── category-form.tsx
-│   │   ├── product-columns.tsx
-│   │   ├── product-form.tsx
-│   │   ├── products-tab.tsx
-│   │   └── success-message.tsx
-│   ├── contact
-│   │   ├── contact-form.tsx
-│   │   └── success-message.tsx
-│   ├── image-slider.tsx
-│   ├── layout
-│   │   ├── auth-toaster.tsx
-│   │   ├── footer.tsx
-│   │   ├── header.tsx
-│   │   ├── index.ts
-│   │   ├── logo.tsx
-│   │   └── modal.tsx
-│   ├── loading
-│   │   ├── card-grid-skeleton.tsx
-│   │   ├── loading-spinner.tsx
-│   │   ├── multi-line-skeleton.tsx
-│   │   └── product-card-skeleton.tsx
-│   ├── loading-dots.tsx
-│   ├── merchandise-card
-│   │   ├── merchandise-card-loader.tsx
-│   │   └── merchandise-card.tsx
-│   ├── navigation
-│   │   ├── basket-nav-item.tsx
-│   │   ├── desktop-nav.tsx
-│   │   ├── index.ts
-│   │   ├── mobile-nav.tsx
-│   │   ├── search-nav-item.tsx
-│   │   ├── user-nav-item.tsx
-│   │   └── utilities-nav-menu.tsx
-│   ├── products
-│   │   ├── add-to-cart-button.tsx
-│   │   ├── card-grid.tsx
-│   │   ├── category-select.tsx
-│   │   ├── paginated-card-grid.tsx
-│   │   ├── product-card.tsx
-│   │   ├── product-detail.tsx
-│   │   ├── product-filters.tsx
-│   │   ├── product-image-carousel.tsx
-│   │   └── product-pagination.tsx
-│   ├── quantity-selector.tsx
-│   ├── root-page
-│   │   ├── featured-products.tsx
-│   │   ├── hero-img-text.tsx
-│   │   ├── hero.tsx
-│   │   └── new-products.tsx
-│   ├── table
-│   │   ├── data-table.tsx
-│   │   ├── expandable-cell.tsx
-│   │   └── sortable-column-header.tsx
-│   ├── text-outliner.tsx
-│   └── ui
-│       ├── accordion.tsx
-│       ├── alert-dialog.tsx
-│       ├── alert.tsx
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── carousel.tsx
-│       ├── command.tsx
-│       ├── dialog.tsx
-│       ├── disabled-tooltip-button.tsx
-│       ├── dropdown-menu.tsx
-│       ├── hover-prefetch-link.tsx
-│       ├── input.tsx
-│       ├── label.tsx
-│       ├── navigation-menu.tsx
-│       ├── pagination.tsx
-│       ├── separator.tsx
-│       ├── sheet.tsx
-│       ├── sidebar.tsx
-│       ├── skeleton.tsx
-│       ├── table.tsx
-│       ├── tabs.tsx
-│       ├── textarea.tsx
-│       └── tooltip.tsx
-├── fonts
-│   └── Icons Social Media 15-COLR.ttf
-├── hooks
-│   └── use-mobile.ts
-├── lib
-│   ├── actions
-│   │   ├── cart.ts
-│   │   ├── contact-form.ts
-│   │   ├── products.ts
-│   │   └── search.ts
-│   ├── constants
-│   │   ├── assets.ts
-│   │   ├── routes.ts
-│   │   └── searchParams.ts
-│   ├── data
-│   │   ├── graphql
-│   │   │   ├── graphql-fetch.ts
-│   │   │   ├── mutations.ts
-│   │   │   └── queries.ts
-│   │   ├── helpers.ts
-│   │   ├── pages-nav-data.ts
-│   │   ├── product-data-service.ts
-│   │   └── services
-│   │       ├── api-product-service.ts
-│   │       └── mock-product-service.ts
-│   ├── hooks
-│   │   ├── products-data-client.ts
-│   │   └── use-cart.ts
-│   ├── mocks
-│   │   ├── experimental-data.ts
-│   │   ├── fallback-data
-│   │   │   └── fallback-data-manager.ts
-│   │   └── mock-data.ts
-│   ├── schemas
-│   │   ├── contactForm.ts
-│   │   └── product-form.ts
-│   ├── types
-│   │   ├── product.ts
-│   │   ├── table.d.ts
-│   │   └── types.ts
-│   └── utils.ts
-└── middleware.ts
+├── app                         # Next.js App Router pages and routes
+│   ├── about                   # About page route
+│   ├── admin                   # Admin dashboard routes
+│   │   ├── create-category     # Page for creating product categories
+│   │   ├── create-product      # Page for creating products
+│   │   └── update-product      # Pages for updating existing products
+│   │       └── [id]            # Dynamic route for editing a specific product by ID
+│   ├── contact                 # Contact page route
+│   ├── merchandise             # Merchandise listing page route
+│   ├── @modal                  # Parallel route for modal-based navigation
+│   │   ├── (.)admin            # Modal version of admin pages
+│   │   │   ├── create-category # Modal for creating categories
+│   │   │   ├── create-product  # Modal for creating products
+│   │   │   └── update-product  # Modal for updating products
+│   │   │       └── [id]        # Modal for updating product by ID
+│   │   └── (.)products         # Modal version of product details
+│   │       └── [slug]          # Modal for specific product by slug
+│   └── products                # Products listing and detail routes
+│       └── [slug]              # Dynamic route for product detail page
+├── components                  # Reusable React components
+│   ├── admin                   # Components for admin dashboards and forms
+│   ├── contact                 # Contact form and related components
+│   ├── layout                  # Layout components (header, footer, modal, etc.)
+│   ├── loading                 # Skeleton loaders and spinners
+│   ├── merchandise-card        # Components for displaying merchandise cards
+│   ├── navigation              # Navigation bar and menu components
+│   ├── products                # Components for product listing and details
+│   ├── root-page               # Components for homepage sections (hero, featured, etc.)
+│   ├── table                   # Data table components (sortable, expandable, etc.)
+│   └── ui                      # Shared UI primitives (buttons, cards, inputs, dialogs, etc.)
+├── fonts                       # Custom font files
+├── hooks                       # Custom React hooks
+├── lib                         # Core logic and utilities
+│   ├── actions                 # Server actions for cart, products, etc.
+│   ├── constants               # App-wide constants (routes, assets, params, etc.)
+│   ├── data                    # Data layer (GraphQL, services, helpers)
+│   │   ├── graphql             # GraphQL queries, mutations, and fetch utils
+│   │   └── services            # API service implementations (mock and real)
+│   ├── hooks                   # Data-fetching and cart-related hooks
+│   ├── mocks                   # Mock and fallback data for development/testing
+│   │   └── fallback-data       # Fallback data management
+│   ├── schemas                 # Validation schemas (Zod, etc.)
+│   └── types                   # TypeScript type definitions
+
 ```
 
 ---
