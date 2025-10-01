@@ -4,7 +4,6 @@ import { ShoppingCart } from 'lucide-react';
 import { use } from 'react';
 import {
   NavigationMenuContent,
-  NavigationMenuItem,
   NavigationMenuTrigger,
 } from '../ui/navigation-menu';
 
@@ -16,7 +15,7 @@ export function BasketNavItem({
   const cartCount = use(cartCountPromise);
 
   return (
-    <NavigationMenuItem>
+    <>
       <NavigationMenuTrigger className="[&>svg:last-child]:hidden relative">
         <ShoppingCart className="cursor-pointer" />
         {cartCount > 0 && (
@@ -35,6 +34,6 @@ export function BasketNavItem({
           </p>
         </div>
       </NavigationMenuContent>
-    </NavigationMenuItem>
+    </>
   );
 }

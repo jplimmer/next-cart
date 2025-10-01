@@ -6,12 +6,13 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
+  NavigationMenuTrigger,
 } from '../ui/navigation-menu';
 import { BasketNavItem } from './basket-nav-item';
 import { SearchNavItem } from './search-nav-item';
 import { UserNavItem } from './user-nav-item';
 
-export async function UtilitiesNavMenu({ className }: { className?: string }) {
+export function UtilitiesNavMenu({ className }: { className?: string }) {
   return (
     <NavigationMenu className={className} aria-label="Account and utilities">
       <NavigationMenuList>
@@ -21,9 +22,17 @@ export async function UtilitiesNavMenu({ className }: { className?: string }) {
         <NavigationMenuItem>
           <UserNavItem />
         </NavigationMenuItem>
-        <Suspense fallback={<ShoppingCart />}>
-          <BasketNavItem cartCountPromise={getCartCount()} />
-        </Suspense>
+        <NavigationMenuItem>
+          <Suspense
+            fallback={
+              <NavigationMenuTrigger className="min-w-[2.5] [&>svg:last-child]:hidden relative">
+                <ShoppingCart />
+              </NavigationMenuTrigger>
+            }
+          >
+            <BasketNavItem cartCountPromise={getCartCount()} />
+          </Suspense>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
