@@ -18,6 +18,9 @@ export interface Product {
 export interface ProductsResponse {
   products: Product[];
 }
+export interface ProductsLightResponse {
+  products: ProductLight[];
+}
 
 export interface ProductResponse {
   product: Product;
