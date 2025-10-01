@@ -4,13 +4,13 @@ import { routes } from '@/lib/constants/routes';
 import { getSlugFromTitle } from '@/lib/data/helpers';
 import { Product } from '@/lib/types/product';
 import { splitByQuery } from '@/lib/utils';
-import { CommandEmpty } from 'cmdk';
 import { Search } from 'lucide-react';
 import { Suspense, use, useEffect, useState } from 'react';
 import { LoadingSpinner } from '../loading/loading-spinner';
 import { Button } from '../ui/button';
 import {
   CommandDialog,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -47,7 +47,7 @@ export function SearchNavItem({
         variant="ghost"
         className="flex h-9 items-center gap-6 px-3 rounded-lg border text-muted-foreground font-normal cursor-text"
       >
-        <div className="hidden md:flex gap-1">
+        <div className="hidden md:flex gap-1 group/kbd">
           <Kbd>Ctrl</Kbd>
           <Kbd>K</Kbd>
           <span>to search...</span>
@@ -135,7 +135,7 @@ function Kbd({
 }: React.ComponentPropsWithoutRef<'kbd'>) {
   return (
     <kbd
-      className={`inline-flex items-end border-1 rounded-sm bg-white px-1 text-xs ${className}`}
+      className={`inline-flex items-end border-1 rounded-sm bg-neutral-100 group-hover/kbd:bg-white px-1 text-xs ${className}`}
       {...props}
     >
       {children}
