@@ -36,11 +36,19 @@ export default function ProductPagination({
           </PaginationItem>
         )}
 
-        {Array.from({ length: totalPages }, (_, i) => (
-          <PaginationItem key={i} onClick={() => createPageURL(i + 1)}>
-            <PaginationLink>{i + 1}</PaginationLink>
-          </PaginationItem>
-        ))}
+        {Array.from({ length: totalPages }, (_, i) => {
+          const isActive = currentPage === i + 1;
+
+          return (
+            <PaginationItem
+              key={i}
+              onClick={() => createPageURL(i + 1)}
+              className={isActive ? 'underline' : ''}
+            >
+              <PaginationLink>{i + 1}</PaginationLink>
+            </PaginationItem>
+          );
+        })}
 
         {totalPages > 5 && (
           <PaginationItem>
