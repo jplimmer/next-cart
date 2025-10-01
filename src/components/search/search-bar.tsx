@@ -6,6 +6,7 @@ import { capitaliseWords, cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
+import { LoadingSpinner } from '../loading/loading-spinner';
 import { useDebouncedCallback } from 'use-debounce';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -183,7 +184,7 @@ export function SearchBar({
         </Button>
       </form>
       {allResultsPromise && showList && (
-        <Suspense fallback={null}>
+        <Suspense fallback={<LoadingSpinner />}>
           <AutocompleteDropdown
             allResultsPromise={allResultsPromise}
             query={debouncedQuery}
