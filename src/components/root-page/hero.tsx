@@ -79,7 +79,7 @@ export default async function Hero() {
         <div className="md:w-1/2 w-full">
           <h1 className="text-6xl mb-4">NextCart</h1>
           <p className="mb-8">An e-commerce page made in Next.js</p>
-          <Button asChild variant={'secondary'}>
+          <Button asChild variant={'secondary'} className="mb-12">
             <Link href={'/products'}>Shop Now &rarr;</Link>
           </Button>
         </div>
