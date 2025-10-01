@@ -80,8 +80,9 @@ export const productColumns: ColumnDef<ProductTableEntry>[] = [
 
       const handleDelete = async () => {
         const result = await deleteProduct(product.id);
-        if (result) toast.success('Product deleted successfully.');
-        else toast.error('Could not delete product, please try again.');
+        if (result.success === true) {
+          toast.success('Product deleted successfully.');
+        } else toast.error('Could not delete product, please try again.');
       };
 
       if (!useApi) {

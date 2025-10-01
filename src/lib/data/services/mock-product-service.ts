@@ -1,5 +1,5 @@
 import { Category, Product, ProductLight } from '@/lib/types/product';
-import { QueryFilters, Result } from '@/lib/types/types';
+import { QueryFilters } from '@/lib/types/types';
 import { removeFalsyValues } from '@/lib/utils';
 
 const useExperimentalData =
@@ -33,34 +33,32 @@ export const fetchProductsLight = async (): Promise<ProductLight[]> => {
 
 export const fetchProductById = async (id: string): Promise<Product | null> => {
   const data = await loadMockData();
-  return data.find((p) => p.id === id) || null;
+  const product = data.find((p) => p.id === id) || null;
+
+  return product;
 };
 
 export const fetchProductByTitle = async (
   title: string
-): Promise<Result<Product>> => {
+): Promise<Product | null> => {
   const data = await loadMockData();
   const product = data.find(
     (p) => p.title.toLowerCase() === title.toLowerCase()
   );
-
-  if (!product) {
-    return { success: false, error: `No product found matching '${title}'` };
-  }
-  return { success: true, data: product };
+  return product ?? null;
 };
 
 export const fetchProductsByIds = async (
   productIds: string[]
-): Promise<Result<Product[]>> => {
+): Promise<Product[]> => {
   const data = await loadMockData();
   const idsSet = new Set(productIds);
   const products = data.filter((p) => idsSet.has(p.id));
 
   if (products.length === 0) {
-    return { success: false, error: 'No products found matching ids' };
+    return [];
   }
-  return { success: true, data: products };
+  return products;
 };
 
 export const fetchProductsByFilters = async (
