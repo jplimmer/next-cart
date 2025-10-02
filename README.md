@@ -42,9 +42,19 @@ The purpose is to practice:
 ---
 
 ## 🛠 Technologies
-- [Next.js 15 (App Router)](https://nextjs.org/)  
-- [WAVE](https://wave.webaim.org/)  
-- [API]  
+- Next.js 15 (App Router) [Framework] - For server-side rendering, routing, and app structure.
+- TypeScript [Language] - For type-safe development.
+- Tailwind CSS [Styling] - For utility-first CSS and responsive design.
+- Clerk [Authentication] - For user sign-in, sign-out, and protected routes.
+- GraphQL [API] - For querying product and category data from external API.
+- Radix UI [UI Components] - For accessible primitives like dropdowns, tooltips, and navigation menus.
+- shadcn/ui [UI Library] - For pre-built components like buttons, inputs, and tables.
+- React Hot Toast [Notifications] - For toast messages on auth events.
+- Embla Carousel [Carousel] - For image sliders in product details.
+- Lucide React [Icons] - For consistent iconography.
+- Zod [Validation] - For form schema validation.
+- ESLint & Prettier [Linting/Formatting] - For code quality and consistency.
+- Husky [Git Hooks] - For pre-commit checks.  
 
 ---
 
