@@ -1,8 +1,7 @@
 # 🛍️ E-commerce Platform in Next.js
 
-Short description of the project, some about technologies, what the purpose is.  
-A minimalist e-commerce platform built with **Next.js 15 App Router** and **TypeScript**.  
-The project does this and that, includes this...
+A minimalist e-commerce platform built with Next.js 15 App Router and TypeScript.
+The project demonstrates server-side rendering for product pages, client-side interactions for search and filters using searchParams, includes CRUD operations in the admin panel via server actions and GraphQL mutations, features lazy loading with Suspense for performance, and integrates authentication with Clerk for protected routes. It also uses Tailwind CSS for responsive design, shadcn/ui components for UI consistency, and fallback mock data for development. The purpose is to practice modern web development techniques, including API integration, form validation with Zod, and modal overlays for seamless user experiences.
 
 ---
 
