@@ -2,10 +2,7 @@
 
 import { ShoppingCart } from 'lucide-react';
 import { use } from 'react';
-import {
-  NavigationMenuContent,
-  NavigationMenuTrigger,
-} from '../ui/navigation-menu';
+import { NavigationMenuTrigger } from '../ui/navigation-menu';
 
 export function BasketNavItem({
   cartCountPromise,
@@ -25,7 +22,7 @@ export function BasketNavItem({
         )}
         <span className="sr-only">Basket ({cartCount} items)</span>
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      {/* <NavigationMenuContent>
         <div className="p-4">
           <p className="text-sm text-muted-foreground">
             {cartCount === 0
@@ -33,7 +30,7 @@ export function BasketNavItem({
               : `${cartCount} item${cartCount === 1 ? '' : 's'} in basket`}
           </p>
         </div>
-      </NavigationMenuContent>
+      </NavigationMenuContent> */}
     </>
   );
 }

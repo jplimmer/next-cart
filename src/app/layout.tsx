@@ -51,11 +51,11 @@ export default function RootLayout({
               <Header />
               {children}
               <Footer />
+              {modal}
+              <AuthToaster />
+              <Toaster />
             </div>
             <MobileNav pages={getNavigationData()} />
-            {modal}
-            <AuthToaster />
-            <Toaster />
           </SidebarProvider>
         </body>
       </html>

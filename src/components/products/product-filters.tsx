@@ -67,7 +67,7 @@ export default function ProductFilters({
         }
       >
         <CategorySelect
-          key={refForCategorySelect.current}
+          key={categoriesParam.join(',')}
           categoriesPromise={categoriesPromise}
           categoriesParam={categoriesParam}
         />

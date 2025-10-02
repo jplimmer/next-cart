@@ -20,12 +20,12 @@ export default async function Products({
   // Potential optimization: Use these as default values. Pass them to <ProductFilters/> and use them in their respective components
   const {
     query = '',
-    categories: categoriesSearchParams = [], // Renaming for clarity
-    pageNumber = 1,
+    category: categoriesSearchParams = [], // Renaming for clarity
+    page = 1,
   }: {
     query?: string;
-    categories?: string[];
-    pageNumber?: number;
+    category?: string[];
+    page?: number;
   } = await searchParams;
 
   const getFilteredProducts = async (): Promise<ProductLight[]> => {
@@ -55,7 +55,7 @@ export default async function Products({
         <PaginatedCardGrid
           productsPromise={getFilteredProducts()}
           maxPerPage={MAX_PRODUCTS_PER_PAGE}
-          currentPage={pageNumber}
+          currentPage={page}
         />
       </Suspense>
     </main>

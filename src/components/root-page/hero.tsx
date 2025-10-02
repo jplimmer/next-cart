@@ -50,6 +50,7 @@ export default async function Hero() {
       <Link
         key={product.id}
         href={`/products/${getSlugFromTitle(product.title)}`}
+        scroll={false}
         className="bg-purple-200/50 p-1 flex-1/3 relative"
         style={style}
       >
@@ -62,7 +63,7 @@ export default async function Hero() {
             alt={product.description}
             width={150}
             height={150}
-            className="size-full"
+            className="size-full object-cover"
           />
         ) : (
           <div className="flex items-center justify-center bg-green-900/60 text-sm size-full">
@@ -75,8 +76,8 @@ export default async function Hero() {
 
   return (
     <section className="full-width bg-gradient-to-tr from-green-950 to-green-800 text-white">
-      <div className="flex flex-col md:flex-row items-center justify-around py-16">
-        <div className="md:w-1/2 w-full">
+      <div className="flex flex-col md:flex-row items-center justify-around p-16">
+        <div className="md:w-1/2 w-full text-center md:text-left">
           <h1 className="text-6xl mb-4">NextCart</h1>
           <p className="mb-8">An e-commerce page made in Next.js</p>
           <Button asChild variant={'secondary'} className="mb-12">
@@ -84,7 +85,7 @@ export default async function Hero() {
           </Button>
         </div>
         <section
-          className="grid grid-rows-2 grid-cols-6 gap-2 md:w-1/2 w-full"
+          className="grid grid-rows-2 grid-cols-5 gap-2 md:w-1/2 w-full"
           style={{
             gridTemplateAreas: `
               "a a c c c"

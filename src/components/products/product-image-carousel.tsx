@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface ProductImageSliderProps {
+interface ProductImageCarouselProps {
   images: string[];
   title: string;
 }
@@ -11,7 +11,7 @@ interface ProductImageSliderProps {
 export default function ProductImageCarousel({
   images,
   title,
-}: ProductImageSliderProps) {
+}: ProductImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Filter valid images
@@ -61,6 +61,11 @@ export default function ProductImageCarousel({
     );
   };
 
+  const handleClick = (e: React.MouseEvent, fn: () => void) => {
+    e.preventDefault();
+    fn();
+  };
+
   return (
     <div className="relative w-full h-full group">
       {/* Image Display */}
@@ -78,14 +83,14 @@ export default function ProductImageCarousel({
       {validImages.length > 1 && (
         <>
           <button
-            onClick={prevSlide}
+            onClick={(e: React.MouseEvent) => handleClick(e, prevSlide)}
             className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             aria-label="Previous image"
           >
             ‹
           </button>
           <button
-            onClick={nextSlide}
+            onClick={(e: React.MouseEvent) => handleClick(e, nextSlide)}
             className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             aria-label="Next image"
           >
@@ -100,7 +105,10 @@ export default function ProductImageCarousel({
           {validImages.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault();
+                goToSlide(index);
+              }}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-200 hover:scale-110 border border-white/30 ${
                 currentIndex === index
                   ? 'bg-white shadow-md scale-110'
