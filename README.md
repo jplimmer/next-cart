@@ -1,11 +1,10 @@
-# 🛍️ E-commerce Platform in Next.js
+# 🛍️ NextCart
 
 A minimalist e-commerce platform built with Next.js 15 App Router and TypeScript.
 The project demonstrates server-side rendering for product pages, client-side interactions for search and filters using searchParams, includes CRUD operations in the admin panel via server actions and GraphQL mutations, features lazy loading with Suspense for performance, and integrates authentication with Clerk for protected routes. It also uses Tailwind CSS for responsive design, shadcn/ui components for UI consistency, and fallback mock data for development. The purpose is to practice modern web development techniques, including API integration, form validation with Zod, and modal overlays for seamless user experiences.
 
----
-
 ## 📑 Table of Contents
+
 - 📖 [About the Project](#-about-the-project)
 - ✨ [Features](#-features)
 - 🛠 [Technologies](#-technologies)
@@ -17,13 +16,12 @@ The project demonstrates server-side rendering for product pages, client-side in
 - 🤝 [Contributing](#-contributing)
 - 📚 [Learnings](#-learnings)
 - 📜 [License](#-license)
-- ✍️ [Contact](#-contact)
-
----
 
 ## 📖 About the Project
+
 This is a group exercise where the goal was to build a **minimalist e-commerce platform**.  
-The purpose is to practice:  
+The purpose is to practice:
+
 - Next.js 15 with App Router for server-side rendering and routing
 - TypeScript for type-safe development
 - GraphQL API integration with fallback to mock data
@@ -33,20 +31,18 @@ The purpose is to practice:
 - Lazy loading and Suspense for performance optimization
 - Search, filtering, and pagination with searchParams
 - Modal overlays and client-side interactions
-- Also, handling image validation and fallback data management  
-
----
+- Also, handling image validation and fallback data management
 
 ## ✨ Features
+
 - ✅ Homepage with product overview - Hero section with CTA, featured products grid, and new arrivals grid.
 - ✅ Different pages - Static pages like About us, Contact, and dynamic pages like Products list, individual product details and Admin dashboard.
 - ✅ Search - Global search via Command dialog (Ctrl+K), product filtering by query and categories
 - ✅ Add - Add to cart functionality (placeholder), and admin forms for adding new products.
-- ✅ CRUD functions in /admin - Create, read, update, and delete products and categories via tables, forms, and server actions.  
-
----
+- ✅ CRUD functions in /admin - Create, read, update, and delete products and categories via tables, forms, and server actions.
 
 ## 🛠 Technologies
+
 - Next.js 15 (App Router) [Framework] - For server-side rendering, routing, and app structure.
 - TypeScript [Language] - For type-safe development.
 - Tailwind CSS [Styling] - For utility-first CSS and responsive design.
@@ -59,11 +55,10 @@ The purpose is to practice:
 - Lucide React [Icons] - For consistent iconography.
 - Zod [Validation] - For form schema validation.
 - ESLint & Prettier [Linting/Formatting] - For code quality and consistency.
-- Husky [Git Hooks] - For pre-commit checks.  
-
----
+- Husky [Git Hooks] - For pre-commit checks.
 
 ## ⚙️ Installation
+
 ```bash
 # Clone repo
 git clone https://github.com/jplimmer/next-cart.git
@@ -78,23 +73,21 @@ npm install
 npm run dev
 ```
 
----
-
 ## 🚀 Usage
-* Homepage (/) -> Shows hero section with random products, featured products grid, and new arrivals grid.
-* About us (/about) -> Static page with text, images, and sections on story, goals, and environment.
-* Contact (/contact) -> Static page with a contact form for user inquiries.
-* Products (/products) -> Displays filtered and paginated product list with search, category filters, and sorting; supports query params for categories, query, and page number.
-* Product detail (/products/[slug]) -> Shows individual product details, including image carousel, description, price, and category.
-* Admin (/admin) -> Protected page for managing catalog; tabs for products and categories with data tables, add/edit/delete actions.
-* Create product (/admin/create-product) -> Form page/modal for creating new products with validation.
-* Create category (/admin/create-category) -> Form page/modal for creating new categories.
-* Update product (/admin/update-product/[id]) -> Form page/modal for editing existing products.
-* Modal overlays (e.g., @modal/(.)products/[slug], @modal/(.)admin/create-product) -> Modal versions of product details or admin forms for quick access without full page navigation.
 
----
+- Homepage (/) -> Shows hero section with random products, featured products grid, and new arrivals grid.
+- About us (/about) -> Static page with text, images, and sections on story, goals, and environment.
+- Contact (/contact) -> Static page with a contact form for user inquiries.
+- Products (/products) -> Displays filtered and paginated product list with search, category filters, and sorting; supports query params for categories, query, and page number.
+- Product detail (/products/[slug]) -> Shows individual product details, including image carousel, description, price, and category.
+- Admin (/admin) -> Protected page for managing catalog; tabs for products and categories with data tables, add/edit/delete actions.
+- Create product (/admin/create-product) -> Form page/modal for creating new products with validation.
+- Create category (/admin/create-category) -> Form page/modal for creating new categories.
+- Update product (/admin/update-product/[id]) -> Form page/modal for editing existing products.
+- Modal overlays (e.g., @modal/(.)products/[slug], @modal/(.)admin/create-product) -> Modal versions of product details or admin forms for quick access without full page navigation.
 
 ## 📂 Project Structure
+
 ```
 ├── app                         # Next.js App Router pages and routes
 │   ├── about                   # About page route
@@ -142,71 +135,81 @@ npm run dev
 
 ```
 
----
-
 ## 📈 Workflow
-* 👥 Group work in agile sprints (SCRUM)  
-* 🌱 Feature branches  
-* 🔍 PR + code review  
-* DSUs  
-* Keep team meeting open  
 
----
+- 👥 Group work in agile sprints (SCRUM)
+- 🌱 Feature branches
+- 🔍 PR + code review
+- DSUs
+- Keep team meeting open
 
-## 🗓 Sprint Plan
+### 🗓 Sprint Plan
 
-### Sprint 1 - Basic Structure
-* Set up Next.js project  
-* Created menus & static pages  
+#### Sprint 1 - Basic Structure
 
-### Sprint 2 - Basic Structure
-* Uses [slug] for dynamic routing  
-* Filter and search for /products  
+- Set up Next.js project
+- Created menus & static pages
 
-### Sprint 3 - Basic Structure
-* Created /admin route with a DataTable  
-* Create, Update, and Delete functionality for products with server actions  
-* Zod validation on create/update forms  
+#### Sprint 2 - Basic Structure
 
-### Sprint 4 - Fine Tuning
-* WAVE and Lighthouse analysis  
-* Refactor fetch and GraphQL functions  
-* Responsive styling  
+- Uses [slug] for dynamic routing
+- Filter and search for /products
 
----
+#### Sprint 3 - Basic Structure
+
+- Created /admin route with a DataTable
+- Create, Update, and Delete functionality for products with server actions
+- Zod validation on create/update forms
+
+#### Sprint 4 - Fine Tuning
+
+- WAVE and Lighthouse analysis
+- Refactor fetch and GraphQL functions
+- Responsive styling
 
 ## 🤝 Contributing
+
 Want to contribute? Great! Here's how to get started:
 
 #### Quick Start
-  1. Fork and clone the repo: git clone https://github.com/your-username/next-cart.git
-  2. Install dependencies: npm install
-  3. Create a feature branch: git checkout -b feature/your-feature
-  4. Make changes, commit, and push.
-  5. Open a Pull Request (PR) with a clear description.
 
-##### Guidelines
-  * Follow code style: Run npm run lint for ESLint/Prettier checks.
-  * Use clear commit messages.
-  * All PRs need review.
-  * Focus on areas like features, UI/UX, performance, or bug fixes.
-    
-For questions, use GitHub Issues. Thanks for helping! 🚀  
+1. Fork and clone the repo:
 
----
+```bash
+git clone https://github.com/<your-username>/next-cart.git
+```
+
+2. Navigate to your repo root and install dependencies:
+
+```bash
+cd next-cart
+npm install
+```
+
+3. Create a feature branch:
+
+```bash
+git checkout -b feature/your-feature
+```
+
+4. Make changes, commit, and push.
+5. Open a Pull Request (PR) with a clear description.
+
+#### Guidelines
+
+- Follow code style with ESLint/Prettier config.
+- Use clear commit messages.
+- All PRs need review.
+
+For questions, use GitHub Issues. Thanks for helping! 🚀
 
 ## 📚 Learnings
-* Difference between Server & Client Components in Next.js - Understanding when to use server components for data fetching and SEO, vs. client components for interactivity and state management.
-* Agile methods - Applying iterative development, daily stand-ups, and feedback loops in a group project to adapt to changes quickly.
-* API - Integrating GraphQL APIs with queries, mutations, and error handling, including fallback to mock data.
-* Responsiveness - Implementing responsive design with Tailwind CSS, ensuring layouts work across devices using grid, flexbox, and media queries. 
 
----
+- Difference between Server & Client Components in Next.js - Understanding when to use server components for data fetching and SEO, vs. client components for interactivity and state management.
+- Agile methods - Applying iterative development, daily stand-ups, and feedback loops in a group project to adapt to changes quickly.
+- API - Integrating GraphQL APIs with queries, mutations, and error handling, including fallback to mock data.
+- Responsiveness - Implementing responsive design with Tailwind CSS, ensuring layouts work across devices using grid, flexbox, and media queries.
 
 ## 📜 License
-This project is developed for educational purposes and is not intended for production.  
 
----
-
-## ✍️ Contact
-Any contact details  
+This project is developed for educational purposes and is not intended for production.
