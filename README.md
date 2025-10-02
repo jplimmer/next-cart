@@ -32,12 +32,11 @@ The purpose is to practice:
 ---
 
 ## ✨ Features
-- ✅ Homepage with product overview  
-- ✅ Hero section with CTA  
-- ✅ Different pages  
-- ✅ Search  
-- ✅ Add  
-- CRUD functions in /admin  
+- ✅ Homepage with product overview - Hero section with CTA, featured products grid, and new arrivals grid.
+- ✅ Different pages - Static pages like About us, Contact, and dynamic pages like Products list, individual product details and Admin dashboard.
+- ✅ Search - Global search via Command dialog (Ctrl+K), product filtering by query and categories
+- ✅ Add - Add to cart functionality (placeholder), and admin forms for adding new products.
+- ✅ CRUD functions in /admin - Create, read, update, and delete products and categories via tables, forms, and server actions.  
 
 ---
 
