@@ -11,7 +11,6 @@ export default async function ProductDetail({
 }) {
   const product = await productPromise;
 
-  console.log(product);
   if (!product) notFound();
 
   return (
