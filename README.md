@@ -196,10 +196,10 @@ For questions, use GitHub Issues. Thanks for helping! 🚀
 ---
 
 ## 📚 Learnings
-* Difference between Server & Client Components in Next.js  
-* Agile methods  
-* API  
-* Responsiveness  
+* Difference between Server & Client Components in Next.js - Understanding when to use server components for data fetching and SEO, vs. client components for interactivity and state management.
+* Agile methods - Applying iterative development, daily stand-ups, and feedback loops in a group project to adapt to changes quickly.
+* API - Integrating GraphQL APIs with queries, mutations, and error handling, including fallback to mock data.
+* Responsiveness - Implementing responsive design with Tailwind CSS, ensuring layouts work across devices using grid, flexbox, and media queries. 
 
 ---
 
