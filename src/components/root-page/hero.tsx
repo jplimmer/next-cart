@@ -50,6 +50,7 @@ export default async function Hero() {
       <Link
         key={product.id}
         href={`/products/${getSlugFromTitle(product.title)}`}
+        scroll={false}
         className="bg-purple-200/50 p-1 flex-1/3 relative"
         style={style}
       >
