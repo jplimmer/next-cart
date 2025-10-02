@@ -44,27 +44,27 @@ The purpose is to practice:
 
 #### Core Framework & Language
 
-- **Next.js 15 (App Router)** - React framework for server-side rendering, routing, and modern app architecture
-- **TypeScript** - Type-safe JavaScript for improved developer experience and code reliability
+- **[Next.js 15 (App Router)](https://nextjs.org/docs)** - React framework for server-side rendering, routing, and modern app architecture
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript for improved developer experience and code reliability
 
 #### Styling & UI
 
-- **Tailwind CSS** - Utility-first CSS framework for responsive design
-- **shadcn/ui** - Composable UI component library built on Radix UI
-- **Radix UI** - Unstyled, accessible component primitives
-- **Lucide React** - Modern icon library
+- **[Tailwind CSS](https://tailwindcss.com/docs/styling-with-utility-classes)** - Utility-first CSS framework for responsive design
+- **[shadcn/ui](https://ui.shadcn.com/docs)** - Composable UI component library built on Radix UI
+- **[Radix UI](https://www.radix-ui.com/primitives/docs/overview/introduction)** - Unstyled, accessible component primitives
+- **[Lucide React](https://lucide.dev/icons/)** - Modern icon library
 
 #### Features & Functionality
 
-- **Clerk** - Authentication and protected routes
-- **GraphQL** - API queries for product and category data
-- **React Hot Toast** - Toast notification system for user feedback
-- **Zod** - Runtime type validation for forms and data schemas
+- **[Clerk](https://clerk.com/)** - Authentication and protected routes
+- **[GraphQL](https://graphql.org/)** - API queries for product and category data
+- **[React Hot Toast](https://react-hot-toast.com/)** - Toast notification system for user feedback
+- **[Zod](https://zod.dev/)** - Runtime type validation for forms and data schemas
 
 #### Development Tools
 
-- **ESLint & Prettier** - Code linting and formatting for consistent code style
-- **Husky** - Git hooks for automated pre-commit quality checks
+- **[ESLint](https://eslint.org/) & [Prettier](https://prettier.io/)** - Code linting and formatting for consistent code style
+- **[Husky](https://typicode.github.io/husky/)** - Git hooks for automated pre-commit quality checks
 
 ## ⚙️ Installation
 
