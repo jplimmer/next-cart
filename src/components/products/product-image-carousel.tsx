@@ -90,7 +90,7 @@ export default function ProductImageCarousel({
             ‹
           </button>
           <button
-            onClick={(e: React.MouseEvent) => handleClick(e, prevSlide)}
+            onClick={(e: React.MouseEvent) => handleClick(e, nextSlide)}
             className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             aria-label="Next image"
           >
