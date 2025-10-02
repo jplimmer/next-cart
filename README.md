@@ -25,9 +25,16 @@ The project does this and that, includes this...
 ## 📖 About the Project
 This is a group exercise where the goal was to build a **minimalist e-commerce platform**.  
 The purpose is to practice:  
-- this  
-- and this  
-- also this  
+- Next.js 15 with App Router for server-side rendering and routing
+- TypeScript for type-safe development
+- GraphQL API integration with fallback to mock data
+- Tailwind CSS and shadcn/ui for responsive UI components
+- Clerk for authentication and protected routes
+- CRUD operations via server actions and forms
+- Lazy loading and Suspense for performance optimization
+- Search, filtering, and pagination with searchParams
+- Modal overlays and client-side interactions
+- Also, handling image validation and fallback data management  
 
 ---
 
