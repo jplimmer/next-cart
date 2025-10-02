@@ -1,7 +1,8 @@
 # 🛍️ NextCart
 
-A minimalist e-commerce platform built with Next.js 15 App Router and TypeScript.
-The project demonstrates server-side rendering for product pages, client-side interactions for search and filters using searchParams, includes CRUD operations in the admin panel via server actions and GraphQL mutations, features lazy loading with Suspense for performance, and integrates authentication with Clerk for protected routes. It also uses Tailwind CSS for responsive design, shadcn/ui components for UI consistency, and fallback mock data for development. The purpose is to practice modern web development techniques, including API integration, form validation with Zod, and modal overlays for seamless user experiences.
+A minimalist e-commerce platform built with Next.js 15 and TypeScript, using data from [Platzi's GraphQL API](https://fakeapi.platzi.com/en/gql/products/). Features server-side rendering and streaming, real-time search, authentication with Clerk and an admin dashboard with CRUD functionality.
+
+The purpose is to practice modern web development techniques, including API integration, form validation with Zod, and modal overlays for seamless user experiences.
 
 ## 📑 Contents
 
@@ -13,32 +14,55 @@ The project demonstrates server-side rendering for product pages, client-side in
 - 📂 [Project Structure](#-project-structure)
 - 📈 [Workflow](#-workflow)
 - 🤝 [Contributing](#-contributing)
-- 📚 [Learnings](#-learnings)
 - 📜 [License](#-license)
 
 ## 📖 About the Project
 
-This is a group exercise where the goal was to build a **minimalist e-commerce platform**.  
-The purpose is to practice:
+This is a group exercise focused on building a minimalist e-commerce platform to practice modern web development patterns.
 
-- Next.js 15 with App Router for server-side rendering and routing
-- TypeScript for type-safe development
-- GraphQL API integration with fallback to mock data
-- Tailwind CSS and shadcn/ui for responsive UI components
-- Clerk for authentication and protected routes
-- CRUD operations via server actions and forms
-- Lazy loading and Suspense for performance optimization
-- Search, filtering, and pagination with searchParams
-- Modal overlays and client-side interactions
-- Also, handling image validation and fallback data management
+**Key learnings:**
+
+- Server-side rendering and routing with Next.js 15 App Router
+- Type-safe development with TypeScript and Zod validation
+- GraphQL API integration with queries, mutations and error-handling
+- Implementing mock data fallback for development with environment variables
+- Authentication and route protection using Clerk
+- Form management with server actions for CRUD operations and contact forms
+- Performance optimization through lazy loading and React Suspense
+- Dynamic routing with searchParams for filtering and pagination
+- Building accessible, responsive UI with Tailwind CSS and shadcn/ui
+- Agile methodology with iterative development and continuous feedback & communication.
 
 ## ✨ Features
 
-- ✅ Homepage with product overview - Hero section with CTA, featured products grid, and new arrivals grid.
-- ✅ Different pages - Static pages like About us, Contact, and dynamic pages like Products list, individual product details and Admin dashboard.
-- ✅ Search - Global search via Command dialog (Ctrl+K), product filtering by query and categories
-- ✅ Add - Add to cart functionality (placeholder), and admin forms for adding new products.
-- ✅ CRUD functions in /admin - Create, read, update, and delete products and categories via tables, forms, and server actions.
+### 🏠 Storefront
+
+- **Product Discovery** - Browse featured products and new arrivals with a clean, responsive grid layout
+- **Search** - Global command palette (⌘K/Ctrl+K) for instant product search
+- **Smart Filtering** - Filter products by category, search query, and combine multiple filters
+- **Product Details** - Dynamic product pages with image carousels, descriptions, and specifications
+
+### 🛒 Shopping Experience
+
+- **Add to Cart** - Simple add-to-cart functionality using cookies, with toast notifications
+- **Responsive Design** - Optimised for mobile, tablet, and desktop viewing
+- **Contact Form** - Get in touch with validated server-side form handling
+
+### 🔐 Authentication
+
+- **User Management** - Sign in with Clerk authentication to access protected admin areas
+
+### ⚙️ Admin Dashboard
+
+- **Product Management** - Create, edit, and delete products in Platzi's public API server
+- **Data Tables** - Sortable, filterable tables for managing inventory
+- **Server Actions** - secure mutations handled server-side with real-time feedback
+
+### 🚀 Performance
+
+- **SSR & Streaming** - Server-side rendering with React Suspense for optimal loading
+- **Image Optimization** - Automatic image optimization with Next.js Image component
+- **Fallback Data** - Develop with mock data when API is unavailable
 
 ## 🛠 Technologies Used
 
@@ -222,13 +246,6 @@ git checkout -b feature/your-feature
 - All PRs need review.
 
 For questions, use GitHub Issues. Thanks for helping! 🚀
-
-## 📚 Learnings
-
-- Difference between Server & Client Components in Next.js - Understanding when to use server components for data fetching and SEO, vs. client components for interactivity and state management.
-- Agile methods - Applying iterative development, daily stand-ups, and feedback loops in a group project to adapt to changes quickly.
-- API - Integrating GraphQL APIs with queries, mutations, and error handling, including fallback to mock data.
-- Responsiveness - Implementing responsive design with Tailwind CSS, ensuring layouts work across devices using grid, flexbox, and media queries.
 
 ## 📜 License
 
