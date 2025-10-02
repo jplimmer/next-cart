@@ -3,7 +3,7 @@
 A minimalist e-commerce platform built with Next.js 15 App Router and TypeScript.
 The project demonstrates server-side rendering for product pages, client-side interactions for search and filters using searchParams, includes CRUD operations in the admin panel via server actions and GraphQL mutations, features lazy loading with Suspense for performance, and integrates authentication with Clerk for protected routes. It also uses Tailwind CSS for responsive design, shadcn/ui components for UI consistency, and fallback mock data for development. The purpose is to practice modern web development techniques, including API integration, form validation with Zod, and modal overlays for seamless user experiences.
 
-## 📑 Table of Contents
+## 📑 Contents
 
 - 📖 [About the Project](#-about-the-project)
 - ✨ [Features](#-features)
@@ -12,7 +12,6 @@ The project demonstrates server-side rendering for product pages, client-side in
 - 🚀 [Usage](#-usage)
 - 📂 [Project Structure](#-project-structure)
 - 📈 [Workflow](#-workflow)
-- 🗓 [Sprint Plan](#-sprint-plan)
 - 🤝 [Contributing](#-contributing)
 - 📚 [Learnings](#-learnings)
 - 📜 [License](#-license)
@@ -41,37 +40,54 @@ The purpose is to practice:
 - ✅ Add - Add to cart functionality (placeholder), and admin forms for adding new products.
 - ✅ CRUD functions in /admin - Create, read, update, and delete products and categories via tables, forms, and server actions.
 
-## 🛠 Technologies
+## 🛠 Technologies Used
 
-- Next.js 15 (App Router) [Framework] - For server-side rendering, routing, and app structure.
-- TypeScript [Language] - For type-safe development.
-- Tailwind CSS [Styling] - For utility-first CSS and responsive design.
-- Clerk [Authentication] - For user sign-in, sign-out, and protected routes.
-- GraphQL [API] - For querying product and category data from external API.
-- Radix UI [UI Components] - For accessible primitives like dropdowns, tooltips, and navigation menus.
-- shadcn/ui [UI Library] - For pre-built components like buttons, inputs, and tables.
-- React Hot Toast [Notifications] - For toast messages on auth events.
-- Embla Carousel [Carousel] - For image sliders in product details.
-- Lucide React [Icons] - For consistent iconography.
-- Zod [Validation] - For form schema validation.
-- ESLint & Prettier [Linting/Formatting] - For code quality and consistency.
-- Husky [Git Hooks] - For pre-commit checks.
+#### Core Framework & Language
+
+- **Next.js 15 (App Router)** - React framework for server-side rendering, routing, and modern app architecture
+- **TypeScript** - Type-safe JavaScript for improved developer experience and code reliability
+
+#### Styling & UI
+
+- **Tailwind CSS** - Utility-first CSS framework for responsive design
+- **shadcn/ui** - Composable UI component library built on Radix UI
+- **Radix UI** - Unstyled, accessible component primitives
+- **Lucide React** - Modern icon library
+
+#### Features & Functionality
+
+- **Clerk** - Authentication and protected routes
+- **GraphQL** - API queries for product and category data
+- **React Hot Toast** - Toast notification system for user feedback
+- **Zod** - Runtime type validation for forms and data schemas
+
+#### Development Tools
+
+- **ESLint & Prettier** - Code linting and formatting for consistent code style
+- **Husky** - Git hooks for automated pre-commit quality checks
 
 ## ⚙️ Installation
 
+1. Clone this repository and navigate to the folder:
+
 ```bash
-# Clone repo
 git clone https://github.com/jplimmer/next-cart.git
+cd next-cart
+```
 
-# Go into project folder
-cd repo-name
+2. Install dependencies:
 
-# Install dependencies
+```bash
 npm install
+```
 
-# Start development server
+3. Run the development server:
+
+```bash
 npm run dev
 ```
+
+4. Open http://localhost:3000 in your browser to view the site.
 
 ## 🚀 Usage
 
