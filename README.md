@@ -89,50 +89,54 @@ npm run dev
 ## 📂 Project Structure
 
 ```
-├── app                         # Next.js App Router pages and routes
-│   ├── about                   # About page route
-│   ├── admin                   # Admin dashboard routes
-│   │   ├── create-category     # Page for creating product categories
-│   │   ├── create-product      # Page for creating products
-│   │   └── update-product      # Pages for updating existing products
-│   │       └── [id]            # Dynamic route for editing a specific product by ID
-│   ├── contact                 # Contact page route
-│   ├── merchandise             # Merchandise listing page route
-│   ├── @modal                  # Parallel route for modal-based navigation
-│   │   ├── (.)admin            # Modal version of admin pages
-│   │   │   ├── create-category # Modal for creating categories
-│   │   │   ├── create-product  # Modal for creating products
-│   │   │   └── update-product  # Modal for updating products
-│   │   │       └── [id]        # Modal for updating product by ID
-│   │   └── (.)products         # Modal version of product details
-│   │       └── [slug]          # Modal for specific product by slug
-│   └── products                # Products listing and detail routes
-│       └── [slug]              # Dynamic route for product detail page
-├── components                  # Reusable React components
-│   ├── admin                   # Components for admin dashboards and forms
-│   ├── contact                 # Contact form and related components
-│   ├── layout                  # Layout components (header, footer, modal, etc.)
-│   ├── loading                 # Skeleton loaders and spinners
-│   ├── merchandise-card        # Components for displaying merchandise cards
-│   ├── navigation              # Navigation bar and menu components
-│   ├── products                # Components for product listing and details
-│   ├── root-page               # Components for homepage sections (hero, featured, etc.)
-│   ├── table                   # Data table components (sortable, expandable, etc.)
-│   └── ui                      # Shared UI primitives (buttons, cards, inputs, dialogs, etc.)
-├── fonts                       # Custom font files
-├── hooks                       # Custom React hooks
-├── lib                         # Core logic and utilities
-│   ├── actions                 # Server actions for cart, products, etc.
-│   ├── constants               # App-wide constants (routes, assets, params, etc.)
-│   ├── data                    # Data layer (GraphQL, services, helpers)
-│   │   ├── graphql             # GraphQL queries, mutations, and fetch utils
-│   │   └── services            # API service implementations (mock and real)
-│   ├── hooks                   # Data-fetching and cart-related hooks
-│   ├── mocks                   # Mock and fallback data for development/testing
-│   │   └── fallback-data       # Fallback data management
-│   ├── schemas                 # Validation schemas (Zod, etc.)
-│   └── types                   # TypeScript type definitions
-
+├── public/                         # Static assets
+├── src/
+│   ├── app/                        # Next.js App Router pages and routes
+│   │   ├── about/
+│   │   ├── admin/
+│   │   │   ├── create-category/
+│   │   │   ├── create-product/
+│   │   │   └── update-product/
+│   │   │       └── [id]/
+│   │   ├── contact/
+│   │   ├── products/
+│   │   │   └── [slug]/
+│   │   └── @modal/                 # Parallel slot for intercepting modal routes
+│   │       ├── (.)admin/
+│   │       │   ├── create-category/
+│   │       │   ├── create-product/
+│   │       │   └── update-product/
+│   │       │       └── [id]/
+│   │       └── (.)products/
+│   │           └── [slug]/
+│   ├── components/                 # Reusable React components organised by feature
+│   │   ├── admin/
+│   │   ├── contact/
+│   │   ├── layout/
+│   │   ├── loading/
+│   │   ├── navigation/
+│   │   ├── products/
+│   │   ├── root-page/
+│   │   ├── table/
+│   │   └── ui/                     # Shared UI primitives (buttons, cards, inputs, dialogs, etc.)
+│   ├── fonts/                      # Custom font files
+│   ├── hooks/                      # Custom React hooks
+│   ├── lib/                        # Core shared logic and utilities
+│   │   ├── actions/
+│   │   ├── constants/
+│   │   ├── data/
+│   │   │   ├── graphql/            # GraphQL queries, mutations, and fetch utils
+│   │   │   └── services/           # API service implementations (mock and real)
+│   │   ├── hooks/
+│   │   ├── mocks/                  # Mock and experimental data for development/testing
+│   │   ├── schemas/                # Zod validation schemas
+│   │   ├── types/
+│   │   └── utils.ts
+│   └── middleware.ts               # Clerk configuration
+├── .gitignore
+├── next.config.ts
+├── package.json
+└── README.md
 ```
 
 ## 📈 Workflow
