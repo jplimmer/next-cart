@@ -66,11 +66,16 @@ npm run dev
 ---
 
 ## 🚀 Usage
-* Homepage -> shows products + hero  
-* About us -> static page with text and image  
-* etc  
-* etc  
-* etc  
+* Homepage (/) -> Shows hero section with random products, featured products grid, and new arrivals grid.
+* About us (/about) -> Static page with text, images, and sections on story, goals, and environment.
+* Contact (/contact) -> Static page with a contact form for user inquiries.
+* Products (/products) -> Displays filtered and paginated product list with search, category filters, and sorting; supports query params for categories, query, and page number.
+* Product detail (/products/[slug]) -> Shows individual product details, including image carousel, description, price, and category.
+* Admin (/admin) -> Protected page for managing catalog; tabs for products and categories with data tables, add/edit/delete actions.
+* Create product (/admin/create-product) -> Form page/modal for creating new products with validation.
+* Create category (/admin/create-category) -> Form page/modal for creating new categories.
+* Update product (/admin/update-product/[id]) -> Form page/modal for editing existing products.
+* Modal overlays (e.g., @modal/(.)products/[slug], @modal/(.)admin/create-product) -> Modal versions of product details or admin forms for quick access without full page navigation.
 
 ---
 
