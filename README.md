@@ -2,23 +2,20 @@
 
 A minimalist e-commerce platform built with Next.js 15 and TypeScript, using data from [Platzi's GraphQL API](https://fakeapi.platzi.com/en/gql/products/). Features server-side rendering and streaming, real-time search, authentication with Clerk and an admin dashboard with CRUD functionality.
 
-The purpose is to practice modern web development techniques, including API integration, form validation with Zod, and modal overlays for seamless user experiences.
-
 ## 📑 Contents
 
-- 📖 [About the Project](#-about-the-project)
+- 📖 [About the project](#-about-the-project)
 - ✨ [Features](#-features)
-- 🛠 [Technologies](#-technologies)
+- 🛠 [Technologies Used](#-technologies)
 - ⚙️ [Installation](#-installation)
-- 🚀 [Usage](#-usage)
 - 📂 [Project Structure](#-project-structure)
-- 📈 [Workflow](#-workflow)
+- 🚀 [Workflow](#-workflow)
 - 🤝 [Contributing](#-contributing)
 - 📜 [License](#-license)
 
-## 📖 About the Project
+## 📖 About the project
 
-This is a group exercise focused on building a minimalist e-commerce platform to practice modern web development patterns.
+This is a group exercise focused on building a minimalist e-commerce platform to practise modern web development patterns.
 
 **Key learnings:**
 
@@ -28,6 +25,7 @@ This is a group exercise focused on building a minimalist e-commerce platform to
 - Implementing mock data fallback for development with environment variables
 - Authentication and route protection using Clerk
 - Form management with server actions for CRUD operations and contact forms
+- Advanced routing patterns with parallel routes and route interception for modals
 - Performance optimization through lazy loading and React Suspense
 - Dynamic routing with searchParams for filtering and pagination
 - Building accessible, responsive UI with Tailwind CSS and shadcn/ui
@@ -41,6 +39,7 @@ This is a group exercise focused on building a minimalist e-commerce platform to
 - **Search** - Global command palette (⌘K/Ctrl+K) for instant product search
 - **Smart Filtering** - Filter products by category, search query, and combine multiple filters
 - **Product Details** - Dynamic product pages with image carousels, descriptions, and specifications
+- **Modal Overlays** - Product quick-view and search in modal windows
 
 ### 🛒 Shopping Experience
 
@@ -112,19 +111,6 @@ npm run dev
 ```
 
 4. Open http://localhost:3000 in your browser to view the site.
-
-## 🚀 Usage
-
-- Homepage (/) -> Shows hero section with random products, featured products grid, and new arrivals grid.
-- About us (/about) -> Static page with text, images, and sections on story, goals, and environment.
-- Contact (/contact) -> Static page with a contact form for user inquiries.
-- Products (/products) -> Displays filtered and paginated product list with search, category filters, and sorting; supports query params for categories, query, and page number.
-- Product detail (/products/[slug]) -> Shows individual product details, including image carousel, description, price, and category.
-- Admin (/admin) -> Protected page for managing catalog; tabs for products and categories with data tables, add/edit/delete actions.
-- Create product (/admin/create-product) -> Form page/modal for creating new products with validation.
-- Create category (/admin/create-category) -> Form page/modal for creating new categories.
-- Update product (/admin/update-product/[id]) -> Form page/modal for editing existing products.
-- Modal overlays (e.g., @modal/(.)products/[slug], @modal/(.)admin/create-product) -> Modal versions of product details or admin forms for quick access without full page navigation.
 
 ## 📂 Project Structure
 
