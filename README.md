@@ -1,6 +1,8 @@
 # 🛍️ NextCart
 
-A minimalist e-commerce platform built with Next.js 15 and TypeScript, using data from [Platzi's GraphQL API](https://fakeapi.platzi.com/en/gql/products/). Features server-side rendering and streaming, real-time search, authentication with Clerk and an admin dashboard with CRUD functionality.
+_This repo is a fork of the [NextCart repository](github.com/nextcart-se/next-cart) - this README documents the original group project with my personal contributions highlighted below._
+
+**NextCart** is a minimalist e-commerce platform built with Next.js 15 and TypeScript, using data from [Platzi's GraphQL API](https://fakeapi.platzi.com/en/gql/products/). It features server-side rendering and streaming, real-time search, authentication with Clerk and an admin dashboard with CRUD functionality.
 
 ## 📑 Contents
 
@@ -9,13 +11,15 @@ A minimalist e-commerce platform built with Next.js 15 and TypeScript, using dat
 - 🛠 [Technologies Used](#-technologies)
 - ⚙️ [Installation](#-installation)
 - 📂 [Project Structure](#-project-structure)
-- 🚀 [Workflow](#-workflow)
+- 📅 [Project Workflow](#-project-workflow)
+- 🌱 [My Contributions](#-my-contributions)
+- 🚀 [Future Development Ideas](#-future-development-ideas)
 - 🤝 [Contributing](#-contributing)
 - 📜 [License](#-license)
 
 ## 📖 About the project
 
-This is a group exercise focused on building a minimalist e-commerce platform to practise modern web development patterns.
+This was a group exercise focused on building a minimalist e-commerce platform to practise modern web development patterns.
 
 **Key learnings:**
 
@@ -91,10 +95,10 @@ This is a group exercise focused on building a minimalist e-commerce platform to
 
 ## ⚙️ Installation
 
-1. Clone this repository and navigate to the folder:
+1. Clone the upstream repository and navigate to the folder:
 
 ```bash
-git clone https://github.com/jplimmer/next-cart.git
+git clone https://github.com/nextcart-se/next-cart.git
 cd next-cart
 ```
 
@@ -165,13 +169,13 @@ npm run dev
 └── README.md
 ```
 
-## 📈 Workflow
+## 📈 Project Workflow
 
 - 👥 Group work in agile sprints (SCRUM)
 - 🌱 Feature branches
 - 🔍 PR + code review
-- DSUs
-- Keep team meeting open
+- Daily standup meetings
+- Open Teams channel
 
 ### 🗓 Sprint Plan
 
@@ -197,13 +201,32 @@ npm run dev
 - Refactor fetch and GraphQL functions
 - Responsive styling
 
+## 🌱 My Contributions
+
+- Navigation bar and sidebar component with mobile-responsive hamburger menu
+- Search functionality with CommandDialog supporting real-time filtering
+- Contact form and server action
+- Parallel and intercepting routes for server-side modals
+- Admin tables with TanStack Table
+- Authentication integration with Clerk
+- Responsive layout using CSS Grid for product cards and page structure
+- Loading skeletons and Suspense boundaries for improved user experience
+- Mock data support for development (via environment variables)
+
+## 🚀 Future Development Ideas
+
+- Add CRUD functionality for Categories in the admin page
+- Add basket page/component and couple AddToCart functionality with full order details & quantity
+- Add more filters to the Product page (e.g. min and max price)
+- Add runtime validation of GraphQL responses with Zod
+
 ## 🤝 Contributing
 
 Want to contribute? Great! Here's how to get started:
 
 #### Quick Start
 
-1. Fork and clone the repo:
+1. Fork and clone the upstream repo:
 
 ```bash
 git clone https://github.com/<your-username>/next-cart.git
