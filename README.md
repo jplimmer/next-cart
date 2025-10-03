@@ -8,6 +8,7 @@ _This repo is a fork of the [NextCart repository](github.com/nextcart-se/next-ca
 
 - 📖 [About the project](#-about-the-project)
 - ✨ [Features](#-features)
+- 🖼️ [Screenshots](#️-screenshots)
 - 🛠 [Technologies Used](#-technologies)
 - ⚙️ [Installation](#-installation)
 - 📂 [Project Structure](#-project-structure)
@@ -66,6 +67,25 @@ This was a group exercise focused on building a minimalist e-commerce platform t
 - **SSR & Streaming** - Server-side rendering with React Suspense for optimal loading
 - **Image Optimization** - Automatic image optimization with Next.js Image component
 - **Fallback Data** - Develop with mock data when API is unavailable
+
+## 🖼️ Screenshots
+
+<table>
+  <tr>
+    <td width="50%">
+      <figure>
+        <img src="screenshots/home-page.png" alt="Screenshot of the home page, showing the navigation bar, Hero section and Featured products">
+        <figcaption><i>Home page</i></figcaption>
+      </figure>
+    </td>
+    <td width="50%">
+      <figure>
+        <img src="screenshots/products-page.png" alt="Screenshot of the products page, showing the filter search bar, category select and products grid">
+        <figcaption><i>Products page</i></figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
 
 ## 🛠 Technologies Used
 
@@ -205,13 +225,30 @@ npm run dev
 
 - Navigation bar and sidebar component with mobile-responsive hamburger menu
 - Search functionality with CommandDialog supporting real-time filtering
-- Contact form and server action
+- Contact form and server action with Zod validation
 - Parallel and intercepting routes for server-side modals
 - Admin tables with TanStack Table
 - Authentication integration with Clerk
 - Responsive layout using CSS Grid for product cards and page structure
 - Loading skeletons and Suspense boundaries for improved user experience
 - Mock data support for development (via environment variables)
+
+<table>
+  <tr>
+    <td width="50%">
+      <figure>
+        <img src="screenshots/search.png" alt="Screenshot of the search modal window, showing matching product results and their categories">
+        <figcaption><i>Search</i></figcaption>
+      </figure>
+    </td>
+    <td width="50%">
+      <figure>
+        <img src="screenshots/admin-dashboard.png" alt="Screenshot of the admin dashboard, showing the products tab with table, filter search bar and add new product button">
+        <figcaption><i>Admin dashboard</i></figcaption>
+      </figure>
+    </td>
+  </tr>
+</table>
 
 ## 🚀 Future Development Ideas
 
